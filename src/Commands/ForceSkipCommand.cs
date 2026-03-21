@@ -29,11 +29,8 @@ internal sealed class ForceSkipCommand : BaseCommand
     {
         if (GameState.IsHost)
         {
-            foreach (var client in AmongUsClient.Instance.allClients)
-            {
-                MeetingHud.Instance.RpcClearVote(client.Id);
-            }
-            MeetingHud.Instance.RpcClose();
+            var states = Array.Empty<MeetingHud.VoterState>();
+            MeetingHud.Instance.RpcVotingComplete(states, null, false);
         }
     }
 }
