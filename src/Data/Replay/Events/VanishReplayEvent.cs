@@ -8,9 +8,10 @@ namespace BetterAmongUs.Data.Replay.Events;
 [Serializable]
 internal sealed class VanishReplayEvent : IReplayEvent<int>
 {
+    [JsonPropertyName("id")]
     public string Id => "player_vanish";
 
-    [JsonInclude]
+    [JsonPropertyName("eventData")]
     public int EventData { get; set; }
 
     public void Play()

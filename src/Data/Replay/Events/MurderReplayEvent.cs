@@ -7,9 +7,10 @@ namespace BetterAmongUs.Data.Replay.Events;
 [Serializable]
 internal sealed class MurderReplayEvent : IReplayEvent<(int killerId, int targetId)>
 {
+    [JsonPropertyName("id")]
     public string Id => "player_murder";
 
-    [JsonInclude]
+    [JsonPropertyName("eventData")]
     public (int killerId, int targetId) EventData { get; set; }
 
     public void Play()

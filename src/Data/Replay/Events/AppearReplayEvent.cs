@@ -8,9 +8,10 @@ namespace BetterAmongUs.Data.Replay.Events;
 [Serializable]
 internal sealed class AppearReplayEvent : IReplayEvent<(int playerId, bool animate)>
 {
+    [JsonPropertyName("id")]
     public string Id => "player_appear";
 
-    [JsonInclude]
+    [JsonPropertyName("eventData")]
     public (int playerId, bool animate) EventData { get; set; }
 
     public void Play()

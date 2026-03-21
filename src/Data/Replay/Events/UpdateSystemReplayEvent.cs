@@ -7,9 +7,10 @@ namespace BetterAmongUs.Data.Replay.Events;
 [Serializable]
 internal sealed class UpdateSystemReplayEvent : IReplayEvent<(byte systemType, int playerId, byte amount)>
 {
+    [JsonPropertyName("id")]
     public string Id => "update_system";
 
-    [JsonInclude]
+    [JsonPropertyName("eventData")]
     public (byte systemType, int playerId, byte amount) EventData { get; set; }
 
     public void Play()

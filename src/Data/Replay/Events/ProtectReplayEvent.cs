@@ -8,9 +8,10 @@ namespace BetterAmongUs.Data.Replay.Events;
 [Serializable]
 internal sealed class ProtectReplayEvent : IReplayEvent<(int playerId, int targetId)>
 {
+    [JsonPropertyName("id")]
     public string Id => "protect_player";
 
-    [JsonInclude]
+    [JsonPropertyName("eventData")]
     public (int playerId, int targetId) EventData { get; set; }
 
     public void Play()

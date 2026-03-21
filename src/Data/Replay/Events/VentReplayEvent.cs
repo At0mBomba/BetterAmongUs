@@ -7,9 +7,10 @@ namespace BetterAmongUs.Data.Replay.Events;
 [Serializable]
 internal sealed class VentReplayEvent : IReplayEvent<(int playerId, bool exit, int ventId)>
 {
+    [JsonPropertyName("id")]
     public string Id => "player_vent";
 
-    [JsonInclude]
+    [JsonPropertyName("eventData")]
     public (int playerId, bool exit, int ventId) EventData { get; set; }
 
     public void Play()
