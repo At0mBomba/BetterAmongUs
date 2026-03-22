@@ -113,24 +113,46 @@ internal static class PlayerTabPatch
             colorChip.Button.OnClick = new();
             colorChip.Button.OnClick.AddListener(() =>
             {
-                // Shift+Click = toggle favorite
-                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                if (ActiveInputManager.currentControlType == ActiveInputManager.InputType.Keyboard)
                 {
-                    if (BAUConfigs.FavoriteColor.Value == index)
+                    // Shift+Click to toggle favorite
+                    if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
                     {
-                        BAUConfigs.FavoriteColor.Value = -1; // Remove favorite
-                    }
-                    else
-                    {
-                        BAUConfigs.FavoriteColor.Value = index; // Set favorite
+                        if (BAUConfigs.FavoriteColor.Value == index)
+                        {
+                            BAUConfigs.FavoriteColor.Value = -1; // Remove favorite
+                        }
+                        else
+                        {
+                            BAUConfigs.FavoriteColor.Value = index; // Set favorite
+                        }
+
+                        UpdateFavorite();
+                        return;
                     }
 
-                    UpdateFavorite();
-                    return;
+                    playerTab.ClickEquip();
                 }
+                else
+                {
+                    // Click Color to toggle favorite if color is already taken 
+                    if (DataManager.Player.Customization.Color == index || !playerTab.AvailableColors.Contains(index))
+                    {
+                        if (BAUConfigs.FavoriteColor.Value == index)
+                        {
+                            BAUConfigs.FavoriteColor.Value = -1; // Remove favorite
+                        }
+                        else
+                        {
+                            BAUConfigs.FavoriteColor.Value = index; // Set favorite
+                        }
 
-                // Normal click = equip color
-                playerTab.ClickEquip();
+                        UpdateFavorite();
+                        return;
+                    }
+
+                    playerTab.SelectColor(index);
+                }
             });
 
             // Add favorite star indicator
