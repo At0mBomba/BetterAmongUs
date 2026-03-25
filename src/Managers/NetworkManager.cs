@@ -493,6 +493,8 @@ internal static class NetworkManager
         [HarmonyPrefix]
         internal static bool ShipStatus_UpdateSystemLocal_Prefix(SystemTypes systemType, PlayerControl player, byte amount)
         {
+            if (!GameState.IsFreePlay) return true;
+
             MessageWriter messageWriter = MessageWriter.Get(0);
             messageWriter.Write(amount);
             MessageReader messageReader = MessageReader.Get(messageWriter.ToByteArray(false));
