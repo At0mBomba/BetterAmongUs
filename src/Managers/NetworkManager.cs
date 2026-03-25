@@ -489,27 +489,6 @@ internal static class NetworkManager
     [HarmonyPatch]
     internal static class MessageReaderUpdateSystemPatch
     {
-        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.UpdateSystem), typeof(SystemTypes), typeof(PlayerControl), typeof(byte))]
-        [HarmonyPrefix]
-        internal static bool ShipStatus_UpdateSystemLocal_Prefix(SystemTypes systemType, PlayerControl player, byte amount)
-        {
-            if (!GameState.IsFreePlay) return true;
-
-            MessageWriter messageWriter = MessageWriter.Get(0);
-            messageWriter.Write(amount);
-            MessageReader messageReader = MessageReader.Get(messageWriter.ToByteArray(false));
-            messageWriter.Recycle();
-
-            if (BetterAntiCheat.RpcUpdateSystemCheck(player, systemType, messageReader) != true)
-            {
-                messageReader.Recycle();
-                return false;
-            }
-            messageReader.Recycle();
-
-            return true;
-        }
-
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.UpdateSystem), typeof(SystemTypes), typeof(PlayerControl), typeof(MessageReader))]
         [HarmonyPrefix]
         internal static bool ShipStatus_UpdateSystem_Prefix(SystemTypes systemType, PlayerControl player, MessageReader msgReader)
