@@ -68,7 +68,10 @@ internal static class PlayerControlPatch
         Logger_.LogPrivate($"{__instance.Data.PlayerName} Has killed {target.Data.PlayerName} as {__instance.Data.RoleType.GetRoleName()}", "EventLog");
 
         // Track kill count in player's BetterData
-        __instance.BetterData().RoleInfo.Kills += 1;
+        if (!target.IsAlive())
+        {
+            __instance.BetterData().RoleInfo.Kills += 1;
+        }
     }
 
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Shapeshift))]
