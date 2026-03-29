@@ -88,6 +88,7 @@ internal static class OptionsMenuBehaviourPatch
         // Clean up BAU mod components and return to vanilla Among Us
         ConsoleManager.DetachConsole();
         BetterNotificationManager.Detach();
+        ClientPatch.Unpatch();
         Harmony.UnpatchAll();
         ModManager.Instance.ModStamp.gameObject.SetActive(false);
         SceneChanger.ChangeScene("MainMenu");

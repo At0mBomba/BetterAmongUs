@@ -15,11 +15,21 @@ namespace BetterAmongUs.Patches.Client;
 [HarmonyPatch]
 internal static class ClientPatch
 {
+    private static GameObject? friendsButton;
+    internal static void Unpatch()
+    {
+        if (friendsButton != null)
+        {
+            friendsButton.SetSpriteColors(Color.white);
+        }
+    }
+
     [HarmonyPatch(typeof(AccountTab), nameof(AccountTab.Awake))]
     [HarmonyPostfix]
     private static void AccountTab_Awake_Postfix(AccountTab __instance)
     {
         // Apply custom UI colors to the friends button
+        friendsButton = __instance.signInStatusComponent.friendsButton;
         __instance.signInStatusComponent.friendsButton.SetUIColors();
     }
 
