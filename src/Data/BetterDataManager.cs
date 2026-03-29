@@ -23,7 +23,7 @@ internal static class BetterDataManager
         /// <summary>
         /// Root directory for BetterAmongUs data.
         /// </summary>
-        internal static string starLightDataFolderPath = Environment.GetEnvironmentVariable("STAR_DATA_PATH") ?? throw new Exception("Unable to find `STAR_DATA_PATH` environment variable!");
+        internal static string starLightDataFolderPath = Environment.GetEnvironmentVariable("STAR_DATA_PATH") ?? string.Empty;
 
         /// <summary>
         /// Directory for save information files.
