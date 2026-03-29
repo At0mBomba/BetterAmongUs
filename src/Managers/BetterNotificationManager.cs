@@ -163,10 +163,10 @@ internal static class BetterNotificationManager
             rawText = $"{playerDetectedLog}: <color=#0097b5>{player?.BetterData().RealName}</color> " + newText + $": <b><color=#fc0000>{reason}</color></b>";
         }
 
-        if (!BetterDataManager.BetterDataFile.CheatData.Any(info => info.CheckPlayerData(player.Data)))
+        if (!BetterDataManager.Files.BetterDataFile.CheatData.Any(info => info.CheckPlayerData(player.Data)))
         {
-            BetterDataManager.BetterDataFile.CheatData.Add(new(player?.BetterData().RealName ?? player.Data.PlayerName, player.GetHashPuid(), player.Data.FriendCode, reason));
-            BetterDataManager.BetterDataFile.Save();
+            BetterDataManager.Files.BetterDataFile.CheatData.Add(new(player?.BetterData().RealName ?? player.Data.PlayerName, player.GetHashPuid(), player.Data.FriendCode, reason));
+            BetterDataManager.Files.BetterDataFile.Save();
             Notify(text, Time: 8f);
         }
 

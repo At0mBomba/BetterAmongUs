@@ -124,12 +124,12 @@ internal static class OptionsMenuBehaviourPatch
     private static void OpenSaveData()
     {
         // Open BAU save data folder in file explorer
-        if (!File.Exists(BetterDataManager.dataPath))
+        if (!File.Exists(BetterDataManager.Files.dataFilePath))
             return;
 
         Process.Start(new ProcessStartInfo
         {
-            FileName = BetterDataManager.dataPath,
+            FileName = BetterDataManager.Files.dataFilePath,
             UseShellExecute = true,
             Verb = "open"
         });

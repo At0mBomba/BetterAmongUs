@@ -19,7 +19,7 @@ internal sealed class SendChatHandler : RPCHandler
 
         if (BetterGameSettings.UseBanWordList.GetBool() && (!BetterGameSettings.UseBanWordListOnlyLobby.GetBool() || GameState.IsLobby))
         {
-            if (TextFileHandler.CompareStringFilters(BetterDataManager.banWordListFile, text.Split(' ')))
+            if (TextFileHandler.CompareStringFilters(BetterDataManager.Files.banWordListFilePath, text.Split(' ')))
             {
                 sender.Kick(false, $"has been kicked due to\nchat message containing a banned word!");
             }

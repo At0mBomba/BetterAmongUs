@@ -160,10 +160,10 @@ internal class BAUPlugin : BasePlugin
         InstanceAttribute.RegisterAll();
         OutfitData.Initialize();
 
-        if (File.Exists(Path.Combine(BetterDataManager.filePathFolder, "better-log.txt")))
-            File.WriteAllText(Path.Combine(BetterDataManager.filePathFolder, "better-previous-log.txt"), File.ReadAllText(Path.Combine(BetterDataManager.filePathFolder, "better-log.txt")));
+        if (File.Exists(Path.Combine(BetterDataManager.Folders.fileFolderPath, "better-log.txt")))
+            File.WriteAllText(Path.Combine(BetterDataManager.Folders.fileFolderPath, "better-previous-log.txt"), File.ReadAllText(Path.Combine(BetterDataManager.Folders.fileFolderPath, "better-log.txt")));
 
-        File.WriteAllText(Path.Combine(BetterDataManager.filePathFolder, "better-log.txt"), "");
+        File.WriteAllText(Path.Combine(BetterDataManager.Folders.fileFolderPath, "better-log.txt"), "");
         Logger_.Log("Better Among Us successfully loaded!");
 
         string SupportedVersions = string.Join(" ", ModInfo.SupportedAmongUsVersions);
@@ -208,29 +208,6 @@ internal class BAUPlugin : BasePlugin
             {
                 Logger_.Error($"Failed to register MonoBehaviour: {type.FullName}\n{ex}");
             }
-        }
-    }
-
-    /// <summary>
-    /// Gets the persistent data path for Among Us.
-    /// </summary>
-    /// <returns>The persistent data path string.</returns>
-    internal static string GetDataPathToAmongUs()
-        => Application.persistentDataPath;
-
-    /// <summary>
-    /// Gets the game installation path for Among Us.
-    /// </summary>
-    /// <returns>The game installation path string.</returns>
-    internal static string GetGamePathToAmongUs()
-    {
-        if (!ModInfo.Starlight)
-        {
-            return Path.GetDirectoryName(Application.dataPath) ?? throw new Exception("Unable to find `Application.dataPath` path");
-        }
-        else
-        {
-            return GetDataPathToAmongUs();
         }
     }
 }

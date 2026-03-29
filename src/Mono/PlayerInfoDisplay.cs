@@ -357,7 +357,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
 
         var color = _player.cosmetics.currentBodySprite.BodySprite.material.GetColor("_OutlineColor");
 
-        if (BetterDataManager.BetterDataFile.TryGetCheatInfo(_player.Data, out var info))
+        if (BetterDataManager.Files.BetterDataFile.TryGetCheatInfo(_player.Data, out var info))
         {
             sbTag.Append(info.title.ToColor(info.hexColor) + "+++");
             _player.SetOutlineByHex(true, info.hexColor);

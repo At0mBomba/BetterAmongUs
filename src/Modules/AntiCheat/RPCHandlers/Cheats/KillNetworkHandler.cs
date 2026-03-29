@@ -25,11 +25,11 @@ internal sealed class KillNetworkHandler : RPCHandler
         if (!BAUConfigs.AntiCheat.Value || !BetterGameSettings.DetectCheatClients.GetBool())
             return;
 
-        if (!BetterDataManager.BetterDataFile.KNData.Any(info => info.CheckPlayerData(sender.Data)))
+        if (!BetterDataManager.Files.BetterDataFile.KNData.Any(info => info.CheckPlayerData(sender.Data)))
         {
             sender.ReportPlayer(ReportReasons.Cheating_Hacking);
-            BetterDataManager.BetterDataFile.KNData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "KillNetwork RPC"));
-            BetterDataManager.BetterDataFile.Save();
+            BetterDataManager.Files.BetterDataFile.KNData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "KillNetwork RPC"));
+            BetterDataManager.Files.BetterDataFile.Save();
             BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.KN"), Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
         }
     }

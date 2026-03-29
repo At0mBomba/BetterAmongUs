@@ -51,7 +51,7 @@ internal static class PlayerTabPatch
             var data = OutfitData.GetOutfitData(currentI);
             var button = playerTab.CreateOutfitPresetButton(name, new Vector3(2.5f, 1.55f - currentI * 0.45f, 0f), out var playerPreview, () =>
             {
-                if (BetterDataManager.BetterDataFile.SelectedOutfitPreset == currentI)
+                if (BetterDataManager.Files.BetterDataFile.SelectedOutfitPreset == currentI)
                     return;
 
                 // Ignore if cooldown active or same preset selected
@@ -61,7 +61,7 @@ internal static class PlayerTabPatch
                 cooldown = 0.5f;
 
                 // Update selected preset
-                BetterDataManager.BetterDataFile.SelectedOutfitPreset = currentI;
+                BetterDataManager.Files.BetterDataFile.SelectedOutfitPreset = currentI;
 
                 // Reset all button hover states
                 foreach (var button in _presetButtons)
@@ -244,7 +244,7 @@ internal static class PlayerTabPatch
         {
             PassiveButton? button = _presetButtons[i];
             if (button == null) continue;
-            if (i == BetterDataManager.BetterDataFile.SelectedOutfitPreset)
+            if (i == BetterDataManager.Files.BetterDataFile.SelectedOutfitPreset)
             {
                 button.SetPassiveButtonHoverStateActive(); // Highlight selected preset
             }

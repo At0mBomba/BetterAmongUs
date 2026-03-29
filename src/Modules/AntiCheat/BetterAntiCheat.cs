@@ -44,31 +44,31 @@ internal static class BetterAntiCheat
         {
             foreach (var player in BAUPlugin.AllPlayerControls)
             {
-                if (BetterDataManager.BetterDataFile.SickoData.Any(info => info.CheckPlayerData(player.Data)))
+                if (BetterDataManager.Files.BetterDataFile.SickoData.Any(info => info.CheckPlayerData(player.Data)))
                 {
                     string reason = Translator.GetString("AntiCheat.Reason.SickoMenuUser");
                     string kickMessage = string.Format(Translator.GetString("AntiCheat.KickMessage"), Translator.GetString("AntiCheat.ByAntiCheat"), reason);
                     player.Kick(true, kickMessage, true);
                 }
-                else if (BetterDataManager.BetterDataFile.AUMData.Any(info => info.CheckPlayerData(player.Data)))
+                else if (BetterDataManager.Files.BetterDataFile.AUMData.Any(info => info.CheckPlayerData(player.Data)))
                 {
                     string reason = Translator.GetString("AntiCheat.Reason.AUMUser");
                     string kickMessage = string.Format(Translator.GetString("AntiCheat.KickMessage"), Translator.GetString("AntiCheat.ByAntiCheat"), reason);
                     player.Kick(true, kickMessage, true);
                 }
-                else if (BetterDataManager.BetterDataFile.KNData.Any(info => info.CheckPlayerData(player.Data)))
+                else if (BetterDataManager.Files.BetterDataFile.KNData.Any(info => info.CheckPlayerData(player.Data)))
                 {
                     string reason = Translator.GetString("AntiCheat.Reason.KNUser");
                     string kickMessage = string.Format(Translator.GetString("AntiCheat.KickMessage"), Translator.GetString("AntiCheat.ByAntiCheat"), reason);
                     player.Kick(true, kickMessage, true);
                 }
-                else if (BetterDataManager.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(player.Data)))
+                else if (BetterDataManager.Files.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(player.Data)))
                 {
                     string reason = Translator.GetString("AntiCheat.Reason.MMCUser");
                     string kickMessage = string.Format(Translator.GetString("AntiCheat.KickMessage"), Translator.GetString("AntiCheat.ByAntiCheat"), reason);
                     player.Kick(true, kickMessage, true);
                 }
-                else if (BetterDataManager.BetterDataFile.CheatData.Any(info => info.CheckPlayerData(player.Data)))
+                else if (BetterDataManager.Files.BetterDataFile.CheatData.Any(info => info.CheckPlayerData(player.Data)))
                 {
                     string reason = Translator.GetString("AntiCheat.Reason.KnownCheater");
                     string kickMessage = string.Format(Translator.GetString("AntiCheat.KickMessage"), Translator.GetString("AntiCheat.ByAntiCheat"), reason);

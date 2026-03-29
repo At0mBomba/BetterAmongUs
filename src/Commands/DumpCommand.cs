@@ -25,7 +25,7 @@ internal sealed class DumpCommand : BaseCommand
 
     internal override void Run()
     {
-        string logFilePath = Path.Combine(BetterDataManager.filePathFolder, "better-log.txt");
+        string logFilePath = Path.Combine(BetterDataManager.Folders.fileFolderPath, "better-log.txt");
         string log = File.ReadAllText(logFilePath);
         string newLog = string.Empty;
         string[] logArray = log.Split([Environment.NewLine], StringSplitOptions.None);

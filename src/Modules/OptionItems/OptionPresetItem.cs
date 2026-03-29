@@ -43,8 +43,8 @@ internal sealed class OptionPresetItem : OptionStringItem
     internal override void OnValueChange(int oldValue, int newValue)
     {
         BAUConfigs.SettingsPreset.Value = newValue;
-        BetterDataManager.BetterGameSettingsFile = new();
-        BetterDataManager.BetterGameSettingsFile.Init();
+        BetterDataManager.Files.BetterGameSettingsFile = new();
+        BetterDataManager.Files.BetterGameSettingsFile.Init();
         foreach (var opt in AllOptions)
         {
             opt.TryLoad(true);

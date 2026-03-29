@@ -14,7 +14,7 @@ internal sealed class BetterGameSettingsFile : AbstractJsonFile
     /// <summary>
     /// Gets the file path for the game settings file.
     /// </summary>
-    internal override string FilePath => BetterDataManager.SettingsFile;
+    internal override string FilePath => BetterDataManager.Files.SettingsFilePath;
 
     /// <summary>
     /// Loads the settings file and converts JSON elements to their appropriate types.

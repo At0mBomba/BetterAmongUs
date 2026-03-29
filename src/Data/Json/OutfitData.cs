@@ -38,7 +38,7 @@ internal sealed class OutfitData
     /// </summary>
     /// <returns>The outfit data for the current preset.</returns>
     internal static OutfitData GetOutfitData() =>
-        BetterDataManager.BetterDataFile.OutfitData.ElementAt(BetterDataManager.BetterDataFile.SelectedOutfitPreset);
+        BetterDataManager.Files.BetterDataFile.OutfitData.ElementAt(BetterDataManager.Files.BetterDataFile.SelectedOutfitPreset);
 
     /// <summary>
     /// Gets the outfit data for a specific preset index.
@@ -46,7 +46,7 @@ internal sealed class OutfitData
     /// <param name="index">The index of the preset to retrieve.</param>
     /// <returns>The outfit data for the specified preset.</returns>
     internal static OutfitData GetOutfitData(int index) =>
-        BetterDataManager.BetterDataFile.OutfitData.ElementAt(index);
+        BetterDataManager.Files.BetterDataFile.OutfitData.ElementAt(index);
 
     private static bool ignoreChange;
 
@@ -63,7 +63,7 @@ internal sealed class OutfitData
                 return;
 
             GetOutfitData().SetFromData();
-            BetterDataManager.BetterDataFile.Save();
+            BetterDataManager.Files.BetterDataFile.Save();
         };
 
         DataManager.Player.Customization.OnHatChanged += Save;
@@ -79,7 +79,7 @@ internal sealed class OutfitData
     /// </summary>
     internal static void FindPreset()
     {
-        var collection = BetterDataManager.BetterDataFile.OutfitData;
+        var collection = BetterDataManager.Files.BetterDataFile.OutfitData;
         int i = 0;
         foreach (var data in collection)
         {
@@ -89,13 +89,13 @@ internal sealed class OutfitData
                 data.VisorId == DataManager.Player.Customization.Visor &&
                 data.NamePlateId == DataManager.Player.Customization.NamePlate)
             {
-                BetterDataManager.BetterDataFile.SelectedOutfitPreset = i;
+                BetterDataManager.Files.BetterDataFile.SelectedOutfitPreset = i;
                 return;
             }
             i++;
         }
 
-        BetterDataManager.BetterDataFile.SelectedOutfitPreset = 0;
+        BetterDataManager.Files.BetterDataFile.SelectedOutfitPreset = 0;
     }
 
     /// <summary>
@@ -132,7 +132,7 @@ internal sealed class OutfitData
         ignoreChange = false;
 
         callback.Invoke();
-        BetterDataManager.BetterDataFile.Save();
+        BetterDataManager.Files.BetterDataFile.Save();
     }
 
     /// <summary>

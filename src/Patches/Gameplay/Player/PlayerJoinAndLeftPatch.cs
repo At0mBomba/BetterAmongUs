@@ -46,7 +46,7 @@ internal static class PlayerJoinAndLeftPatch
                     {
                         if (player != null)
                         {
-                            if (TextFileHandler.CompareStringMatch(BetterDataManager.banPlayerListFile,
+                            if (TextFileHandler.CompareStringMatch(BetterDataManager.Files.banPlayerListFilePath,
                                 BAUPlugin.AllPlayerControls.Select(player => player.Data.FriendCode)
                                 .Concat(BAUPlugin.AllPlayerControls.Select(player => player.GetHashPuid())).ToArray()))
                             {
@@ -60,7 +60,7 @@ internal static class PlayerJoinAndLeftPatch
                     {
                         if (player != null)
                         {
-                            if (TextFileHandler.CompareStringFilters(BetterDataManager.banNameListFile, [player.Data.PlayerName]))
+                            if (TextFileHandler.CompareStringFilters(BetterDataManager.Files.banNameListFilePath, [player.Data.PlayerName]))
                             {
                                 player?.Kick(true, Translator.GetString("AntiCheat.BanPlayerListMessage"), bypassDataCheck: true);
                             }

@@ -34,21 +34,21 @@ internal sealed class ModMenuCrewHandler : RPCHandler
             if (sender.PlayerId != playerId)
                 return;
 
-            if (!BetterDataManager.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(sender.Data)))
+            if (!BetterDataManager.Files.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(sender.Data)))
             {
                 sender.ReportPlayer(ReportReasons.Cheating_Hacking);
-                BetterDataManager.BetterDataFile.MMCData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "ModMenuCrew RPC"));
-                BetterDataManager.BetterDataFile.Save();
+                BetterDataManager.Files.BetterDataFile.MMCData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "ModMenuCrew RPC"));
+                BetterDataManager.Files.BetterDataFile.Save();
                 BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.MMC"), Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
             }
         }
         catch
         {
-            if (!BetterDataManager.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(sender.Data)))
+            if (!BetterDataManager.Files.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(sender.Data)))
             {
                 sender.ReportPlayer(ReportReasons.Cheating_Hacking);
-                BetterDataManager.BetterDataFile.MMCData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "ModMenuCrew RPC"));
-                BetterDataManager.BetterDataFile.Save();
+                BetterDataManager.Files.BetterDataFile.MMCData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "ModMenuCrew RPC"));
+                BetterDataManager.Files.BetterDataFile.Save();
                 BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.MMC"), Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
             }
         }

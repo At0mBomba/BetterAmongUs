@@ -46,11 +46,11 @@ internal sealed class ModMenuCrewChatHandler : RPCHandler
                 return;
 
             var isEmpty = string.IsNullOrEmpty(senderName) && string.IsNullOrEmpty(content);
-            if (!isEmpty && !BetterDataManager.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(sender.Data)))
+            if (!isEmpty && !BetterDataManager.Files.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(sender.Data)))
             {
                 sender.ReportPlayer(ReportReasons.Cheating_Hacking);
-                BetterDataManager.BetterDataFile.MMCData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "ModMenuCrew Chat RPC"));
-                BetterDataManager.BetterDataFile.Save();
+                BetterDataManager.Files.BetterDataFile.MMCData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "ModMenuCrew Chat RPC"));
+                BetterDataManager.Files.BetterDataFile.Save();
                 BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.MMCChat"), Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
             }
         }
@@ -62,11 +62,11 @@ internal sealed class ModMenuCrewChatHandler : RPCHandler
             if (!BAUConfigs.AntiCheat.Value || !BetterGameSettings.DetectCheatClients.GetBool())
                 return;
 
-            if (!BetterDataManager.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(sender.Data)))
+            if (!BetterDataManager.Files.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(sender.Data)))
             {
                 sender.ReportPlayer(ReportReasons.Cheating_Hacking);
-                BetterDataManager.BetterDataFile.MMCData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "ModMenuCrew Chat RPC"));
-                BetterDataManager.BetterDataFile.Save();
+                BetterDataManager.Files.BetterDataFile.MMCData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "ModMenuCrew Chat RPC"));
+                BetterDataManager.Files.BetterDataFile.Save();
                 BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.MMCChat"), Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
             }
         }

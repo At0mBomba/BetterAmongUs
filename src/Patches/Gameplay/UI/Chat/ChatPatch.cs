@@ -179,7 +179,7 @@ internal static class ChatPatch
             }
 
             // Show mod-specific tags based on player data
-            if (BetterDataManager.BetterDataFile.TryGetCheatInfo(sourcePlayer.Data, out var info))
+            if (BetterDataManager.Files.BetterDataFile.TryGetCheatInfo(sourcePlayer.Data, out var info))
             {
                 sbTag.Append(info.title.ToColor(info.hexColor) + "+++");
             }

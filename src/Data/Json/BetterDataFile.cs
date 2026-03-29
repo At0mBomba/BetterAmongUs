@@ -13,7 +13,7 @@ internal sealed class BetterDataFile : AbstractJsonFile
     /// <summary>
     /// Gets the file path for the BetterAmongUs data file.
     /// </summary>
-    internal override string FilePath => BetterDataManager.dataPath;
+    internal override string FilePath => BetterDataManager.Files.dataFilePath;
 
     /// <summary>
     /// Loads the data file and performs post-load processing.

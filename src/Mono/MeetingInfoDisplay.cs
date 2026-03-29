@@ -172,7 +172,7 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
         if (_player.Data == null)
             return;
 
-        if (BetterDataManager.BetterDataFile.TryGetCheatInfo(_player.Data, out var info))
+        if (BetterDataManager.Files.BetterDataFile.TryGetCheatInfo(_player.Data, out var info))
         {
             sbTag.Append(info.title.ToColor(info.hexColor) + "+++");
         }

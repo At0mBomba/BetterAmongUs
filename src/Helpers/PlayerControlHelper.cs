@@ -430,7 +430,7 @@ internal static class PlayerControlHelper
         if (player == null)
             return false;
 
-        var betterDataFile = BetterDataManager.BetterDataFile;
+        var betterDataFile = BetterDataManager.Files.BetterDataFile;
         if (betterDataFile == null)
             return false;
 
@@ -447,7 +447,7 @@ internal static class PlayerControlHelper
         if (data == null)
             return false;
 
-        var betterDataFile = BetterDataManager.BetterDataFile;
+        var betterDataFile = BetterDataManager.Files.BetterDataFile;
         if (betterDataFile == null)
             return false;
 
