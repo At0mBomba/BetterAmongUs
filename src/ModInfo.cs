@@ -101,4 +101,9 @@ internal static class ModInfo
         /// </summary>
         internal const string PROCESS_NAME = "Among Us.exe";
     }
+
+    internal static class Constants
+    {
+        internal const int MAX_CHAT_TEXT = 120;
+    }
 }

@@ -56,6 +56,8 @@ internal class ZoomPatch
     // Handles zoom in/out and reset functionality
     private static void SetZoomSize(bool zoomIn = false, bool zoomOut = false, bool reset = false)
     {
+        if (!HudManager.InstanceExists) return;
+
         if (reset)
         {
             // Reset to default zoom (3.0)
@@ -75,9 +77,12 @@ internal class ZoomPatch
         }
 
         // Show/hide shadow quad based on zoom level and if player is alive
-        HudManager.Instance?.ShadowQuad?.gameObject?.SetActive(
-            (reset || Camera.main.orthographicSize == 3.0f) &&
-            PlayerControl.LocalPlayer.IsAlive());
+        if (HudManager.Instance.ShadowQuad != null)
+        {
+            HudManager.Instance.ShadowQuad.gameObject.SetActive(
+                (reset || Camera.main.orthographicSize == 3.0f) &&
+                PlayerControl.LocalPlayer.IsAlive());
+        }
 
         // Trigger resolution change event if camera size changed
         if (Camera.main.orthographicSize != _lastOrthographicSize)
