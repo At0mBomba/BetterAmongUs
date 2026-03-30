@@ -1,7 +1,7 @@
 using BetterAmongUs.Attributes;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Managers;
-using BetterAmongUs.Mono;
+using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using Hazel;
 

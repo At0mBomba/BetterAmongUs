@@ -2,6 +2,7 @@
 using BetterAmongUs.Data;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
+using BetterAmongUs.Mono.Extended;
 using Il2CppInterop.Runtime.Attributes;
 using System.Text;
 using TMPro;

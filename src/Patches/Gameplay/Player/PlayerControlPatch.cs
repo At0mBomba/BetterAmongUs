@@ -4,7 +4,7 @@ using BetterAmongUs.Data.Config;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.OptionItems;
-using BetterAmongUs.Mono;
+using BetterAmongUs.Mono.Extended;
 using HarmonyLib;
 using System.Collections;
 using UnityEngine;

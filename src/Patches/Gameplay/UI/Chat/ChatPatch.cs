@@ -3,7 +3,7 @@ using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
-using BetterAmongUs.Mono;
+using BetterAmongUs.Mono.Extended;
 using HarmonyLib;
 using System.Text;
 using TMPro;

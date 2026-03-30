@@ -2,7 +2,7 @@
 using BetterAmongUs.Enums;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
-using BetterAmongUs.Mono;
+using BetterAmongUs.Mono.Extended;
 using Hazel;
 
 namespace BetterAmongUs.Network;

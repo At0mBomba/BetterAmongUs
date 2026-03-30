@@ -3,7 +3,7 @@ using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Enums;
 using BetterAmongUs.Helpers;
-using BetterAmongUs.Mono;
+using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Network;
 using Hazel;
 using Il2CppInterop.Runtime.Attributes;

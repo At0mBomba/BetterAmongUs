@@ -4,7 +4,7 @@ using BetterAmongUs.Enums;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.AntiCheat;
-using BetterAmongUs.Mono;
+using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Network;
 using BetterAmongUs.Structs;
 using HarmonyLib;

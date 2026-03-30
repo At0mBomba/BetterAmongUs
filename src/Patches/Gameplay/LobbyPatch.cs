@@ -3,6 +3,7 @@ using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.OptionItems;
 using BetterAmongUs.Modules.Support;
+using BetterAmongUs.Mono.Extended;
 using HarmonyLib;
 using UnityEngine;
 
@@ -69,17 +70,27 @@ internal static class LobbyPatch
     {
         lobbyTimer = 600f; // Reset timer
 
+        var extendedPassiveButton = __instance.StartButton.gameObject.AddComponent<ExtendedPassiveButton>();
+        extendedPassiveButton.OnHoldOrShiftClick += () =>
+        {
+            if (__instance.startState == GameStartManager.StartingStates.NotStarting)
+            {
+                __instance.startState = GameStartManager.StartingStates.Countdown;
+                __instance.FinallyBegin();
+            }
+        };
+
         // Apply UI colors to buttons
-        __instance.StartButton?.gameObject?.SetUIColors("Icon");
-        __instance.EditButton?.gameObject?.SetUIColors("Icon");
-        __instance.ClientViewButton?.gameObject?.SetUIColors("Icon");
-        __instance.HostViewButton?.gameObject?.SetUIColors("Icon");
+        __instance.StartButton.gameObject.SetUIColors("Icon");
+        __instance.EditButton.gameObject.SetUIColors("Icon");
+        __instance.ClientViewButton.gameObject.SetUIColors("Icon");
+        __instance.HostViewButton.gameObject.SetUIColors("Icon");
 
         // Move start buttons to host panel if ping tracker not disabled
         if (!BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_BetterPingTracker))
         {
-            __instance.StartButton?.transform?.SetParent(__instance.HostInfoPanel?.transform);
-            __instance.StartButtonClient?.transform?.SetParent(__instance.HostInfoPanel?.transform);
+            __instance.StartButton.transform.SetParent(__instance.HostInfoPanel?.transform);
+            __instance.StartButtonClient.transform.SetParent(__instance.HostInfoPanel?.transform);
         }
     }
 
@@ -114,7 +125,7 @@ internal static class LobbyPatch
         __instance.GameStartTextParent.SetActive(false);
         __instance.StartButton.gameObject.SetActive(true);
 
-        if (__instance.startState == global::GameStartManager.StartingStates.Countdown)
+        if (__instance.startState == GameStartManager.StartingStates.Countdown)
         {
             // Show cancel button with countdown
             __instance.StartButton.buttonText.text = string.Format("{0}: {1}", Translator.GetString(StringNames.Cancel), (int)__instance.countDownTimer + 1);
@@ -133,18 +144,10 @@ internal static class LobbyPatch
         if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_CancelStartingGame)) return true;
 
         // If countdown is active, clicking cancels the start
-        if (__instance.startState == global::GameStartManager.StartingStates.Countdown)
+        if (__instance.startState == GameStartManager.StartingStates.Countdown)
         {
             SoundManager.instance.StopSound(__instance.gameStartSound);
             __instance.ResetStartState();
-            return false;
-        }
-
-        // Shift+click starts game immediately (bypasses countdown)
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            __instance.startState = global::GameStartManager.StartingStates.Countdown;
-            __instance.FinallyBegin();
             return false;
         }
 

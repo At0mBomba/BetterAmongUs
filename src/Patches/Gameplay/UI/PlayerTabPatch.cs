@@ -3,6 +3,7 @@ using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Data.Json;
 using BetterAmongUs.Helpers;
+using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Client.Managers;
 using HarmonyLib;
 using TMPro;
@@ -110,50 +111,20 @@ internal static class PlayerTabPatch
             var colorChip = playerTab.ColorChips[i];
 
             // Override click behavior
-            colorChip.Button.OnClick = new();
-            colorChip.Button.OnClick.AddListener(() =>
+            var extendedPassiveButton = colorChip.Button.gameObject.AddComponent<ExtendedPassiveButton>();
+            extendedPassiveButton.OnHoldOrShiftClick += () =>
             {
-                if (ActiveInputManager.currentControlType == ActiveInputManager.InputType.Keyboard)
+                if (BAUConfigs.FavoriteColor.Value == index)
                 {
-                    // Shift+Click to toggle favorite
-                    if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
-                    {
-                        if (BAUConfigs.FavoriteColor.Value == index)
-                        {
-                            BAUConfigs.FavoriteColor.Value = -1; // Remove favorite
-                        }
-                        else
-                        {
-                            BAUConfigs.FavoriteColor.Value = index; // Set favorite
-                        }
-
-                        UpdateFavorite();
-                        return;
-                    }
-
-                    playerTab.ClickEquip();
+                    BAUConfigs.FavoriteColor.Value = -1; // Remove favorite
                 }
                 else
                 {
-                    // Click Color to toggle favorite if color is already taken 
-                    if (DataManager.Player.Customization.Color == index || !playerTab.AvailableColors.Contains(index))
-                    {
-                        if (BAUConfigs.FavoriteColor.Value == index)
-                        {
-                            BAUConfigs.FavoriteColor.Value = -1; // Remove favorite
-                        }
-                        else
-                        {
-                            BAUConfigs.FavoriteColor.Value = index; // Set favorite
-                        }
-
-                        UpdateFavorite();
-                        return;
-                    }
-
-                    playerTab.SelectColor(index);
+                    BAUConfigs.FavoriteColor.Value = index; // Set favorite
                 }
-            });
+
+                UpdateFavorite();
+            };
 
             // Add favorite star indicator
             var checkBox = colorChip.PlayerEquippedForeground.transform.Find("CheckMark").GetComponentInChildren<SpriteRenderer>();
