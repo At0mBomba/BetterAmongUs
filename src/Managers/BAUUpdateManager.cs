@@ -13,14 +13,14 @@ namespace BetterAmongUs.Managers;
 /// <summary>
 /// Manages update functionality for BetterAmongUs, including download and installation.
 /// </summary>
-internal sealed class UpdateManager : MonoBehaviour
+internal sealed class BAUUpdateManager : MonoBehaviour
 {
     private bool AmUpdateing;
 
     /// <summary>
     /// Gets the singleton instance of the UpdateManager.
     /// </summary>
-    internal static UpdateManager? Instance { get; private set; }
+    internal static BAUUpdateManager? Instance { get; private set; }
 
     /// <summary>
     /// Gets whether the application is waiting for a restart after an update.
@@ -34,7 +34,7 @@ internal sealed class UpdateManager : MonoBehaviour
     {
         var obj = new GameObject("UpdateManager(BAU)") { hideFlags = HideFlags.HideAndDontSave };
         DontDestroyOnLoad(obj);
-        Instance = obj.AddComponent<UpdateManager>();
+        Instance = obj.AddComponent<BAUUpdateManager>();
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ internal sealed class UpdateManager : MonoBehaviour
         var doNotPress = FindObjectOfType<DoNotPressButton>(true);
         if (doNotPress != null)
         {
-            doNotPress.gameObject.SetActive(UpdateLoader.UpdateInfo?.IsNewUpdate() == true && !WaitForRestart);
+            doNotPress.gameObject.SetActive(BAUUpdateLoader.UpdateInfo?.IsNewUpdate() == true && !WaitForRestart);
             var buttonPressed = doNotPress.transform.Find("ButtonPressed");
             if (buttonPressed != null)
             {
@@ -125,11 +125,11 @@ internal sealed class UpdateManager : MonoBehaviour
         mainMenu?.SetActive(false);
         ambience?.SetActive(false);
 
-        if (UpdateLoader.UpdateInfo != null && UpdateLoader.UpdateInfo.DllLink != string.Empty)
+        if (BAUUpdateLoader.UpdateInfo != null && BAUUpdateLoader.UpdateInfo.DllLink != string.Empty)
         {
-            if (UpdateLoader.UpdateInfo.IsNewUpdate())
+            if (BAUUpdateLoader.UpdateInfo.IsNewUpdate())
             {
-                yield return UpdateLoader.UpdateInfo.CoDownload();
+                yield return BAUUpdateLoader.UpdateInfo.CoDownload();
                 WaitForRestart = true;
                 mainMenu?.SetActive(true);
                 ambience?.SetActive(true);

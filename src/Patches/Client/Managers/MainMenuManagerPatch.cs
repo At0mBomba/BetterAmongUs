@@ -66,6 +66,6 @@ internal static class MainMenuManagerPatch
         }
 
         // Notify UpdateManager that we're in the main menu
-        UpdateManager.Instance?.OnMainMenu();
+        BAUUpdateManager.Instance?.OnMainMenu();
     }
 }

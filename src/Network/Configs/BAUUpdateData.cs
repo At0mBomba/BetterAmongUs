@@ -11,7 +11,7 @@ namespace BetterAmongUs.Network.Configs;
 /// Represents update data retrieved from the remote repository.
 /// </summary>
 [Serializable]
-internal sealed class UpdateData
+internal sealed class BAUUpdateData
 {
     /// <summary>
     /// Gets or sets the download link for the updated DLL file.

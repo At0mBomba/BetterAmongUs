@@ -11,13 +11,13 @@ namespace BetterAmongUs.Network.Loaders;
 /// <summary>
 /// Handles downloading and processing of update data from a remote repository.
 /// </summary>
-internal sealed class UpdateLoader : MonoBehaviour
+internal sealed class BAUUpdateLoader : MonoBehaviour
 {
     /// <summary>
     /// Gets the update information retrieved from the remote repository.
     /// </summary>
     /// <value>The update data, or null if not loaded.</value>
-    internal static UpdateData? UpdateInfo { get; private set; }
+    internal static BAUUpdateData? UpdateInfo { get; private set; }
 
     /// <summary>
     /// Coroutine to fetch update data from the remote repository.
@@ -57,7 +57,7 @@ internal sealed class UpdateLoader : MonoBehaviour
             AllowTrailingCommas = true,
         };
 
-        var response = JsonSerializer.Deserialize<UpdateData>(callBack, options);
+        var response = JsonSerializer.Deserialize<BAUUpdateData>(callBack, options);
 
         if (response != null)
         {
@@ -65,7 +65,7 @@ internal sealed class UpdateLoader : MonoBehaviour
             Logger_.Log($"Loaded update info");
         }
 
-        UpdateManager.Init();
+        BAUUpdateManager.Init();
 
         Destroy(this);
     }

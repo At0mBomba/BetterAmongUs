@@ -62,7 +62,7 @@ internal sealed class GithubAPI : MonoBehaviour
         var newsLoader = gameObject.AddComponent<NewsLoader>();
         this.StartCoroutine(newsLoader.CoFetchNewsData());
 
-        var updateLoader = gameObject.AddComponent<UpdateLoader>();
+        var updateLoader = gameObject.AddComponent<BAUUpdateLoader>();
         this.StartCoroutine(updateLoader.CoFetchUpdateData());
     }
 
