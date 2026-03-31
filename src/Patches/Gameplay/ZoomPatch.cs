@@ -14,7 +14,7 @@ internal class ZoomPatch
 
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     [HarmonyPostfix]
-    private static void HudManager_Update_Postfix()
+    private static void HudManager_Update_Postfix(HudManager __instance)
     {
         // Determine if zooming is allowed:
         // - Player can move AND
@@ -51,6 +51,12 @@ internal class ZoomPatch
                 SetZoomSize(zoomOut: true); // Scroll down = zoom out
             }
         }
+
+        // Show/hide shadow quad based on zoom level and if player is alive
+        if (__instance.ShadowQuad != null)
+        {
+            __instance.ShadowQuad.gameObject.SetActive(Camera.main.orthographicSize == 3.0f && PlayerControl.LocalPlayer.IsAlive());
+        }
     }
 
     // Handles zoom in/out and reset functionality
@@ -74,14 +80,6 @@ internal class ZoomPatch
             float size = zoomIn ? 1 / 1.5f : 1.5f;
             Camera.main.orthographicSize *= size;
             HudManager.Instance.UICamera.orthographicSize *= size;
-        }
-
-        // Show/hide shadow quad based on zoom level and if player is alive
-        if (HudManager.Instance.ShadowQuad != null)
-        {
-            HudManager.Instance.ShadowQuad.gameObject.SetActive(
-                (reset || Camera.main.orthographicSize == 3.0f) &&
-                PlayerControl.LocalPlayer.IsAlive());
         }
 
         // Trigger resolution change event if camera size changed
