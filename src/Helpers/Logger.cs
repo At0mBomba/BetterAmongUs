@@ -28,7 +28,7 @@ internal static class Logger_
                 return;
 
             string mark = $"{DateTime.Now:HH:mm} [BetterLog][{tag}]";
-            string logFilePath = Path.Combine(BetterDataManager.Folders.fileFolderPath, "better-log.txt");
+            string logFilePath = BetterDataManager.Files.logFilePath;
             string newLine = $"{mark}: {Utils.RemoveHtmlText(info)}";
             File.AppendAllText(logFilePath, newLine + Environment.NewLine);
             BAUPlugin.Logger.LogInfo($"[{tag}] {info}");
@@ -185,7 +185,7 @@ internal static class Logger_
                 return;
 
             string mark = $"{DateTime.Now:HH:mm} [BetterLog][PrivateLog][{tag}]";
-            string logFilePath = Path.Combine(BetterDataManager.Folders.fileFolderPath, "better-log.txt");
+            string logFilePath = BetterDataManager.Files.logFilePath;
             string newLine = $"{mark}: " + Encryptor.Encrypt($"{info}");
             File.AppendAllText(logFilePath, newLine + Environment.NewLine);
         }

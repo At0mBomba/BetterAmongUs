@@ -160,10 +160,10 @@ internal class BAUPlugin : BasePlugin
         InstanceAttribute.RegisterAll();
         OutfitData.Initialize();
 
-        if (File.Exists(Path.Combine(BetterDataManager.Folders.fileFolderPath, "better-log.txt")))
-            File.WriteAllText(Path.Combine(BetterDataManager.Folders.fileFolderPath, "better-previous-log.txt"), File.ReadAllText(Path.Combine(BetterDataManager.Folders.fileFolderPath, "better-log.txt")));
+        if (File.Exists(BetterDataManager.Files.logFilePath))
+            File.WriteAllText(BetterDataManager.Files.previousLogFilePath, File.ReadAllText(BetterDataManager.Files.logFilePath));
 
-        File.WriteAllText(Path.Combine(BetterDataManager.Folders.fileFolderPath, "better-log.txt"), "");
+        File.WriteAllText(BetterDataManager.Files.logFilePath, "");
         Logger_.Log("Better Among Us successfully loaded!");
 
         string SupportedVersions = string.Join(" ", ModInfo.SupportedAmongUsVersions);

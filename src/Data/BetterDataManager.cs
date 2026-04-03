@@ -18,27 +18,27 @@ internal static class BetterDataManager
         /// <summary>
         /// Root directory for BetterAmongUs data.
         /// </summary>
-        internal static string fileFolderPath = Path.Combine(GetPathToAmongUs(), $"Better_Data");
+        internal static readonly string fileFolderPath = Path.Combine(GetPathToAmongUs(), $"Better_Data");
 
         /// <summary>
         /// Root directory for BetterAmongUs data.
         /// </summary>
-        internal static string starLightDataFolderPath = Environment.GetEnvironmentVariable("STAR_DATA_PATH") ?? string.Empty;
+        internal static readonly string starLightDataFolderPath = Environment.GetEnvironmentVariable("STAR_DATA_PATH") ?? string.Empty;
 
         /// <summary>
         /// Directory for save information files.
         /// </summary>
-        internal static string saveInfoFolderPath = Path.Combine(fileFolderPath, $"SaveInfo");
+        internal static readonly string saveInfoFolderPath = Path.Combine(fileFolderPath, $"SaveInfo");
 
         /// <summary>
         /// Directory for settings files.
         /// </summary>
-        internal static string settingsFolderPath = Path.Combine(fileFolderPath, $"Settings");
+        internal static readonly string settingsFolderPath = Path.Combine(fileFolderPath, $"Settings");
 
         /// <summary>
         /// Directory for game replay files.
         /// </summary>
-        internal static string replaysFolderPath = Path.Combine(fileFolderPath, $"Replays");
+        internal static readonly string replaysFolderPath = Path.Combine(fileFolderPath, $"Replays");
     }
 
     /// <summary>
@@ -57,19 +57,29 @@ internal static class BetterDataManager
         internal static BetterGameSettingsFile BetterGameSettingsFile = new();
 
         /// <summary>
+        /// The log file path.
+        /// </summary>
+        internal static readonly string logFilePath = Path.Combine(Folders.fileFolderPath, "better-log.txt");
+
+        /// <summary>
+        /// The previous log file path.
+        /// </summary>
+        internal static readonly string previousLogFilePath = Path.Combine(Folders.fileFolderPath, "better-previous-log.txt");
+
+        /// <summary>
         /// Legacy data file path (BetterData.json).
         /// </summary>
-        internal static string dataFilePath_Legacy = Path.Combine(GetPathToAmongUsData(), "BetterData.json");
+        internal static readonly string dataFilePath_Legacy = Path.Combine(GetPathToAmongUsData(), "BetterData.json");
 
         /// <summary>
         /// Current data file path (BetterDataV2.json).
         /// </summary>
-        internal static string dataFilePath = Path.Combine(GetPathToAmongUsData(), "BetterDataV2.json");
+        internal static readonly string dataFilePath = Path.Combine(GetPathToAmongUsData(), "BetterDataV2.json");
 
         /// <summary>
         /// Legacy settings file path.
         /// </summary>
-        internal static string settingsFilePath_Legacy = Path.Combine(Folders.settingsFolderPath, "Settings.dat");
+        internal static readonly string settingsFilePath_Legacy = Path.Combine(Folders.settingsFolderPath, "Settings.dat");
 
         /// <summary>
         /// Current compressed settings file path.
@@ -79,17 +89,17 @@ internal static class BetterDataManager
         /// <summary>
         /// File containing banned player identifiers.
         /// </summary>
-        internal static string banPlayerListFilePath = Path.Combine(Folders.saveInfoFolderPath, "BanPlayerList.txt");
+        internal static readonly string banPlayerListFilePath = Path.Combine(Folders.saveInfoFolderPath, "BanPlayerList.txt");
 
         /// <summary>
         /// File containing banned player names.
         /// </summary>
-        internal static string banNameListFilePath = Path.Combine(Folders.saveInfoFolderPath, "BanNameList.txt");
+        internal static readonly string banNameListFilePath = Path.Combine(Folders.saveInfoFolderPath, "BanNameList.txt");
 
         /// <summary>
         /// File containing banned words/patterns.
         /// </summary>
-        internal static string banWordListFilePath = Path.Combine(Folders.saveInfoFolderPath, "BanWordList.txt");
+        internal static readonly string banWordListFilePath = Path.Combine(Folders.saveInfoFolderPath, "BanWordList.txt");
     }
 
     /// <summary>
