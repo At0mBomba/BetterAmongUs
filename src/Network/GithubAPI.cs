@@ -62,8 +62,12 @@ internal sealed class GithubAPI : MonoBehaviour
         var newsLoader = gameObject.AddComponent<NewsLoader>();
         this.StartCoroutine(newsLoader.CoFetchNewsData());
 
-        var updateLoader = gameObject.AddComponent<BAUUpdateLoader>();
-        this.StartCoroutine(updateLoader.CoFetchUpdateData());
+        // Disable auto updating on Starlight
+        if (!ModInfo.Starlight)
+        {
+            var updateLoader = gameObject.AddComponent<BAUUpdateLoader>();
+            this.StartCoroutine(updateLoader.CoFetchUpdateData());
+        }
     }
 
     /// <summary>
