@@ -154,18 +154,18 @@ internal static class BetterNotificationManager
         string playerDetectedLog = Translator.GetString("AntiCheat.PlayerDetected", useConsoleLanguage: true);
         string unauthorizedActionLog = Translator.GetString("AntiCheat.UnauthorizedAction", useConsoleLanguage: true);
 
-        string text = $"{playerDetected}: <color=#0097b5>{player?.BetterData().RealName}</color> {unauthorizedAction}: <b><color=#fc0000>{Reason}</color></b>";
-        string rawText = $"{playerDetectedLog}: <color=#0097b5>{player?.BetterData().RealName}</color> {unauthorizedActionLog}: <b><color=#fc0000>{reason}</color></b>";
+        string text = $"{playerDetected}: <color=#0097b5>{player?.ExtendedData().RealName}</color> {unauthorizedAction}: <b><color=#fc0000>{Reason}</color></b>";
+        string rawText = $"{playerDetectedLog}: <color=#0097b5>{player?.ExtendedData().RealName}</color> {unauthorizedActionLog}: <b><color=#fc0000>{reason}</color></b>";
 
         if (newText != "")
         {
-            text = $"{playerDetected}: <color=#0097b5>{player?.BetterData().RealName}</color> " + newText + $": <b><color=#fc0000>{Reason}</color></b>";
-            rawText = $"{playerDetectedLog}: <color=#0097b5>{player?.BetterData().RealName}</color> " + newText + $": <b><color=#fc0000>{reason}</color></b>";
+            text = $"{playerDetected}: <color=#0097b5>{player?.ExtendedData().RealName}</color> " + newText + $": <b><color=#fc0000>{Reason}</color></b>";
+            rawText = $"{playerDetectedLog}: <color=#0097b5>{player?.ExtendedData().RealName}</color> " + newText + $": <b><color=#fc0000>{reason}</color></b>";
         }
 
         if (!BetterDataManager.Files.BetterDataFile.CheatData.Any(info => info.CheckPlayerData(player.Data)))
         {
-            BetterDataManager.Files.BetterDataFile.CheatData.Add(new(player?.BetterData().RealName ?? player.Data.PlayerName, player.GetHashPuid(), player.Data.FriendCode, reason));
+            BetterDataManager.Files.BetterDataFile.CheatData.Add(new(player?.ExtendedData().RealName ?? player.Data.PlayerName, player.GetHashPuid(), player.Data.FriendCode, reason));
             BetterDataManager.Files.BetterDataFile.Save();
             Notify(text, Time: 8f);
         }

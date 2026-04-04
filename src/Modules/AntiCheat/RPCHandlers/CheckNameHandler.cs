@@ -20,19 +20,19 @@ internal sealed class CheckNameHandler : RPCHandler
 
         var name = reader.ReadString();
 
-        if (sender.DataIsCollected() == true && sender.BetterData().AntiCheatInfo.HasSetName && !GameState.IsLocalGame && GameState.IsVanillaServer)
+        if (sender.DataIsCollected() == true && sender.ExtendedData().AntiCheatInfo.HasSetName && !GameState.IsLocalGame && GameState.IsVanillaServer)
         {
             if (BetterNotificationManager.NotifyCheat(sender, GetFormatSetText()))
             {
                 Utils.AddChatPrivate($"{sender.GetPlayerNameAndColor()} Has tried to change their name to '{name}' but has been undone!");
-                Logger_.LogCheat($"{sender.BetterData().RealName} Has tried to change their name to '{name}' but has been undone!");
+                Logger_.LogCheat($"{sender.ExtendedData().RealName} Has tried to change their name to '{name}' but has been undone!");
                 LogRpcInfo($"{sender.DataIsCollected() == true} && {!GameState.IsLocalGame} && {GameState.IsVanillaServer}");
             }
 
             return false;
         }
 
-        sender.BetterData().AntiCheatInfo.HasSetName = true;
+        sender.ExtendedData().AntiCheatInfo.HasSetName = true;
 
         return true;
     }

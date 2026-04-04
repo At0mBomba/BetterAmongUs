@@ -23,7 +23,7 @@ internal static class RoleManagerPatch
             if (clientData.Id == target.GetClientId())
                 return false;
 
-            var betterData = clientData.BetterData();
+            var betterData = clientData.ExtendedData();
             if (betterData == null)
                 return true;
 
@@ -40,7 +40,7 @@ internal static class RoleManagerPatch
         {
             if (!targetPlayer.Data.RoleType.IsGhostRole())
             {
-                targetPlayer.BetterData().RoleInfo.DeadDisplayRole = targetPlayer.Data.RoleType;
+                targetPlayer.ExtendedData().RoleInfo.DeadDisplayRole = targetPlayer.Data.RoleType;
             }
         }
     }

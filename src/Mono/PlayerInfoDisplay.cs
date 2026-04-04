@@ -176,7 +176,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
         if (_topText == null || _bottomText == null || _infoText == null)
             return;
 
-        var betterData = _player.BetterData();
+        var betterData = _player.ExtendedData();
 
         if (!_player.DataIsCollected())
         {
@@ -233,7 +233,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
             if (targetData == null)
                 return;
 
-            var betterTargetData = targetData.BetterData();
+            var betterTargetData = targetData.ExtendedData();
             string name = betterTargetData != null ? betterTargetData.RealName : targetData.PlayerName;
 
             if (_player.IsImpostorTeammate())

@@ -21,13 +21,13 @@ internal sealed class MurderPlayerHandler : RPCHandler
         {
             if (target.IsLocalPlayer() && GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) > 2.5f)
             {
-                target.BetterData().AntiCheatInfo.TimesAttemptedKilled++;
+                target.ExtendedData().AntiCheatInfo.TimesAttemptedKilled++;
 
-                if (target.BetterData().AntiCheatInfo.TimesAttemptedKilled >= 10 && !target.IsAlive())
+                if (target.ExtendedData().AntiCheatInfo.TimesAttemptedKilled >= 10 && !target.IsAlive())
                 {
                     if (BetterNotificationManager.NotifyCheat(player, string.Format(Translator.GetString("AntiCheat.InvalidAction"), Translator.GetString("AntiCheat.TryBanExploit"))))
                     {
-                        LogRpcInfo($"Ban exploit detected: Player attempted to kill dead target {target.BetterData().AntiCheatInfo.TimesAttemptedKilled} times");
+                        LogRpcInfo($"Ban exploit detected: Player attempted to kill dead target {target.ExtendedData().AntiCheatInfo.TimesAttemptedKilled} times");
                     }
                     return false;
                 }
@@ -35,7 +35,7 @@ internal sealed class MurderPlayerHandler : RPCHandler
                 // Cancel murder on client if not alive
                 if (!target.IsAlive())
                 {
-                    LogRpcInfo($"Murder blocked: Target {target.BetterData()?.RealName} is not alive");
+                    LogRpcInfo($"Murder blocked: Target {target.ExtendedData()?.RealName} is not alive");
                     return false;
                 }
             }

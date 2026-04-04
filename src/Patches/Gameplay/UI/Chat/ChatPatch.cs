@@ -158,7 +158,7 @@ internal static class ChatPatch
 
         string hashPuid = Utils.GetHashPuid(sourcePlayer);
         string friendCode = playerInfo.FriendCode;
-        string playerName = playerInfo.BetterData()?.RealName ?? "???";
+        string playerName = playerInfo.ExtendedData()?.RealName ?? "???";
 
         // Format role display with team color
         string Role = $"<size=75%><color={sourcePlayer.GetTeamHexColor()}>{sourcePlayer.GetRoleName()}</color></size>+++";
@@ -168,7 +168,7 @@ internal static class ChatPatch
         {
             Role = "";
 
-            var betterData = sourcePlayer.BetterData();
+            var betterData = sourcePlayer.ExtendedData();
             if (betterData == null)
                 return;
 

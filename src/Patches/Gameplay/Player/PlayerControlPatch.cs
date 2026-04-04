@@ -70,7 +70,7 @@ internal static class PlayerControlPatch
         // Track kill count in player's BetterData
         if (!target.IsAlive())
         {
-            __instance.BetterData().RoleInfo.Kills += 1;
+            __instance.ExtendedData().RoleInfo.Kills += 1;
         }
     }
 
@@ -119,7 +119,7 @@ internal static class PlayerControlPatch
     private static void PlayerControl_SetName_Postfix(PlayerControl __instance, string playerName)
     {
         // Store the last set name in player's BetterData
-        __instance.BetterDataWait(data =>
+        __instance.ExtendedDataWait(data =>
         {
             data.NameSetAsLast = playerName;
         });

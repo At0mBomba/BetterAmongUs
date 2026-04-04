@@ -170,7 +170,7 @@ internal static class BetterAntiCheat
                 {
                     if (BetterNotificationManager.NotifyCheat(player, string.Format(Translator.GetString("AntiCheat.InvalidHostRPC"), Enum.GetName((RpcCalls)callId))))
                     {
-                        Logger_.LogCheat($"{player.BetterData().RealName} {Enum.GetName((RpcCalls)callId)}: {!player.IsHost()}");
+                        Logger_.LogCheat($"{player.ExtendedData().RealName} {Enum.GetName((RpcCalls)callId)}: {!player.IsHost()}");
                     }
 
                     reader.Recycle();
@@ -189,7 +189,7 @@ internal static class BetterAntiCheat
                 {
                     if (BetterNotificationManager.NotifyCheat(player, string.Format(Translator.GetString("AntiCheat.InvalidSetRPC"), Enum.GetName((RpcCalls)callId))))
                     {
-                        Logger_.LogCheat($"{player.BetterData().RealName} {Enum.GetName((RpcCalls)callId)}: {GameState.IsInGamePlay}");
+                        Logger_.LogCheat($"{player.ExtendedData().RealName} {Enum.GetName((RpcCalls)callId)}: {GameState.IsInGamePlay}");
                     }
 
                     reader.Recycle();
@@ -229,7 +229,7 @@ internal static class BetterAntiCheat
                 {
                     if (BetterNotificationManager.NotifyCheat(player, string.Format(Translator.GetString("AntiCheat.InvalidLobbyRPC"), Enum.GetName((RpcCalls)callId))))
                     {
-                        Logger_.LogCheat($"{player.BetterData().RealName} {Enum.GetName((RpcCalls)callId)}: {GameState.IsInGame} && {GameState.IsLobby}");
+                        Logger_.LogCheat($"{player.ExtendedData().RealName} {Enum.GetName((RpcCalls)callId)}: {GameState.IsInGame} && {GameState.IsLobby}");
                     }
 
                     reader.Recycle();

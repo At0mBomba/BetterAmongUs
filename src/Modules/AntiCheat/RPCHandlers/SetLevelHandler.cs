@@ -14,7 +14,7 @@ internal sealed class SetLevelHandler : RPCHandler
 
     internal override bool HandleAntiCheatCancel(PlayerControl? sender, MessageReader reader)
     {
-        if (sender.DataIsCollected() == true && sender.BetterData().AntiCheatInfo.HasSetLevel && !GameState.IsLocalGame && GameState.IsVanillaServer)
+        if (sender.DataIsCollected() == true && sender.ExtendedData().AntiCheatInfo.HasSetLevel && !GameState.IsLocalGame && GameState.IsVanillaServer)
         {
             if (BetterNotificationManager.NotifyCheat(sender, GetFormatSetText()))
             {
@@ -24,7 +24,7 @@ internal sealed class SetLevelHandler : RPCHandler
             return false;
         }
 
-        sender.BetterData().AntiCheatInfo.HasSetLevel = true;
+        sender.ExtendedData().AntiCheatInfo.HasSetLevel = true;
 
         return true;
     }

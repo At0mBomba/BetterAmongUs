@@ -147,7 +147,7 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
     /// </summary>
     private void UpdateInfo()
     {
-        if (_player == null || _player.Data == null || _player.BetterData() == null)
+        if (_player == null || _player.Data == null || _player.ExtendedData() == null)
             return;
 
         SetPlayerTags(_sbTag);
@@ -324,7 +324,7 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
         if (playerData == null)
             return string.Empty;
 
-        var betterData = playerData.BetterData();
+        var betterData = playerData.ExtendedData();
         if (betterData == null)
             return string.Empty;
 

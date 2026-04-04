@@ -60,11 +60,11 @@ internal static class MeetingHudPatch
             return;
 
         var host = GameData.Instance.GetHost();
-        if (host?.BetterData() == null)
+        if (host?.ExtendedData() == null)
             return;
 
         var hostColor = host.Color;
-        var hostRealName = host.BetterData().RealName;
+        var hostRealName = host.ExtendedData().RealName;
 
         if (MeetingHud.Instance.HostIcon == null || MeetingHud.Instance.ProceedButton == null)
             return;

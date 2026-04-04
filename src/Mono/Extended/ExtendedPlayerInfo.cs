@@ -85,7 +85,7 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
                     Translator.GetString("AntiCheat.UnauthorizedAction")
                 );
 
-                Logger_.LogCheat($"{_Data.Object.BetterData().RealName} {AntiCheatInfo.RPCSentPS} Sent.");
+                Logger_.LogCheat($"{_Data.Object.ExtendedData().RealName} {AntiCheatInfo.RPCSentPS} Sent.");
             }
 
             timeAccumulator += time;
@@ -250,7 +250,7 @@ internal static class PlayerControlDataExtension
     /// </summary>
     /// <param name="player">The PlayerControl instance.</param>
     /// <returns>The ExtendedPlayerInfo, or null if not found.</returns>
-    internal static ExtendedPlayerInfo? BetterData(this PlayerControl player)
+    internal static ExtendedPlayerInfo? ExtendedData(this PlayerControl player)
     {
         return MonoExtensionManager.Get<ExtendedPlayerInfo>(player.Data);
     }
@@ -260,9 +260,9 @@ internal static class PlayerControlDataExtension
     /// </summary>
     /// <param name="player">The PlayerControl instance.</param>
     /// <param name="callback">The callback to execute with the extended data.</param>
-    internal static void BetterDataWait(this PlayerControl player, Action<ExtendedPlayerInfo> callback)
+    internal static void ExtendedDataWait(this PlayerControl player, Action<ExtendedPlayerInfo> callback)
     {
-        MonoExtensionManager.RunWhenNotNull(player, () => player?.BetterData(), callback);
+        MonoExtensionManager.RunWhenNotNull(player, () => player?.ExtendedData(), callback);
     }
 
     /// <summary>
@@ -270,7 +270,7 @@ internal static class PlayerControlDataExtension
     /// </summary>
     /// <param name="data">The NetworkedPlayerInfo instance.</param>
     /// <returns>The ExtendedPlayerInfo, or null if not found.</returns>
-    internal static ExtendedPlayerInfo? BetterData(this NetworkedPlayerInfo data)
+    internal static ExtendedPlayerInfo? ExtendedData(this NetworkedPlayerInfo data)
     {
         return MonoExtensionManager.Get<ExtendedPlayerInfo>(data);
     }
@@ -280,7 +280,7 @@ internal static class PlayerControlDataExtension
     /// </summary>
     /// <param name="data">The ClientData instance.</param>
     /// <returns>The ExtendedPlayerInfo, or null if not found.</returns>
-    internal static ExtendedPlayerInfo? BetterData(this ClientData data)
+    internal static ExtendedPlayerInfo? ExtendedData(this ClientData data)
     {
         var player = Utils.PlayerFromClientId(data.Id);
         return MonoExtensionManager.Get<ExtendedPlayerInfo>(player.Data);

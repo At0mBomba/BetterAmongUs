@@ -34,7 +34,7 @@ internal sealed class AUMHandler : RPCHandler
                 if (!BetterDataManager.Files.BetterDataFile.AUMData.Any(info => info.CheckPlayerData(sender.Data)))
                 {
                     sender.ReportPlayer(ReportReasons.Cheating_Hacking);
-                    BetterDataManager.Files.BetterDataFile.AUMData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "AUM RPC"));
+                    BetterDataManager.Files.BetterDataFile.AUMData.Add(new(sender?.ExtendedData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "AUM RPC"));
                     BetterDataManager.Files.BetterDataFile.Save();
                     BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.AUM"), Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
                 }
@@ -45,7 +45,7 @@ internal sealed class AUMHandler : RPCHandler
             if (!BetterDataManager.Files.BetterDataFile.AUMData.Any(info => info.CheckPlayerData(sender.Data)))
             {
                 sender.ReportPlayer(ReportReasons.Cheating_Hacking);
-                BetterDataManager.Files.BetterDataFile.AUMData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "AUM RPC"));
+                BetterDataManager.Files.BetterDataFile.AUMData.Add(new(sender?.ExtendedData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "AUM RPC"));
                 BetterDataManager.Files.BetterDataFile.Save();
                 BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.AUM"), Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
             }

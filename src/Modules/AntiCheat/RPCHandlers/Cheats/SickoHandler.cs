@@ -28,7 +28,7 @@ internal sealed class SickoHandler : RPCHandler
         if (reader.BytesRemaining == 0 && !BetterDataManager.Files.BetterDataFile.SickoData.Any(info => info.CheckPlayerData(sender.Data)))
         {
             sender.ReportPlayer(ReportReasons.Cheating_Hacking);
-            BetterDataManager.Files.BetterDataFile.SickoData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "Sicko RPC"));
+            BetterDataManager.Files.BetterDataFile.SickoData.Add(new(sender?.ExtendedData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "Sicko RPC"));
             BetterDataManager.Files.BetterDataFile.Save();
             BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.Sicko"), newText: Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
         }

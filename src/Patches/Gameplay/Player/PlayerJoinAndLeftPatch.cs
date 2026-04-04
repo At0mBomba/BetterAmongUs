@@ -100,9 +100,9 @@ internal static class PlayerJoinAndLeftPatch
     private static void GameData_HandleDisconnect_Prefix(PlayerControl player, DisconnectReasons reason)
     {
         // Store disconnect reason in player's BetterData
-        if (player.BetterData() != null)
+        if (player.ExtendedData() != null)
         {
-            player.BetterData().DisconnectReason = reason;
+            player.ExtendedData().DisconnectReason = reason;
         }
 
         // Show custom disconnect notification
@@ -120,17 +120,17 @@ internal static class PlayerJoinAndLeftPatch
     internal static void BetterShowNotification(NetworkedPlayerInfo playerData, DisconnectReasons reason = DisconnectReasons.Unknown, string forceReasonText = "")
     {
         // Prevent showing duplicate notifications
-        if (playerData.BetterData().AntiCheatInfo.BannedByAntiCheat || playerData.BetterData().HasShowDcMsg)
+        if (playerData.ExtendedData().AntiCheatInfo.BannedByAntiCheat || playerData.ExtendedData().HasShowDcMsg)
             return;
 
-        playerData.BetterData().HasShowDcMsg = true;
+        playerData.ExtendedData().HasShowDcMsg = true;
 
-        string? playerName = playerData.BetterData().RealName;
+        string? playerName = playerData.ExtendedData().RealName;
 
         // Use custom reason text if provided
         if (forceReasonText != "")
         {
-            var ReasonText = $"<color=#ff0>{playerData.BetterData().RealName}</color> {forceReasonText}";
+            var ReasonText = $"<color=#ff0>{playerData.ExtendedData().RealName}</color> {forceReasonText}";
 
             Logger_.Log(ReasonText);
 

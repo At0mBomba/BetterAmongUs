@@ -145,7 +145,7 @@ internal static class PlayerControlHelper
 
         AmongUsClient.Instance.KickPlayer(player.GetClientId(), Ban);
 
-        player.BetterData().AntiCheatInfo.BannedByAntiCheat = AntiCheatBan;
+        player.ExtendedData().AntiCheatInfo.BannedByAntiCheat = AntiCheatBan;
     }
 
     /// <summary>
@@ -279,7 +279,7 @@ internal static class PlayerControlHelper
 
         if (!player.IsAlive() && !player.IsGhostRole())
         {
-            return player.BetterData().RoleInfo.DeadDisplayRole.GetRoleName();
+            return player.ExtendedData().RoleInfo.DeadDisplayRole.GetRoleName();
         }
 
         if (player.Data != null)

@@ -37,7 +37,7 @@ internal sealed class ModMenuCrewHandler : RPCHandler
             if (!BetterDataManager.Files.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(sender.Data)))
             {
                 sender.ReportPlayer(ReportReasons.Cheating_Hacking);
-                BetterDataManager.Files.BetterDataFile.MMCData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "ModMenuCrew RPC"));
+                BetterDataManager.Files.BetterDataFile.MMCData.Add(new(sender?.ExtendedData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "ModMenuCrew RPC"));
                 BetterDataManager.Files.BetterDataFile.Save();
                 BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.MMC"), Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
             }
@@ -47,7 +47,7 @@ internal sealed class ModMenuCrewHandler : RPCHandler
             if (!BetterDataManager.Files.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(sender.Data)))
             {
                 sender.ReportPlayer(ReportReasons.Cheating_Hacking);
-                BetterDataManager.Files.BetterDataFile.MMCData.Add(new(sender?.BetterData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "ModMenuCrew RPC"));
+                BetterDataManager.Files.BetterDataFile.MMCData.Add(new(sender?.ExtendedData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "ModMenuCrew RPC"));
                 BetterDataManager.Files.BetterDataFile.Save();
                 BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.MMC"), Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
             }

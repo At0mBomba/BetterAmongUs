@@ -103,7 +103,7 @@ internal static class OptionsMenuBehaviourPatch
         foreach (var player in BAUPlugin.AllPlayerControls)
         {
             if (player.IsLocalPlayer()) continue;
-            player.BetterData().HandshakeHandler.ResendSecretToPlayer();
+            player.ExtendedData().HandshakeHandler.ResendSecretToPlayer();
         }
     }
 

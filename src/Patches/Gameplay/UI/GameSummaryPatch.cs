@@ -195,7 +195,7 @@ internal static class GameSummaryPatch
     // Builds a single player line with name, role info, and status
     private static string BuildPlayerLine(NetworkedPlayerInfo playerData)
     {
-        var name = $"<color={Utils.Color32ToHex(Palette.PlayerColors[playerData.DefaultOutfit.ColorId])}>{playerData.BetterData().RealName}</color>";
+        var name = $"<color={Utils.Color32ToHex(Palette.PlayerColors[playerData.DefaultOutfit.ColorId])}>{playerData.ExtendedData().RealName}</color>";
         var roleInfo = BuildRoleInfo(playerData);
         var deathReason = BuildDeathReason(playerData);
 
@@ -212,7 +212,7 @@ internal static class GameSummaryPatch
 
         if (playerData.Role.IsImpostor)
         {
-            var kills = playerData.BetterData().RoleInfo.Kills;
+            var kills = playerData.ExtendedData().RoleInfo.Kills;
             return $"({roleName}) → {theme($"{Translator.GetString("Kills")}: {kills}")}";
         }
 

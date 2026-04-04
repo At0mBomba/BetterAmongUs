@@ -451,10 +451,10 @@ internal static class NetworkManager
     /// </summary>
     private static bool PlayerRpc(PlayerControl player, byte callId, MessageReader reader)
     {
-        if (player.BetterData() != null)
+        if (player.ExtendedData() != null)
         {
-            player.BetterData().AntiCheatInfo.RPCSentPS++;
-            if (player.BetterData().AntiCheatInfo.RPCSentPS >= ExtendedAntiCheatInfo.MAX_RPC_SENT)
+            player.ExtendedData().AntiCheatInfo.RPCSentPS++;
+            if (player.ExtendedData().AntiCheatInfo.RPCSentPS >= ExtendedAntiCheatInfo.MAX_RPC_SENT)
             {
                 return false;
             }
@@ -493,8 +493,8 @@ internal static class NetworkManager
         [HarmonyPrefix]
         internal static bool ShipStatus_UpdateSystem_Prefix(SystemTypes systemType, PlayerControl player, MessageReader msgReader)
         {
-            player.BetterData().AntiCheatInfo.RPCSentPS++;
-            if (player.BetterData().AntiCheatInfo.RPCSentPS >= ExtendedAntiCheatInfo.MAX_RPC_SENT)
+            player.ExtendedData().AntiCheatInfo.RPCSentPS++;
+            if (player.ExtendedData().AntiCheatInfo.RPCSentPS >= ExtendedAntiCheatInfo.MAX_RPC_SENT)
             {
                 return false;
             }

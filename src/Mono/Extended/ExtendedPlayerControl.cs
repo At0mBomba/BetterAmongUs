@@ -52,20 +52,11 @@ internal sealed class ExtendedPlayerControl : MonoBehaviour, IMonoExtension<Play
     /// <param name="data">The player data to extend.</param>
     internal static void TryCreateExtendedData(NetworkedPlayerInfo data)
     {
-        if (data.BetterData() == null)
+        if (data.ExtendedData() == null)
         {
             ExtendedPlayerInfo newBetterData = data.gameObject.AddComponent<ExtendedPlayerInfo>();
             newBetterData.SetInfo(data);
         }
-    }
-
-    internal readonly ValueTracker<bool> InVentTracker = new();
-    private void Update()
-    {
-        if (_Player == null)
-            return;
-
-        InVentTracker.Update(_Player.inVent);
     }
 
     private void OnDestroy()
@@ -95,9 +86,9 @@ internal static class PlayerControlExtension
         /// <param name="pc">The PlayerControl instance.</param>
         internal static void TryCreateExtendedPlayerControl(PlayerControl pc)
         {
-            if (pc.BetterPlayerControl() == null)
+            if (pc.ExtendedPlayerControl() == null)
             {
-                ExtendedPlayerControl newExtendedPc = pc.gameObject.AddComponent<ExtendedPlayerControl>();
+                pc.gameObject.AddComponent<ExtendedPlayerControl>();
             }
         }
     }
@@ -107,7 +98,7 @@ internal static class PlayerControlExtension
     /// </summary>
     /// <param name="player">The PlayerControl instance.</param>
     /// <returns>The ExtendedPlayerControl, or null if not found.</returns>
-    internal static ExtendedPlayerControl? BetterPlayerControl(this PlayerControl player)
+    internal static ExtendedPlayerControl? ExtendedPlayerControl(this PlayerControl player)
     {
         return MonoExtensionManager.Get<ExtendedPlayerControl>(player);
     }
@@ -117,7 +108,7 @@ internal static class PlayerControlExtension
     /// </summary>
     /// <param name="playerPhysics">The PlayerPhysics instance.</param>
     /// <returns>The ExtendedPlayerControl, or null if not found.</returns>
-    internal static ExtendedPlayerControl? BetterPlayerControl(this PlayerPhysics playerPhysics)
+    internal static ExtendedPlayerControl? ExtendedPlayerControl(this PlayerPhysics playerPhysics)
     {
         return MonoExtensionManager.Get<ExtendedPlayerControl>(playerPhysics.myPlayer);
     }
