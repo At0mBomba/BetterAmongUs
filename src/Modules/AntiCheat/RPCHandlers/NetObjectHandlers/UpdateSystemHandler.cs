@@ -1,6 +1,5 @@
 using BetterAmongUs.Attributes;
 using BetterAmongUs.Helpers;
-using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using Hazel;
 using UnityEngine;
 
@@ -63,28 +62,6 @@ internal sealed class UpdateSystemHandler : RPCHandler
             if (systemHandlers.TryGetValue(systemKey, out var handler))
             {
                 return handler.Invoke(sender, system, reader, count);
-            }
-        }
-
-        return true;
-    }
-
-    internal override bool BetterHandle(PlayerControl? sender, MessageReader reader)
-    {
-        // Prevent dead impostors from sabotaging if setting is enabled 
-        if (CatchedSystemType is SystemTypes.Sabotage or SystemTypes.Electrical or SystemTypes.LifeSupp or
-            SystemTypes.Reactor or SystemTypes.Laboratory or SystemTypes.HeliSabotage or
-            SystemTypes.Comms or SystemTypes.MushroomMixupSabotage)
-        {
-            if (BetterGameSettings.DisableSabotages.GetBool())
-                return false;
-
-            if (BetterGameSettings.DisableSabotagesForDead.GetBool())
-            {
-                if (!sender.IsAlive())
-                {
-                    return false;
-                }
             }
         }
 

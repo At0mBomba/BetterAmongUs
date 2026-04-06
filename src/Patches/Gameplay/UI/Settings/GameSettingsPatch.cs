@@ -1,6 +1,4 @@
-﻿using AmongUs.GameOptions;
-using BetterAmongUs.Helpers;
-using BetterAmongUs.Modules;
+﻿using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.OptionItems;
 using BetterAmongUs.Modules.OptionItems.NoneOption;
 using BetterAmongUs.Modules.Support;
@@ -18,7 +16,6 @@ internal sealed class BetterGameSettings
     internal static OptionCheckboxItem? UseBanNameList;
     internal static OptionCheckboxItem? UseBanWordList;
     internal static OptionCheckboxItem? UseBanWordListOnlyLobby;
-    internal static OptionIntItem? HideAndSeekImpNum;
     internal static OptionIntItem? DetectedLevelAbove;
     internal static OptionIntItem? KickLevelBelow;
     internal static OptionCheckboxItem? DetectCheatClients;
@@ -26,11 +23,9 @@ internal sealed class BetterGameSettings
 
     internal static OptionStringItem? RoleRandomizer;
     internal static OptionCheckboxItem? DesyncRoles;
-    internal static OptionCheckboxItem? DisableSabotagesForDead;
 
     internal static OptionCheckboxItem? CancelInvalidSabotage;
     internal static OptionCheckboxItem? CensorDetectionReason;
-    internal static OptionCheckboxItem? DisableSabotages;
 }
 
 // Temporary settings for Hide & Seek impostor selection
@@ -98,6 +93,7 @@ internal static class GameSettingsPatch
             // Show only for hosts
             if (IsPreload || GameState.IsHost)
             {
+                /*
                 // Normal game mode settings
                 if (IsPreload || !GameState.IsHideNSeek)
                 {
@@ -132,6 +128,7 @@ internal static class GameSettingsPatch
                     BetterGameSettingsTemp.HideAndSeekImp3.GetValue() != -1 &&
                     BetterGameSettingsTemp.HideAndSeekImp4.GetValue() != -1;
                 }
+                */
             }
         }
 

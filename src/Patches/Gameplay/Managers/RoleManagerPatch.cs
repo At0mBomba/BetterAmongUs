@@ -238,7 +238,7 @@ internal static class RoleManagerPatch
         Logger_.LogHeader($"Better Role Assignment Has Started", "RoleManager");
 
         // Get impostor count from BAU settings (defaults to 1)
-        int NumImpostors = BetterGameSettings.HideAndSeekImpNum?.GetInt() ?? 1;
+        int NumImpostors = GameOptionsManager.Instance.currentHideNSeekGameOptions.NumImpostors;
 
         if (NumImpostors > BAUPlugin.AllPlayerControls.Count)
             NumImpostors = BAUPlugin.AllPlayerControls.Count;
@@ -247,30 +247,17 @@ internal static class RoleManagerPatch
         List<NetworkedPlayerInfo> Crewmates = [];
         List<NetworkedPlayerInfo> CrewAndImps() => [.. Impostors, .. Crewmates];
 
-        // Get predefined impostors from settings (host can set specific players as impostors)
-        int[] betterImpostorSettings =
-        [
-            GameOptionsManager.Instance.currentHideNSeekGameOptions.ImpostorPlayerID,
-            BetterGameSettingsTemp.HideAndSeekImp2?.GetInt() ?? -1,
-            BetterGameSettingsTemp.HideAndSeekImp3?.GetInt() ?? -1,
-            BetterGameSettingsTemp.HideAndSeekImp4?.GetInt() ?? -1,
-            BetterGameSettingsTemp.HideAndSeekImp5?.GetInt() ?? -1
-        ];
-
-        for (int i = 0; i < NumImpostors; i++)
+        // Get predefined impostor from settings
+        var impId = GameOptionsManager.Instance.currentHideNSeekGameOptions.ImpostorPlayerID;
+        if (impId != -1)
         {
-            int tempSetImpostor = betterImpostorSettings[i];
-
-            if (tempSetImpostor >= 0)
+            var player = Utils.PlayerFromPlayerId(impId);
+            if (player != null)
             {
-                var player = Utils.PlayerFromPlayerId(tempSetImpostor);
-                if (player != null)
+                if (Impostors.Count < NumImpostors)
                 {
-                    if (Impostors.Count < NumImpostors)
-                    {
-                        Impostors.Add(player.Data);
-                        Logger_.LogPrivate($"Settings Assigned {RoleTypes.Impostor.GetRoleName()} role to {player.Data.PlayerName}", "RoleManager");
-                    }
+                    Impostors.Add(player.Data);
+                    Logger_.LogPrivate($"Settings Assigned {RoleTypes.Impostor.GetRoleName()} role to {player.Data.PlayerName}", "RoleManager");
                 }
             }
         }
