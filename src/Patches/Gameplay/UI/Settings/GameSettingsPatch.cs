@@ -29,6 +29,7 @@ internal sealed class BetterGameSettings
 }
 
 // Temporary settings for Hide & Seek impostor selection
+/*
 internal sealed class BetterGameSettingsTemp
 {
     internal static OptionPlayerItem? HideAndSeekImp2;
@@ -36,6 +37,7 @@ internal sealed class BetterGameSettingsTemp
     internal static OptionPlayerItem? HideAndSeekImp4;
     internal static OptionPlayerItem? HideAndSeekImp5;
 }
+*/
 
 [HarmonyPatch]
 internal static class GameSettingsPatch
