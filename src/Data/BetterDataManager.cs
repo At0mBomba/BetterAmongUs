@@ -26,6 +26,11 @@ internal static class BetterDataManager
         internal static readonly string starLightDataFolderPath = Environment.GetEnvironmentVariable("STAR_DATA_PATH") ?? string.Empty;
 
         /// <summary>
+        /// Directory for audio overrides files.
+        /// </summary>
+        internal static readonly string audioOverridesFolderPath = Path.Combine(fileFolderPath, $"AudioOverrides");
+
+        /// <summary>
         /// Directory for save information files.
         /// </summary>
         internal static readonly string saveInfoFolderPath = Path.Combine(fileFolderPath, $"SaveInfo");

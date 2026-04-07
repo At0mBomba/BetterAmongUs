@@ -501,6 +501,80 @@ internal static class Utils
         }
     }
 
+    /// <summary>
+    /// Loads a WAV audio clip from a file on disk.
+    /// </summary>
+    /// <param name="filePath">The full path to the WAV file.</param>
+    /// <returns>An AudioClip containing the loaded WAV data, or null if loading fails.</returns>
+    internal static AudioClip? LoadWavFromDisk(string filePath)
+    {
+        if (!File.Exists(filePath))
+        {
+            Logger_.Error($"File not found: {filePath}");
+            return null;
+        }
+
+        if (Path.GetExtension(filePath).ToLower() != ".wav")
+        {
+            Logger_.Error("Only .wav files are supported.");
+            return null;
+        }
+
+        try
+        {
+            byte[] wavBytes = File.ReadAllBytes(filePath);
+            if (wavBytes.Length == 0)
+            {
+                return null;
+            }
+            var audio = ToAudioClip(wavBytes);
+            return audio;
+        }
+        catch (Exception ex)
+        {
+            Logger_.Error($"Failed to load WAV: {ex}");
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Converts raw WAV byte data into an AudioClip.
+    /// </summary>
+    /// <param name="wavBytes">The raw WAV file bytes.</param>
+    /// <returns>An AudioClip containing the converted WAV data.</returns>
+    internal static AudioClip ToAudioClip(byte[] wavBytes)
+    {
+        int sampleRate = BitConverter.ToInt32(wavBytes, 24);
+        int channels = BitConverter.ToInt16(wavBytes, 22);
+        int samples = BitConverter.ToInt32(wavBytes, 40) / 2;
+
+        int offset = 36;
+        while (offset < wavBytes.Length - 8)
+        {
+            if (wavBytes[offset] == 'd' && wavBytes[offset + 1] == 'a' &&
+                wavBytes[offset + 2] == 't' && wavBytes[offset + 3] == 'a')
+            {
+                offset += 4;
+                offset += 4;
+                break;
+            }
+            offset++;
+        }
+
+        float[] floatData = new float[samples];
+        for (int i = 0; i < samples; i++)
+        {
+            short sample = BitConverter.ToInt16(wavBytes, offset + i * 2);
+            floatData[i] = sample / 32768f;
+        }
+
+        AudioClip clip = AudioClip.Create("LoadedWav", samples / channels, channels, sampleRate, false);
+        clip.SetData(floatData, 0);
+        clip.hideFlags = HideFlags.HideAndDontSave;
+
+        return clip;
+    }
+
     // Platform utilities
     /// <summary>
     /// Gets the platform name for a player.

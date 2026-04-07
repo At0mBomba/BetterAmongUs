@@ -9,6 +9,7 @@ using BetterAmongUs.Data.Config;
 using BetterAmongUs.Data.Json;
 using BetterAmongUs.Enums;
 using BetterAmongUs.Helpers;
+using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.OptionItems;
 using BetterAmongUs.Modules.Support;
@@ -153,6 +154,7 @@ internal class BAUPlugin : BasePlugin
         GithubAPI.Connect();
         BAUConfigs.LoadConfigs();
         BetterDataManager.Initialize();
+        AudioOverrideManager.Initialize();
         Translator.Initialize();
         Harmony.PatchAll();
         GameSettingsPatch.SetupSettings(true);
