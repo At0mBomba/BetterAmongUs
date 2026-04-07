@@ -52,7 +52,7 @@ internal static class AudioOverridePatch
             __instance.VoteLockinSound = lockin;
         }
 
-        if (AudioOverrideManager.Sounds_EmergencyMeetingEnd.TryGetAudioClip(out var end))
+        if (AudioOverrideManager.Sounds_EmergencyMeetingEnding.TryGetAudioClip(out var end))
         {
             __instance.VoteEndingSound = end;
         }
