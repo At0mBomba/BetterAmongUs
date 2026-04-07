@@ -38,6 +38,16 @@ internal static class AudioOverridePatch
         }
     }
 
+    [HarmonyPatch(typeof(ChatController), nameof(ChatController.Awake))]
+    [HarmonyPrefix]
+    private static void ChatController_Awake_Prefix(ChatController __instance)
+    {
+        if (AudioOverrideManager.Sounds_ChatNotification.TryGetAudioClip(out var audio))
+        {
+            __instance.messageSound = audio;
+        }
+    }
+
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Awake))]
     [HarmonyPrefix]
     private static void MeetingHud_Awake_Prefix(MeetingHud __instance)
