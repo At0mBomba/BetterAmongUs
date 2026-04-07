@@ -16,14 +16,14 @@ internal static class BetterDataManager
     internal static class Folders
     {
         /// <summary>
-        /// Root directory for BetterAmongUs data.
+        /// Root directory for BetterAmongUs data (Starlight mode).
         /// </summary>
-        internal static readonly string fileFolderPath = Path.Combine(GetPathToAmongUs(), $"Better_Data");
+        internal static readonly string starLightDataFolderPath = Environment.GetEnvironmentVariable("STAR_DATA_PATH") ?? string.Empty;
 
         /// <summary>
         /// Root directory for BetterAmongUs data.
         /// </summary>
-        internal static readonly string starLightDataFolderPath = Environment.GetEnvironmentVariable("STAR_DATA_PATH") ?? string.Empty;
+        internal static readonly string fileFolderPath = Path.Combine(GetPathToAmongUs(), $"Better_Data");
 
         /// <summary>
         /// Directory for audio overrides files.
