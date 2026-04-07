@@ -32,9 +32,54 @@ internal static class AudioOverridePatch
     [HarmonyPrefix]
     private static void MeetingCalledAnimation_CoShow_Prefix(MeetingCalledAnimation __instance)
     {
-        if (AudioOverrideManager.Sounds_EmergencyMeeting.TryGetAudioClip(out var audio))
+        if (AudioOverrideManager.Sounds_EmergencyMeetingStart.TryGetAudioClip(out var audio))
         {
             __instance.Stinger = audio;
+        }
+    }
+
+    [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Awake))]
+    [HarmonyPrefix]
+    private static void MeetingHud_Awake_Prefix(MeetingHud __instance)
+    {
+        if (AudioOverrideManager.Sounds_EmergencyMeetingVote.TryGetAudioClip(out var vote))
+        {
+            __instance.VoteSound = vote;
+        }
+
+        if (AudioOverrideManager.Sounds_EmergencyMeetingVoteLockin.TryGetAudioClip(out var lockin))
+        {
+            __instance.VoteLockinSound = lockin;
+        }
+
+        if (AudioOverrideManager.Sounds_EmergencyMeetingEnd.TryGetAudioClip(out var end))
+        {
+            __instance.VoteEndingSound = end;
+        }
+    }
+
+    [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Awake))]
+    [HarmonyPostfix]
+    private static void ShipStatus_Awake_Postfix(ShipStatus __instance)
+    {
+        if (__instance.VentExitSound == null)
+        {
+            __instance.VentExitSound = __instance.VentEnterSound;
+        }
+
+        if (AudioOverrideManager.Sounds_VentEnter.TryGetAudioClip(out var ventEnter))
+        {
+            __instance.VentEnterSound = ventEnter;
+        }
+
+        if (AudioOverrideManager.Sounds_VentExit.TryGetAudioClip(out var ventExit))
+        {
+            __instance.VentExitSound = ventExit;
+        }
+
+        if (AudioOverrideManager.Sounds_SabotageAlert.TryGetAudioClip(out var sabo))
+        {
+            __instance.SabotageSound = sabo;
         }
     }
 }

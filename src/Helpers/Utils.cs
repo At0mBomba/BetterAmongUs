@@ -575,6 +575,27 @@ internal static class Utils
         return clip;
     }
 
+    /// <summary>
+    /// Generates a normalized directory path by combining folder names from a delimited string.
+    /// </summary>
+    /// <param name="path">A string containing folder names separated by the specified separator character. Folder names must not be empty.</param>
+    /// <param name="separator">The character used to separate folder names in the input string. Defaults to '/'.</param>
+    /// <returns>A directory path constructed by combining the non-empty folder names from the input string, using the system's
+    /// directory separator character.</returns>
+    internal static string GenerateDirectoryPath(string path, char separator = '/')
+    {
+        string[] folders = path.Split(separator);
+        string currentPath = "";
+        foreach (string folder in folders)
+        {
+            if (!string.IsNullOrEmpty(folder))
+            {
+                currentPath = Path.Combine(currentPath, folder);
+            }
+        }
+        return currentPath;
+    }
+
     // Platform utilities
     /// <summary>
     /// Gets the platform name for a player.
