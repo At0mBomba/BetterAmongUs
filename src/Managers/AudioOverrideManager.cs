@@ -27,7 +27,7 @@ internal static class AudioOverrideManager
 
     internal static readonly AudioOverrideData Sounds_EmergencyMeetingVote = new("Sounds/Meeting", "EmergencyMeetingVote.wav");
 
-    internal static readonly AudioOverrideData Sounds_EmergencyMeetingVoteLockin = new("Sounds/Meeting", "EmergencyMeetingLockin.wav");
+    internal static readonly AudioOverrideData Sounds_EmergencyMeetingVoteLockin = new("Sounds/Meeting", "EmergencyMeetingVoteLockin.wav");
 
     internal static readonly AudioOverrideData Sounds_EmergencyMeetingEnd = new("Sounds/Meeting", "EmergencyMeetingEnd.wav");
 
