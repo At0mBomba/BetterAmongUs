@@ -17,6 +17,11 @@ internal static class MeetingHudPatch
     [HarmonyPostfix]
     private static void MeetingHud_Start_Postfix(MeetingHud __instance)
     {
+        if (BAUConfigs.ChatInGameplay.Value && PlayerControl.LocalPlayer.IsAlive())
+        {
+            ChatPatch.UncensorPlayerChats();
+        }
+
         if (__instance == null || __instance.playerStates == null)
             return;
 
@@ -91,9 +96,9 @@ internal static class MeetingHudPatch
         Logger_.LogHeader("Meeting Has Ended");
 
         // Clear chat when meeting ends if gameplay chat is enabled
-        if (BAUConfigs.ChatInGameplay.Value && !GameState.IsFreePlay && PlayerControl.LocalPlayer.IsAlive())
+        if (BAUConfigs.ChatInGameplay.Value && PlayerControl.LocalPlayer.IsAlive())
         {
-            ChatPatch.ClearPlayerChats();
+            ChatPatch.CensorPlayerChats();
         }
     }
 }

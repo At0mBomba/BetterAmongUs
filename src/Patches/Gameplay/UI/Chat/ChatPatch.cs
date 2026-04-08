@@ -19,6 +19,9 @@ internal static class ChatPatch
 
     internal const string COMMAND_POSTFIX_ID = "<size=0%>IsCommand</size>";
 
+    /// <summary>
+    /// Removes all chat bubbles from the chat.
+    /// </summary>
     internal static void ClearChat()
     {
         if (!HudManager.InstanceExists)
@@ -28,6 +31,9 @@ internal static class ChatPatch
         HudManager.Instance.Chat.chatBubblePool.ReclaimAll();
     }
 
+    /// <summary>
+    /// Removes all player chat bubbles from the chat, excluding command bubbles.
+    /// </summary>
     internal static void ClearPlayerChats()
     {
         if (!HudManager.InstanceExists)
@@ -46,6 +52,75 @@ internal static class ChatPatch
         HudManager.Instance.Chat.AlignAllBubbles();
     }
 
+    /// <summary>
+    /// Contains cached information about censored chat bubbles, keyed by the associated chat bubble instance.
+    /// </summary>
+    private static readonly Dictionary<ChatBubble, (int index, NetworkedPlayerInfo info, string name, string msg)> _censoredChatBubbleInfo = [];
+
+    /// <summary>
+    /// Censors all active player chat bubbles by anonymizing player information and obscuring chat text.
+    /// </summary>
+    internal static void CensorPlayerChats()
+    {
+        if (!HudManager.InstanceExists)
+            return;
+
+        UncensorPlayerChats();
+
+        foreach (var obj in HudManager.Instance.Chat.chatBubblePool.activeChildren.ToArray())
+        {
+            var chatBubble = obj.GetComponent<ChatBubble>();
+            if (chatBubble != null)
+            {
+                if (_censoredChatBubbleInfo.ContainsKey(chatBubble)) continue;
+                if (chatBubble.NameText.text.EndsWith(COMMAND_POSTFIX_ID)) continue;
+
+                _censoredChatBubbleInfo[chatBubble] = (chatBubble.PoolIndex, chatBubble.playerInfo, chatBubble.NameText.text, chatBubble.TextArea.text);
+
+                // Anonymize player info and obscure chat text
+                chatBubble.playerInfo = null;
+                chatBubble.NameText.SetText("???".ToColor(Color.white));
+                chatBubble.TextArea.SetText(new string('*', chatBubble.TextArea.text.Length).ToColor(Color.white));
+                chatBubble.Player.ResetCosmetics();
+                chatBubble.Player.SetBodyColor(15);
+                chatBubble.ColorBlindName.SetText(string.Empty);
+            }
+        }
+
+        HudManager.Instance.Chat.AlignAllBubbles();
+    }
+
+    /// <summary>
+    /// Restores all previously censored player chat bubbles to display their original, uncensored content in the chat
+    /// UI.
+    /// </summary>
+    internal static void UncensorPlayerChats()
+    {
+        if (!HudManager.InstanceExists)
+            return;
+
+        foreach (var (chatBubble, (index, info, name, msg)) in _censoredChatBubbleInfo)
+        {
+            if (chatBubble == null) continue;
+
+            // Ensure the chat bubble matches the cached pool index before restoring
+            if (index != chatBubble.PoolIndex) continue;
+
+            // Restore original player info and chat text
+            chatBubble.playerInfo = info;
+            chatBubble.NameText.SetText(name);
+            chatBubble.TextArea.SetText(msg);
+            chatBubble.Player.UpdateFromPlayerData(chatBubble.playerInfo, PlayerOutfitType.Default, PlayerMaterial.MaskType.ScrollingUI, false);
+            chatBubble.AlignChildren();
+        }
+
+        _censoredChatBubbleInfo.Clear();
+        HudManager.Instance.Chat.AlignAllBubbles();
+    }
+
+    /// <summary>
+    /// Removes all command related chat bubbles from the chat, preserving player chat bubbles.
+    /// </summary>
     internal static void ClearCommands()
     {
         if (!HudManager.InstanceExists)
