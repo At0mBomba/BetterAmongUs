@@ -5,6 +5,7 @@ using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.OptionItems;
 using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.Patches.Gameplay.UI.Chat;
 using HarmonyLib;
 using System.Collections;
 using UnityEngine;
@@ -54,6 +55,16 @@ internal static class PlayerControlPatch
 
         // Update option UI values
         OptionPlayerItem.UpdateAllValues();
+    }
+
+    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Die))]
+    [HarmonyPostfix]
+    private static void PlayerControl_Die_Postfix(PlayerControl __instance)
+    {
+        if (__instance.IsLocalPlayer())
+        {
+            ChatPatch.UncensorPlayerChats();
+        }
     }
 
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.MurderPlayer))]

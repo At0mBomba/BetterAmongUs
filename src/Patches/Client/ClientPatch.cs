@@ -1,5 +1,4 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
-using BetterAmongUs.Data.Config;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
@@ -111,11 +110,8 @@ internal static class ClientPatch
     [HarmonyPostfix]
     private static void AmongUsClient_CoStartGame_Postfix(AmongUsClient __instance)
     {
-        // Clear in-game chat if chat feature is enabled
-        if (BAUConfigs.ChatInGameplay.Value)
-        {
-            ChatPatch.ClearChat();
-        }
+        // Censor in-game chat
+        ChatPatch.CensorPlayerChats();
 
         // Start custom loading sequence
         __instance.StartCoroutine(CoLoading());

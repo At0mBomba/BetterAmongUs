@@ -1,4 +1,3 @@
-using BetterAmongUs.Data.Config;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Mono;
@@ -17,7 +16,8 @@ internal static class MeetingHudPatch
     [HarmonyPostfix]
     private static void MeetingHud_Start_Postfix(MeetingHud __instance)
     {
-        if (BAUConfigs.ChatInGameplay.Value && PlayerControl.LocalPlayer.IsAlive())
+        // Uncensor chats when meeting starts
+        if (PlayerControl.LocalPlayer.IsAlive())
         {
             ChatPatch.UncensorPlayerChats();
         }
@@ -92,13 +92,13 @@ internal static class MeetingHudPatch
     [HarmonyPostfix]
     private static void MeetingHud_Close_Postfix()
     {
-        timeOpen = 0f;
-        Logger_.LogHeader("Meeting Has Ended");
-
-        // Clear chat when meeting ends if gameplay chat is enabled
-        if (BAUConfigs.ChatInGameplay.Value && PlayerControl.LocalPlayer.IsAlive())
+        // Censor chats when meeting ends
+        if (PlayerControl.LocalPlayer.IsAlive())
         {
             ChatPatch.CensorPlayerChats();
         }
+
+        timeOpen = 0f;
+        Logger_.LogHeader("Meeting Has Ended");
     }
 }
