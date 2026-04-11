@@ -7,6 +7,22 @@
 /// <param name="argInfo">Information about the argument (default: "{String}").</param>
 internal sealed class StringArgument(BaseCommand command, string argInfo = "{String}") : BaseArgument(command, argInfo)
 {
-    // This class inherits the basic string argument functionality from BaseArgument
-    // and can be extended with string-specific parsing or validation if needed.
+    protected override string[] GetArgSuggestions()
+    {
+        return ArgSuggestions.Invoke();
+    }
+
+    /// <summary>
+    /// Gets or sets the function that provides argument suggestions.
+    /// </summary>
+    internal Func<string[]> ArgSuggestions { get; set; } = () => { return []; };
+
+    /// <summary>
+    /// Gets the string argument.
+    /// </summary>
+    /// <returns></returns>
+    internal string GetString()
+    {
+        return Arg;
+    }
 }

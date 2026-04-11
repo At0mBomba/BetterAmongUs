@@ -15,7 +15,7 @@ internal sealed class RemovePlayerCommand : BaseCommand
     {
         _identifierArgument = new StringArgument(this, "{identifier}")
         {
-            GetArgSuggestions = () =>
+            ArgSuggestions = () =>
                 BetterDataManager.Files.BetterDataFile.AllCheatData
                     .SelectMany(info => new[] { info.HashPuid.Replace(' ', '_'), info.FriendCode.Replace(' ', '_'), info.PlayerName.Replace(' ', '_') })
                     .ToArray()

@@ -25,12 +25,10 @@ internal abstract class BaseArgument(BaseCommand command, string argInfo)
     /// <summary>
     /// Gets the argument suggestions for auto-completion.
     /// </summary>
-    protected virtual string[] ArgSuggestions => GetArgSuggestions.Invoke();
-
-    /// <summary>
-    /// Gets or sets the function that provides argument suggestions.
-    /// </summary>
-    internal Func<string[]> GetArgSuggestions { get; set; } = () => { return []; };
+    protected virtual string[] GetArgSuggestions()
+    {
+        return [];
+    }
 
     /// <summary>
     /// Resets the Argument back to its default state.
@@ -45,5 +43,5 @@ internal abstract class BaseArgument(BaseCommand command, string argInfo)
     /// </summary>
     /// <returns>The closest matching suggestion, or empty string if none found.</returns>
     internal string GetClosestSuggestion() =>
-        ArgSuggestions.FirstOrDefault(name => name.StartsWith(Arg, StringComparison.OrdinalIgnoreCase)) ?? string.Empty;
+        GetArgSuggestions().FirstOrDefault(name => name.StartsWith(Arg, StringComparison.OrdinalIgnoreCase)) ?? string.Empty;
 }

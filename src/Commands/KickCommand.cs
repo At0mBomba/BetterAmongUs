@@ -31,17 +31,16 @@ internal sealed class KickCommand : BaseCommand
 
     internal override void Run()
     {
-        var player = _playerArgument.TryGetTarget();
-        if (player == null)
+        if (!_playerArgument.TryParsePlayer(out var player))
             return;
 
-        var isBan = _boolArgument.GetBool();
-        if (isBan == null)
+        var isBan = _boolArgument.TryParseBool(out var ban);
+        if (!isBan)
             return;
 
         if (!player.IsHost())
         {
-            player.Kick((bool)isBan);
+            player.Kick(ban);
         }
     }
 }

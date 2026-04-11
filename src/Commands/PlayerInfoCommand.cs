@@ -20,8 +20,7 @@ internal sealed class PlayerInfoCommand : BaseCommand
 
     internal override void Run()
     {
-        var player = _playerArgument.TryGetTarget();
-        if (player == null)
+        if (!_playerArgument.TryParsePlayer(out var player))
             return;
 
         if (player.Data == null)
