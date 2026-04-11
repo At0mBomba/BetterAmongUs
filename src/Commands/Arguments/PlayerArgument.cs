@@ -63,7 +63,7 @@ internal sealed class PlayerArgument(BaseCommand command, string argInfo = "{pla
     /// <returns></returns>
     private bool IsMatchingPlayer(NetworkedPlayerInfo data)
     {
-        return Arg.Equals(data.PlayerName, StringComparison.OrdinalIgnoreCase)
+        return Arg.Equals(data.PlayerName.Replace(' ', '_'), StringComparison.OrdinalIgnoreCase)
             || Arg.Equals(data.FriendCode, StringComparison.OrdinalIgnoreCase)
             || Arg.Equals($"ID{data.PlayerId}", StringComparison.OrdinalIgnoreCase);
     }
