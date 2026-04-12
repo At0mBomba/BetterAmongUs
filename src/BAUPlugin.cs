@@ -9,7 +9,6 @@ using BetterAmongUs.Data.Config;
 using BetterAmongUs.Data.Json;
 using BetterAmongUs.Enums;
 using BetterAmongUs.Helpers;
-using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.OptionItems;
 using BetterAmongUs.Modules.Support;
