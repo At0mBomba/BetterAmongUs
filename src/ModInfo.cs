@@ -27,17 +27,17 @@ internal static class ModInfo
     /// <summary>
     /// The beta number for beta releases.
     /// </summary>
-    internal const string BETA_NUM = "2";
+    internal const string BETA_NUM = "3";
 
     /// <summary>
     /// The hotfix number for hotfix releases.
     /// </summary>
-    internal const string HOTFIX_NUM = "1";
+    internal const string HOTFIX_NUM = "0";
 
     /// <summary>
     /// Indicates whether this is a hotfix release.
     /// </summary>
-    internal const bool IS_HOTFIX = true;
+    internal const bool IS_HOTFIX = false;
 
     /// <summary>
     /// The name of BAU.
