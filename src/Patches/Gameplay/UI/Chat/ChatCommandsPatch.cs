@@ -1,6 +1,5 @@
 ﻿using BetterAmongUs.Commands;
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Enums;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
@@ -270,7 +269,7 @@ internal static class ChatCommandsPatch
     {
         // First try exact match
         var directNormalMatch = BaseCommand.allCommands
-            .FirstOrDefault(c => FilterCommand(c, CommandType.Normal) &&
+            .FirstOrDefault(c => c.IsEnabled() &&
             c.Names.Any(name => string.Equals(name, typedCommand, StringComparison.OrdinalIgnoreCase)));
         if (directNormalMatch != null)
             return directNormalMatch;
@@ -278,17 +277,11 @@ internal static class ChatCommandsPatch
         // Then try partial match
         var closestNormalCommand = BaseCommand.allCommands
             .OrderBy(c => c.Name)
-            .FirstOrDefault(c => FilterCommand(c, CommandType.Normal) &&
+            .FirstOrDefault(c => c.IsEnabled() &&
             c.Names.Any(name => name.StartsWith(typedCommand, StringComparison.OrdinalIgnoreCase)));
         if (closestNormalCommand != null)
             return closestNormalCommand;
 
         return null;
-    }
-
-    private static bool FilterCommand(BaseCommand command, CommandType commandType)
-    {
-        // Check if command is enabled and not disabled by other mods
-        return command.Type == commandType && command.ShowCommand() && !BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_Command + command.Name);
     }
 }

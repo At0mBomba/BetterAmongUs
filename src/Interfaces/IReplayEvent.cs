@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace BetterAmongUs.Interfaces;
+﻿namespace BetterAmongUs.Interfaces;
 
 /// <summary>
 /// Interface for replay events in BetterAmongUs.
@@ -10,7 +8,6 @@ public interface IReplayEvent
     /// <summary>
     /// Gets the unique identifier for the replay event.
     /// </summary>
-    [JsonIgnore]
     string Id { get; }
 
     /// <summary>

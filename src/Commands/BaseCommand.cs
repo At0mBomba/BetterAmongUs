@@ -1,7 +1,7 @@
 ﻿using BetterAmongUs.Attributes;
 using BetterAmongUs.Commands.Arguments;
-using BetterAmongUs.Enums;
 using BetterAmongUs.Helpers;
+using BetterAmongUs.Modules.Support;
 
 namespace BetterAmongUs.Commands;
 
@@ -14,11 +14,6 @@ internal abstract class BaseCommand
     /// Gets an array of all registered commands.
     /// </summary>
     internal static readonly BaseCommand[] allCommands = [.. RegisterCommandAttribute.Instances];
-
-    /// <summary>
-    /// Gets the type of the command.
-    /// </summary>
-    internal virtual CommandType Type => CommandType.Normal;
 
     /// <summary>
     /// Gets all names for this command (including short names).
@@ -106,5 +101,14 @@ internal abstract class BaseCommand
         string er = "<color=#f50000><size=150%><b>Error:</b></size></color>";
         if (!onlyGetStr) Utils.AddChatPrivate($"<color=#730000>{er}\n{error}");
         return $"<color=#730000>{er}\n{error}";
+    }
+
+    /// <summary>
+    /// Determines whether this command is enabled.
+    /// </summary>
+    /// <returns>True if the command is enabled; otherwise, false.</returns>
+    internal bool IsEnabled()
+    {
+        return ShowCommand() && !BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_Command + Name);
     }
 }

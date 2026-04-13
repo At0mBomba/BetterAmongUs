@@ -15,7 +15,9 @@ namespace BetterAmongUs.Managers;
 /// </summary>
 internal sealed class BAUUpdateManager : MonoBehaviour
 {
-    private bool AmUpdateing;
+    private bool _updateing;
+    private GameObject? mainMenu;
+    private GameObject? ambience;
 
     /// <summary>
     /// Gets the singleton instance of the UpdateManager.
@@ -68,7 +70,7 @@ internal sealed class BAUUpdateManager : MonoBehaviour
                 button.OnClick = new();
                 button.OnClick.AddListener(() =>
                 {
-                    if (AmUpdateing || WaitForRestart)
+                    if (_updateing || WaitForRestart)
                         return;
 
                     this.StartCoroutine(CoPressDownload(doNotPress));
@@ -87,9 +89,6 @@ internal sealed class BAUUpdateManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Unity Start method called when the component is initialized.
-    /// </summary>
     private void Start()
     {
         var oldDll = Assembly.GetExecutingAssembly().Location + ".old";
@@ -99,9 +98,6 @@ internal sealed class BAUUpdateManager : MonoBehaviour
         }
     }
 
-    private GameObject? mainMenu;
-    private GameObject? ambience;
-
     /// <summary>
     /// Coroutine that handles the download process when the update button is pressed.
     /// </summary>
@@ -110,7 +106,7 @@ internal sealed class BAUUpdateManager : MonoBehaviour
     [HideFromIl2Cpp]
     private IEnumerator CoPressDownload(DoNotPressButton button)
     {
-        AmUpdateing = true;
+        _updateing = true;
 
         button.pressedSprite.enabled = true;
         button.unpressedSprite.enabled = false;
@@ -145,6 +141,6 @@ internal sealed class BAUUpdateManager : MonoBehaviour
             Utils.ShowPopUp("Download link missing!");
         }
 
-        AmUpdateing = false;
+        _updateing = false;
     }
 }

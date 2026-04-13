@@ -1,5 +1,4 @@
 ﻿using BetterAmongUs.Attributes;
-using BetterAmongUs.Enums;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
 
 namespace BetterAmongUs.Commands;
@@ -12,7 +11,7 @@ internal sealed class AllCommandsCommand : BaseCommand
 
     internal override void Run()
     {
-        BaseCommand[] allNormalCommands = [.. allCommands.Where(cmd => cmd.Type == CommandType.Normal && cmd.ShowCommand())];
+        BaseCommand[] allNormalCommands = [.. allCommands.Where(cmd => cmd.IsEnabled())];
         string list;
         var open = "<color=#858585>┌──────── </color>";
         var mid = "<color=#858585>├ </color>";
