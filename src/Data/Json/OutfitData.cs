@@ -37,7 +37,7 @@ internal sealed class OutfitData
     /// Gets the outfit data for the currently selected preset.
     /// </summary>
     /// <returns>The outfit data for the current preset.</returns>
-    internal static OutfitData GetOutfitData() =>
+    internal static OutfitData GetCurrentOutfitData() =>
         BetterDataManager.Files.BetterDataFile.OutfitData.ElementAt(BetterDataManager.Files.BetterDataFile.SelectedOutfitPreset);
 
     /// <summary>
@@ -45,7 +45,7 @@ internal sealed class OutfitData
     /// </summary>
     /// <param name="index">The index of the preset to retrieve.</param>
     /// <returns>The outfit data for the specified preset.</returns>
-    internal static OutfitData GetOutfitData(int index) =>
+    internal static OutfitData GetOutfitDataAt(int index) =>
         BetterDataManager.Files.BetterDataFile.OutfitData.ElementAt(index);
 
     private static bool ignoreChange;
@@ -55,14 +55,14 @@ internal sealed class OutfitData
     /// </summary>
     internal static void Initialize()
     {
-        FindPreset();
+        FindCurrentPreset();
 
         var Save = () =>
         {
             if (ignoreChange)
                 return;
 
-            GetOutfitData().SetFromData();
+            GetCurrentOutfitData().UpdateFromCustomizationData();
             BetterDataManager.Files.BetterDataFile.Save();
         };
 
@@ -77,12 +77,12 @@ internal sealed class OutfitData
     /// <summary>
     /// Finds the preset that matches the current player customization and sets it as selected.
     /// </summary>
-    internal static void FindPreset()
+    internal static void FindCurrentPreset()
     {
-        var collection = BetterDataManager.Files.BetterDataFile.OutfitData;
-        int i = 0;
-        foreach (var data in collection)
+        var allOutfitData = BetterDataManager.Files.BetterDataFile.OutfitData;
+        for (int i = 0; i < allOutfitData.Count; i++)
         {
+            var data = allOutfitData.ElementAt(i);
             if (data.HatId == DataManager.Player.Customization.Hat &&
                 data.PetId == DataManager.Player.Customization.Pet &&
                 data.SkinId == DataManager.Player.Customization.Skin &&
@@ -92,7 +92,6 @@ internal sealed class OutfitData
                 BetterDataManager.Files.BetterDataFile.SelectedOutfitPreset = i;
                 return;
             }
-            i++;
         }
 
         BetterDataManager.Files.BetterDataFile.SelectedOutfitPreset = 0;
@@ -101,7 +100,7 @@ internal sealed class OutfitData
     /// <summary>
     /// Validates the outfit data by ensuring all IDs correspond to unlocked items.
     /// </summary>
-    private void Validate()
+    private void ValidateOutfit()
     {
         if (!HatManager.Instance.GetUnlockedHats().Any(item => item.ProductId == HatId))
             HatId = HatData.EmptyId;
@@ -116,12 +115,12 @@ internal sealed class OutfitData
     }
 
     /// <summary>
-    /// Loads the outfit data into the player's customization and invokes a callback.
+    /// Applies the outfit data to the player's customization, invoking a callback after loading.
     /// </summary>
     /// <param name="callback">The callback to invoke after loading the outfit.</param>
-    internal void Load(Action callback)
+    internal void ApplyToCustomizationData(Action callback)
     {
-        Validate();
+        ValidateOutfit();
 
         ignoreChange = true;
         DataManager.Player.Customization.Hat = HatId;
@@ -136,9 +135,9 @@ internal sealed class OutfitData
     }
 
     /// <summary>
-    /// Updates the outfit data with the current player customization values.
+    /// Updates the outfit data from the player's current customization.
     /// </summary>
-    internal void SetFromData()
+    internal void UpdateFromCustomizationData()
     {
         HatId = DataManager.Player.Customization.Hat;
         PetId = DataManager.Player.Customization.Pet;

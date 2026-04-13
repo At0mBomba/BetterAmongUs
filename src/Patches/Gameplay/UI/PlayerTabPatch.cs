@@ -49,7 +49,7 @@ internal static class PlayerTabPatch
         {
             int currentI = i;
             var name = currentI == 0 ? "Among Us Preset" : $"Preset {i}";
-            var data = OutfitData.GetOutfitData(currentI);
+            var data = OutfitData.GetOutfitDataAt(currentI);
             var button = playerTab.CreateOutfitPresetButton(name, new Vector3(2.5f, 1.55f - currentI * 0.45f, 0f), out var playerPreview, () =>
             {
                 if (BetterDataManager.Files.BetterDataFile.SelectedOutfitPreset == currentI)
@@ -72,7 +72,7 @@ internal static class PlayerTabPatch
                 }
 
                 // Load and apply outfit from preset
-                data.Load(() =>
+                data.ApplyToCustomizationData(() =>
                 {
                     if (LoadPlayerOutfit(data))
                     {

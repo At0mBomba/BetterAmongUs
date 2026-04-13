@@ -23,7 +23,7 @@ internal static class NetworkManager
     /// <summary>
     /// Gets the InnerNetClient instance from AmongUsClient.
     /// </summary>
-    internal static InnerNetClient? InnerNetClient => AmongUsClient.Instance;
+    internal static InnerNetClient InnerNetClient => AmongUsClient.Instance;
 
     /// <summary>
     /// Sends a message to the game server.
