@@ -29,6 +29,16 @@ internal static class PlayerTabPatch
             _presetTabSetup = __instance;
             SetupOutfitPresets(__instance);
         }
+        else
+        {
+            for (int i = 0; i < _presetPreviews.Count; i++)
+            {
+                var preview = _presetPreviews[i];
+                if (preview == null) continue;
+                var data = OutfitData.GetOutfitDataAt(i);
+                preview.UpdateFromPlayerOutfit(data.ToPlayerOutfit(), PlayerMaterial.MaskType.None, false, true);
+            }
+        }
     }
 
     [HarmonyPatch(typeof(PlayerTab), nameof(PlayerTab.OnEnable))]
