@@ -16,7 +16,7 @@ internal static class RoleManagerPatch
     private static readonly Random random = new();
 
     // Check if client is verified Better Among Us user
-    private static Func<InnerNet.ClientData, bool> SendTo(PlayerControl target)
+    private static Func<InnerNet.ClientData, bool> FilterTargetClients(PlayerControl target)
     {
         return (clientData) =>
         {
@@ -164,9 +164,9 @@ internal static class RoleManagerPatch
                         // Desync role to hide special role from non-BAU players
                         if (BetterGameSettings.DesyncRoles.GetBool())
                         {
-                            if (kvp.Key is not (RoleTypes.Phantom or RoleTypes.Viper))
+                            if (kvp.Key.CanDesyncRole())
                             {
-                                AmongUsClient.Instance.SendRpcImmediatelyDesync(pc.NetId, RpcCalls.SetRole, SendOption.None, SendTo(pc), writer =>
+                                AmongUsClient.Instance.SendRpcImmediatelyDesync(pc.NetId, RpcCalls.SetRole, SendOption.None, FilterTargetClients(pc), writer =>
                                 {
                                     writer.Write((ushort)RoleTypes.Impostor);
                                     writer.Write(false);
@@ -204,9 +204,9 @@ internal static class RoleManagerPatch
                         // Desync role to hide special role from non-BAU players
                         if (BetterGameSettings.DesyncRoles.GetBool())
                         {
-                            if (kvp.Key is not RoleTypes.Noisemaker)
+                            if (kvp.Key.CanDesyncRole())
                             {
-                                AmongUsClient.Instance.SendRpcImmediatelyDesync(pc.NetId, RpcCalls.SetRole, SendOption.None, SendTo(pc), writer =>
+                                AmongUsClient.Instance.SendRpcImmediatelyDesync(pc.NetId, RpcCalls.SetRole, SendOption.None, FilterTargetClients(pc), writer =>
                                 {
                                     writer.Write((ushort)RoleTypes.Crewmate);
                                     writer.Write(false);
@@ -351,7 +351,7 @@ internal static class RoleManagerPatch
                 // Desync ghost role to hide it from non-BAU players
                 if (BetterGameSettings.DesyncRoles.GetBool())
                 {
-                    AmongUsClient.Instance.SendRpcImmediatelyDesync(player.NetId, RpcCalls.SetRole, SendOption.None, SendTo(player), writer =>
+                    AmongUsClient.Instance.SendRpcImmediatelyDesync(player.NetId, RpcCalls.SetRole, SendOption.None, FilterTargetClients(player), writer =>
                     {
                         writer.Write((ushort)player.Data.Role.DefaultGhostRole);
                         writer.Write(false);

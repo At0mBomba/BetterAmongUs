@@ -83,6 +83,26 @@ internal static class RoleHelper
     }
 
     /// <summary>
+    /// Determines whether a role type is cliant side and can be desynced.
+    /// </summary>
+    /// <param name="role">The role type to check.</param>
+    /// <returns>True if the role can be desynced to other clients, false otherwise.</returns>
+    internal static bool CanDesyncRole(this RoleTypes role)
+    {
+        if (role is RoleTypes.Phantom or RoleTypes.Viper)
+        {
+            return false;
+        }
+
+        if (role is RoleTypes.Noisemaker)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
     /// Dictionary mapping role types to their hexadecimal color codes.
     /// </summary>
     internal static Dictionary<RoleTypes, string> RoleColor => new()
