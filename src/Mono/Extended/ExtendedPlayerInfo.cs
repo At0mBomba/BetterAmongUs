@@ -151,12 +151,6 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
     /// </summary>
     [HideFromIl2Cpp]
     internal ExtendedAntiCheatInfo? AntiCheatInfo { get; } = new();
-
-    /// <summary>
-    /// Gets extended gameplay information.
-    /// </summary>
-    [HideFromIl2Cpp]
-    internal ExtendedGameplayInfo? GameplayInfo { get; } = new();
 }
 
 /// <summary>
@@ -244,17 +238,6 @@ internal sealed class ExtendedRoleInfo
     /// Gets or sets the role to display when dead.
     /// </summary>
     internal RoleTypes DeadDisplayRole { get; set; }
-}
-
-/// <summary>
-/// Represents the gameplay information for a player.
-/// </summary>
-internal sealed class ExtendedGameplayInfo
-{
-    /// <summary>
-    /// Gets or sets a value indicating whether the player is currently in a vent.
-    /// </summary>
-    internal bool InVent { get; set; }
 }
 
 /// <summary>

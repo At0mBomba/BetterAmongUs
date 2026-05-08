@@ -253,20 +253,21 @@ internal static class PlayerControlHelper
         if (player == null)
             return false;
 
-        if (player.IsLocalPlayer())
-        {
-            return player.inVent || player.walkingToVent;
-        }
-        else
-        {
-            var extendedData = player.ExtendedData();
-            if (extendedData != null)
-            {
-                return extendedData.GameplayInfo.InVent;
-            }
-        }
+        if (player.inVent)
+            return true;
 
-        return false;
+        if (player.walkingToVent && !player.moveable)
+            return true;
+
+        var physics = player.MyPhysics;
+        if (physics == null)
+            return false;
+
+        var animations = physics.Animations;
+        if (animations == null)
+            return false;
+
+        return animations.IsPlayingEnterVentAnimation();
     }
 
     /// <summary>

@@ -2,7 +2,6 @@ using AmongUs.GameOptions;
 using BetterAmongUs.Attributes;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Managers;
-using BetterAmongUs.Mono.Extended;
 using Hazel;
 
 namespace BetterAmongUs.Modules.AntiCheat.RPCHandlers;
@@ -21,10 +20,5 @@ internal sealed class EnterVentHandler : RPCHandler
                 LogRpcInfo($"Non-impostor and non-engineer attempted EnterVent RPC");
             }
         }
-    }
-
-    internal override void Handle(PlayerControl? sender, MessageReader reader)
-    {
-        sender.ExtendedData().GameplayInfo.InVent = true;
     }
 }
