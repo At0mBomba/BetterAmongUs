@@ -2,6 +2,7 @@
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
+using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
 using HarmonyLib;
 using InnerNet;
@@ -114,7 +115,10 @@ internal static class ClientPatch
         ChatPatch.CensorPlayerChats();
 
         // Start custom loading sequence
-        __instance.StartCoroutine(CoLoading());
+        if (!BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_CustomLoadingBar))
+        {
+            __instance.StartCoroutine(CoLoading());
+        }
     }
 
     private static IEnumerator CoLoading()

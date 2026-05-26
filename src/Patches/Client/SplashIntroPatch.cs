@@ -1,4 +1,5 @@
 ﻿using BetterAmongUs.Helpers;
+using BetterAmongUs.Modules.Support;
 using HarmonyLib;
 using UnityEngine;
 
@@ -20,6 +21,9 @@ internal static class SplashIntroPatch
     [HarmonyPrefix]
     private static void SplashManager_Start_Prefix(SplashManager __instance)
     {
+        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_CustomSplashIntro))
+            return;
+
         // Reset all flags when splash screen starts
         Skip = false;
         BetterIntro = false;
@@ -35,6 +39,9 @@ internal static class SplashIntroPatch
     [HarmonyPrefix]
     private static bool SplashManager_Update_Prefix(SplashManager __instance)
     {
+        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_CustomSplashIntro))
+            return true;
+
         if (Skip)
         {
             CheckIfDone(__instance);

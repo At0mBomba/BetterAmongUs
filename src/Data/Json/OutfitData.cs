@@ -1,4 +1,5 @@
 ﻿using AmongUs.Data;
+using BetterAmongUs.Modules.Support;
 
 namespace BetterAmongUs.Data.Json;
 
@@ -59,6 +60,9 @@ internal sealed class OutfitData
 
         var Save = () =>
         {
+            if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_OutfitPresets))
+                return;
+
             if (ignoreChange)
                 return;
 

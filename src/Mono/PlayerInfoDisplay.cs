@@ -4,6 +4,7 @@ using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
+using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using HarmonyLib;
@@ -430,6 +431,9 @@ internal class PlayerInfoDisplay : MonoBehaviour
     /// </summary>
     private void UpdateColorBlindTextPosition()
     {
+        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_CustomColorBlindText))
+            return;
+
         var text = _player.cosmetics.colorBlindText;
         if (!text.enabled)
             return;

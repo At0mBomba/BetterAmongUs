@@ -4,6 +4,7 @@ using BetterAmongUs.Data.Config;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.OptionItems;
+using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
 using HarmonyLib;
@@ -31,7 +32,11 @@ internal static class PlayerControlPatch
 
     private static IEnumerator CoSetFavoriteColor(PlayerControl player)
     {
-        if (!GameState.IsLobby) yield break;
+        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_FavoriteColor))
+            yield break;
+
+        if (!GameState.IsLobby)
+            yield break;
 
         // Apply player's favorite color setting if they own this character
         if (player.AmOwner)
@@ -92,12 +97,15 @@ internal static class PlayerControlPatch
         if (targetPlayer == null)
             return;
 
-        if (targetPlayer.Data.PlayerId == __instance.Data.PlayerId)
+        if (!BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_CustomColorBlindText))
         {
-            if (animate)
+            if (targetPlayer.Data.PlayerId == __instance.Data.PlayerId)
             {
-                // SetColor early so color blind text doesn't reveal previous color during animation
-                __instance.StartCoroutine(CoSetColorEarly(__instance));
+                if (animate)
+                {
+                    // SetColor early so color blind text doesn't reveal previous color during animation
+                    __instance.StartCoroutine(CoSetColorEarly(__instance));
+                }
             }
         }
 

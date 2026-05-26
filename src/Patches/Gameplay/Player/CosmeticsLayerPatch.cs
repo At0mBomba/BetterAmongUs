@@ -1,4 +1,5 @@
 ﻿using BetterAmongUs.Helpers;
+using BetterAmongUs.Modules.Support;
 using HarmonyLib;
 
 namespace BetterAmongUs.Patches.Gameplay.Player;
@@ -10,6 +11,11 @@ internal static class CosmeticsLayerPatch
     [HarmonyPrefix]
     private static bool CosmeticsLayer_GetColorBlindText_Prefix(CosmeticsLayer __instance, ref string __result)
     {
+        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_CustomColorBlindText))
+        {
+            return true;
+        }
+
         // Skip for custom colors not in vanilla palette
         if (__instance.bodyMatProperties.ColorId > Palette.PlayerColors.Length) return true;
 

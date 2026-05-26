@@ -3,6 +3,7 @@ using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Data.Json;
 using BetterAmongUs.Helpers;
+using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Client.Managers;
 using HarmonyLib;
@@ -24,6 +25,9 @@ internal static class PlayerTabPatch
     [HarmonyPrefix]
     private static void PlayerTab_OnEnable_Prefix(PlayerTab __instance)
     {
+        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_OutfitPresets))
+            return;
+
         if (_presetTabSetup == null)
         {
             _presetTabSetup = __instance;
@@ -45,6 +49,9 @@ internal static class PlayerTabPatch
     [HarmonyPostfix]
     private static void PlayerTab_OnEnable_Postfix(PlayerTab __instance)
     {
+        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_FavoriteColor))
+            return;
+
         SetupFavoriteColor(__instance);
     }
 
