@@ -22,7 +22,6 @@ internal sealed class BetterGameSettings
     internal static OptionCheckboxItem? DetectInvalidRPCs;
 
     internal static OptionStringItem? RoleRandomizer;
-    internal static OptionCheckboxItem? DesyncRoles;
 
     internal static OptionCheckboxItem? CancelInvalidSabotage;
     internal static OptionCheckboxItem? CensorDetectionReason;
@@ -87,7 +86,7 @@ internal static class GameSettingsPatch
         {
             OptionHeaderItem.Create(BetterSettingsTab, "BetterSetting.MainHeader.RoleAlgorithm");
             BetterGameSettings.RoleRandomizer = OptionStringItem.Create(1100, BetterSettingsTab, "BetterSetting.Setting.RoleRandomizer", ["System.Random", "UnityEngine.Random"], 0);
-            BetterGameSettings.DesyncRoles = OptionCheckboxItem.Create(1200, BetterSettingsTab, "BetterSetting.Setting.DesyncRoles", true);
+            // BetterGameSettings.DesyncRoles = OptionCheckboxItem.Create(1200, BetterSettingsTab, "BetterSetting.Setting.DesyncRoles", true);
         }
 
         // Gameplay Settings section

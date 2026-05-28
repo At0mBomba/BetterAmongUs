@@ -5,7 +5,6 @@ using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using HarmonyLib;
-using Hazel;
 
 namespace BetterAmongUs.Patches.Gameplay.Managers;
 
@@ -14,22 +13,6 @@ internal static class RoleManagerPatch
 {
     internal static Dictionary<string, int> ImpostorMultiplier = []; // HashPuid, Multiplier
     private static readonly Random random = new();
-
-    // Check if client is verified Better Among Us user
-    private static Func<InnerNet.ClientData, bool> FilterTargetClients(PlayerControl target)
-    {
-        return (clientData) =>
-        {
-            if (clientData.Id == target.GetClientId())
-                return false;
-
-            var betterData = clientData.ExtendedData();
-            if (betterData == null)
-                return true;
-
-            return !betterData.IsVerifiedBetterUser;
-        };
-    }
 
     [HarmonyPatch(typeof(RoleManager), nameof(RoleManager.SetRole))]
     [HarmonyPrefix]
@@ -161,19 +144,6 @@ internal static class RoleManagerPatch
                         Impostors.Add(pc);
                         pc.RpcSetRole(kvp.Key);
 
-                        // Desync role to hide special role from non-BAU players
-                        if (BetterGameSettings.DesyncRoles.GetBool())
-                        {
-                            if (kvp.Key.CanDesyncRole())
-                            {
-                                AmongUsClient.Instance.SendRpcImmediatelyDesync(pc.NetId, RpcCalls.SetRole, SendOption.None, FilterTargetClients(pc), writer =>
-                                {
-                                    writer.Write((ushort)RoleTypes.Impostor);
-                                    writer.Write(false);
-                                });
-                            }
-                        }
-
                         Logger_.LogPrivate($"Assigned {kvp.Key.GetRoleName()} role to {pc.Data.PlayerName}", "RoleManager");
                         break;
                     }
@@ -200,19 +170,6 @@ internal static class RoleManagerPatch
                         CrewmateRoles[kvp.Key]--;
                         Crewmates.Add(pc);
                         pc.RpcSetRole(kvp.Key);
-
-                        // Desync role to hide special role from non-BAU players
-                        if (BetterGameSettings.DesyncRoles.GetBool())
-                        {
-                            if (kvp.Key.CanDesyncRole())
-                            {
-                                AmongUsClient.Instance.SendRpcImmediatelyDesync(pc.NetId, RpcCalls.SetRole, SendOption.None, FilterTargetClients(pc), writer =>
-                                {
-                                    writer.Write((ushort)RoleTypes.Crewmate);
-                                    writer.Write(false);
-                                });
-                            }
-                        }
 
                         Logger_.LogPrivate($"Assigned {kvp.Key.GetRoleName()} role to {pc.Data.PlayerName}", "RoleManager");
                         break;
@@ -347,16 +304,6 @@ internal static class RoleManagerPatch
             if (kvp.Value > 0 && RNG() <= GameOptionsManager.Instance.CurrentGameOptions.RoleOptions.GetChancePerGame(kvp.Key))
             {
                 player.RpcSetRole(kvp.Key);
-
-                // Desync ghost role to hide it from non-BAU players
-                if (BetterGameSettings.DesyncRoles.GetBool())
-                {
-                    AmongUsClient.Instance.SendRpcImmediatelyDesync(player.NetId, RpcCalls.SetRole, SendOption.None, FilterTargetClients(player), writer =>
-                    {
-                        writer.Write((ushort)player.Data.Role.DefaultGhostRole);
-                        writer.Write(false);
-                    });
-                }
 
                 return false;
             }
