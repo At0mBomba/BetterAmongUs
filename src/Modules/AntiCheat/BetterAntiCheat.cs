@@ -7,7 +7,6 @@ using BetterAmongUs.Managers;
 using BetterAmongUs.Modules.AntiCheat.RPCHandlers.NetObjectHandlers;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
-using BetterAmongUs.Network;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using Hazel;
 
@@ -151,15 +150,6 @@ internal static class BetterAntiCheat
             {
                 reader.Recycle();
                 return false;
-            }
-
-            if (callId == (byte)RpcCalls.SetNamePlateStr)
-            {
-                if (RPC.IsPackedCustomRpc(reader))
-                {
-                    reader.Recycle();
-                    return false;
-                }
             }
 
             if (!player.IsHost())

@@ -276,7 +276,7 @@ internal static class NetworkManager
 
                     if (innerNetObject is PlayerControl player && player != null)
                     {
-                        if (rpcCall == (byte)RpcCalls.SetNamePlateStr)
+                        if (rpcCall == (byte)RPC.CUSTOM_RPC_CALL)
                         {
                             RPC.HandleCustomRPCPacked(player, reader);
                         }

@@ -1,5 +1,4 @@
-﻿using AmongUs.Data;
-using BetterAmongUs.Enums;
+﻿using BetterAmongUs.Enums;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Mono.Extended;
@@ -9,11 +8,14 @@ namespace BetterAmongUs.Network;
 
 /// <summary>
 /// Handles custom RPC (Remote Procedure Call) messages for BetterAmongUs.
-/// This class provides methods for sending and receiving custom RPC messages
-/// packed within vanilla RPC calls to maintain compatibility with vanilla servers.
 /// </summary>
 internal static class RPC
 {
+    /// <summary>
+    /// The base rpc call used for custom RPC messages.
+    /// </summary>
+    internal const RpcCalls CUSTOM_RPC_CALL = RpcCalls.CancelPet;
+
     /// <summary>
     /// The flag string used to identify custom RPC messages packed within vanilla RPC calls.
     /// </summary>
@@ -29,11 +31,8 @@ internal static class RPC
     /// <param name="targetClientId">The specific client ID to target, or -1 to broadcast to all clients.</param>
     internal static void SendCustomRpcPacked(CustomRPC customRPC, Action<MessageWriter> action, int targetClientId = -1)
     {
-        AmongUsClient.Instance.SendRpcImmediately(PlayerControl.LocalPlayer.NetId, RpcCalls.SetNamePlateStr, SendOption.Reliable, writer =>
+        AmongUsClient.Instance.SendRpcImmediately(PlayerControl.LocalPlayer.NetId, CUSTOM_RPC_CALL, SendOption.Reliable, writer =>
         {
-            writer.Write(DataManager.Player.Customization.NamePlate);
-            writer.Write(PlayerControl.LocalPlayer.GetNextRpcSequenceId(RpcCalls.SetNamePlateStr));
-
             writer.Write(CUSTOM_RPC_FLAG); // Flag to check if its a rpc packed into SetNamePlateStr
             writer.Write((byte)customRPC);
             action(writer);
@@ -52,9 +51,6 @@ internal static class RPC
             return;
 
         MessageReader reader = MessageReader.Get(oldReader);
-
-        _ = reader.ReadString();
-        _ = reader.ReadByte();
 
         if (IsPackedCustomRpc(reader))
         {
