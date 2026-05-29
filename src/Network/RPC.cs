@@ -1,6 +1,5 @@
 ﻿using BetterAmongUs.Enums;
 using BetterAmongUs.Helpers;
-using BetterAmongUs.Modules;
 using BetterAmongUs.Mono.Extended;
 using Hazel;
 
@@ -104,22 +103,6 @@ internal static class RPC
                     }
                     break;
             }
-        }
-        else if (!Enum.IsDefined(typeof(CustomRPC), (int)unchecked(callId)))
-        {
-            try
-            {
-                if (!GameState.IsHost)
-                {
-                    if (player.IsHost())
-                    {
-                        var Icon = Translator.GetString("BAUMark");
-                        var BAU = $"<color=#278720>{Icon}</color><color=#0ed400><b>{Translator.GetString("BAU")}</b></color><color=#278720>{Icon}</color>";
-                        Utils.DisconnectSelf(string.Format(Translator.GetString("ModdedLobbyMsg"), BAU));
-                    }
-                }
-            }
-            catch { }
         }
     }
 

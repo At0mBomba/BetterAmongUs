@@ -18,12 +18,15 @@ namespace BetterAmongUs.Modules.AntiCheat;
 internal static class BetterAntiCheat
 {
     /// <summary>
-    /// Gets whether anti-cheat is enabled for the current player.
+    /// Gets whether anti-cheat is enabled.
     /// </summary>
     internal static bool IsEnabled
     {
         get
         {
+            if (GameState.IsModdedProtocol)
+                return false;
+
             if (PlayerControl.LocalPlayer == null)
                 return false;
 

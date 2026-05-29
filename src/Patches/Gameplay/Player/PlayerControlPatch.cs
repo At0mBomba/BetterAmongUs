@@ -2,6 +2,7 @@
 using BepInEx.Unity.IL2CPP.Utils.Collections;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Helpers;
+using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.OptionItems;
 using BetterAmongUs.Modules.Support;
@@ -27,24 +28,29 @@ internal static class PlayerControlPatch
         OptionPlayerItem.UpdateAllValues();
 
         // Append favorite color setting to player initialization coroutine
-        __result = Effects.Sequence(__result, CoSetFavoriteColor(__instance).WrapToIl2Cpp());
+        __result = Effects.Sequence(__result, CoStartPostfix(__instance).WrapToIl2Cpp());
     }
 
-    private static IEnumerator CoSetFavoriteColor(PlayerControl player)
+    private static IEnumerator CoStartPostfix(PlayerControl player)
     {
-        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_FavoriteColor))
-            yield break;
-
-        if (!GameState.IsLobby)
-            yield break;
-
-        // Apply player's favorite color setting if they own this character
-        if (player.AmOwner)
+        if (GameState.IsLobby)
         {
-            if (BAUConfigs.FavoriteColor.Value >= 0 && player.cosmetics.ColorId != (byte)BAUConfigs.FavoriteColor.Value)
+            if (player.AmOwner)
             {
-                // Send command to server to change color
-                player.CmdCheckColor((byte)BAUConfigs.FavoriteColor.Value);
+                // Apply player's favorite color setting if they own this character
+                if (!BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_FavoriteColor))
+                {
+                    if (BAUConfigs.FavoriteColor.Value >= 0 && player.cosmetics.ColorId != (byte)BAUConfigs.FavoriteColor.Value)
+                    {
+                        // Send command to server to change color
+                        player.CmdCheckColor((byte)BAUConfigs.FavoriteColor.Value);
+                    }
+                }
+
+                if (GameState.IsModdedProtocol)
+                {
+                    BetterNotificationManager.Notify(Translator.GetString("AntiCheat.DisabledModdedProtocol"), 6f, true);
+                }
             }
         }
 

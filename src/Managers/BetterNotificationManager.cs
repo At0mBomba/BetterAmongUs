@@ -85,10 +85,11 @@ internal static class BetterNotificationManager
     /// Displays a notification message in-game.
     /// </summary>
     /// <param name="text">The text to display in the notification.</param>
-    /// <param name="Time">The duration in seconds to show the notification.</param>
-    internal static void Notify(string text, float Time = 5f)
+    /// <param name="time">The duration in seconds to show the notification.</param>
+    /// /// <param name="force">If notification should be forced even if better notifications is disabled.</param>
+    internal static void Notify(string text, float time = 5f, bool force = false)
     {
-        if (!BAUConfigs.BetterNotifications.Value)
+        if (!BAUConfigs.BetterNotifications.Value && !force)
             return;
 
         if (BAUNotificationManagerObj == null)
@@ -99,11 +100,11 @@ internal static class BetterNotificationManager
             if (text == TextArea.text)
                 return;
 
-            NotifyQueue[text] = Time;
+            NotifyQueue[text] = time;
             return;
         }
 
-        showTime = Time;
+        showTime = time;
         BAUNotificationManagerObj.SetActive(true);
         NameText.text = $"<color=#00ff44>{Translator.GetString("SystemNotification")}</color>";
         TextArea.text = text;
@@ -167,7 +168,7 @@ internal static class BetterNotificationManager
         {
             BetterDataManager.Files.BetterDataFile.CheatData.Add(new(player?.ExtendedData().RealName ?? player.Data.PlayerName, player.GetHashPuid(), player.Data.FriendCode, reason));
             BetterDataManager.Files.BetterDataFile.Save();
-            Notify(text, Time: 8f);
+            Notify(text, time: 8f);
         }
 
         Logger_.LogCheat($"{player.cosmetics.nameText.text} Info: {player.Data.PlayerName} - {player.Data.FriendCode} - {player.GetHashPuid()}");

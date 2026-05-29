@@ -246,7 +246,7 @@ internal static class GameState
     {
         get
         {
-            if (!IsVanillaServer)
+            if (IsFreePlay || IsLocalGame)
             {
                 return false;
             }
@@ -261,7 +261,7 @@ internal static class GameState
                 return false;
             }
 
-            if (PlayerControl.LocalPlayer.Data.AmOwner)
+            if (PlayerControl.LocalPlayer.Data.OwnerId == -2)
             {
                 return true;
             }
