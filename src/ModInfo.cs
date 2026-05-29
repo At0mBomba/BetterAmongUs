@@ -108,5 +108,7 @@ internal static class ModInfo
     internal static class Constants
     {
         internal const int MAX_CHAT_TEXT = 120;
+        internal const string BAU_CUSTOM_RPC_FLAG = "bau:rpc";
+        internal const string BAU_MODDED_PROTOCOL_FLAG = "bau:flags";
     }
 }

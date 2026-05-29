@@ -17,18 +17,13 @@ internal sealed class ExtendedPlayerControl : MonoBehaviour, IMonoExtension<Play
     /// </summary>
     public PlayerControl? BaseMono { get; set; }
 
-    /// <summary>
-    /// Gets the PlayerControl instance.
-    /// </summary>
-    internal PlayerControl? _Player => BaseMono;
-
     private void Awake()
     {
         if (!this.RegisterExtension())
             return;
 
         this.StartCoroutine(CoAddBetterData());
-        _Player.gameObject.AddComponent<PlayerInfoDisplay>().Init(_Player);
+        BaseMono.gameObject.AddComponent<PlayerInfoDisplay>().Init(BaseMono);
     }
 
     /// <summary>
@@ -38,12 +33,12 @@ internal sealed class ExtendedPlayerControl : MonoBehaviour, IMonoExtension<Play
     [HideFromIl2Cpp]
     private IEnumerator CoAddBetterData()
     {
-        while (_Player == null || _Player.Data == null)
+        while (BaseMono == null || BaseMono.Data == null)
         {
             yield return null;
         }
 
-        TryCreateExtendedData(_Player.Data);
+        TryCreateExtendedData(BaseMono.Data);
     }
 
     /// <summary>

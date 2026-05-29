@@ -18,6 +18,7 @@ using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace BetterAmongUs;
 
@@ -160,6 +161,7 @@ internal class BAUPlugin : BasePlugin
         BAUModdedSupportEvents.OnBAUOptionsLoadedEvent.InvokeAll([.. OptionItem.AllOptions.Cast<object>()]);
         InstanceAttribute.RegisterAll();
         OutfitData.Initialize();
+        SceneManager.add_sceneLoaded((Action<Scene, LoadSceneMode>)OnSceneLoaded);
 
         if (File.Exists(BetterDataManager.Files.logFilePath))
             File.WriteAllText(BetterDataManager.Files.previousLogFilePath, File.ReadAllText(BetterDataManager.Files.logFilePath));
@@ -169,6 +171,17 @@ internal class BAUPlugin : BasePlugin
 
         string SupportedVersions = string.Join(" ", ModInfo.SupportedAmongUsVersions);
         Logger_.Log($"BetterAmongUs {BetterAmongUsVersion}-{ModInfo.BuildDate} - [{AppVersion} --> {SupportedVersions}] {Utils.GetPlatformName(PlatformData.Platform)}");
+    }
+
+    private static void OnSceneLoaded(Scene scene, LoadSceneMode _)
+    {
+        if (AmongUsClient.Instance != null)
+        {
+            if (scene.name == AmongUsClient.Instance.MainMenuScene)
+            {
+                BAUModdedSupportFlags.ClearTempFlags();
+            }
+        }
     }
 
     /// <summary>

@@ -35,7 +35,7 @@ internal static class ClientPatch
 
     [HarmonyPatch(typeof(SignInStatusComponent), nameof(SignInStatusComponent.SetOnline))]
     [HarmonyPrefix]
-    private static bool SignInStatusComponent_SetOnline_Prefix(SignInStatusComponent __instance)
+    private static bool SignInStatusComponent_SetOnline_Prefix()
     {
         // Get supported Among Us versions for BAU
         var varSupportedVersions = ModInfo.SupportedAmongUsVersions;
@@ -80,10 +80,11 @@ internal static class ClientPatch
 
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.ExitGame))]
     [HarmonyPostfix]
-    private static void AmongUsClient_ExitGame_Postfix([HarmonyArgument(0)] DisconnectReasons reason)
+    private static void AmongUsClient_ExitGame_Postfix(DisconnectReasons reason)
     {
         // Hide custom loading bar when exiting game
         CustomLoadingBarManager.ToggleLoadingBar(false);
+
         Logger_.Log($"Client has left game for: {Enum.GetName(reason)}", "AmongUsClientPatch");
     }
 

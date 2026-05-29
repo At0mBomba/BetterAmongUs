@@ -40,7 +40,7 @@ internal sealed class HandshakeHandler
     {
         if (!BAUConfigs.SendBetterRpc.Value) yield break;
 
-        while (_extendedData._Data == null || _extendedData._Data.Object == null || PlayerControl.LocalPlayer == null)
+        while (_extendedData.BaseMono == null || _extendedData.BaseMono.Object == null || PlayerControl.LocalPlayer == null)
         {
             if (GameState.IsFreePlay) yield break;
             yield return null;
@@ -71,7 +71,7 @@ internal sealed class HandshakeHandler
     // Local client sends to client
     private void SendSecretToPlayer()
     {
-        if (_extendedData._Data.Object.IsLocalPlayer())
+        if (_extendedData.BaseMono.Object.IsLocalPlayer())
             return;
 
         if (HasSendSharedSecret)
@@ -84,7 +84,7 @@ internal sealed class HandshakeHandler
             writer.Write(SharedSecret.CryptoAvailable);
             writer.WriteBytes(SharedSecret.GetPublicKey());
             writer.Write(SharedSecret.GetTempKey());
-        }, _extendedData._Data.ClientId);
+        }, _extendedData.BaseMono.ClientId);
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ internal sealed class HandshakeHandler
     // Client receives from local client
     internal void HandleSecretFromSender(MessageReader reader)
     {
-        if (_extendedData._Data?.Object?.IsLocalPlayer() == true)
+        if (_extendedData.BaseMono?.Object?.IsLocalPlayer() == true)
             return;
 
         bool senderSupportsCrypto = reader.ReadBoolean();
@@ -116,7 +116,7 @@ internal sealed class HandshakeHandler
         _extendedData.IsBetterUser = true;
 
         TryHandlePendingVerificationData();
-        SendSecretHashToSender(tempKey, _extendedData._Data.ClientId);
+        SendSecretHashToSender(tempKey, _extendedData.BaseMono.ClientId);
         ResendSecretToPlayer();
     }
 

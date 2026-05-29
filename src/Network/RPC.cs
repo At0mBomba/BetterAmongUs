@@ -15,10 +15,6 @@ internal static class RPC
     /// </summary>
     internal const RpcCalls CUSTOM_RPC_CALL = RpcCalls.CancelPet;
 
-    /// <summary>
-    /// The flag string used to identify custom RPC messages packed within vanilla RPC calls.
-    /// </summary>
-    internal const string CUSTOM_RPC_FLAG = "bau:rpc";
 
     /// <summary>
     /// Sends a custom RPC message packed within a vanilla SetNamePlateStr RPC call.
@@ -32,7 +28,7 @@ internal static class RPC
     {
         AmongUsClient.Instance.SendRpcImmediately(PlayerControl.LocalPlayer.NetId, CUSTOM_RPC_CALL, SendOption.Reliable, writer =>
         {
-            writer.Write(CUSTOM_RPC_FLAG); // Flag to check if its a rpc packed into SetNamePlateStr
+            writer.Write(ModInfo.Constants.BAU_CUSTOM_RPC_FLAG); // Flag to check if its a rpc packed into SetNamePlateStr
             writer.Write((byte)customRPC);
             action(writer);
         }, targetClientId);
@@ -120,7 +116,7 @@ internal static class RPC
         {
             try
             {
-                if (reader.ReadString() == CUSTOM_RPC_FLAG)
+                if (reader.ReadString() == ModInfo.Constants.BAU_CUSTOM_RPC_FLAG)
                 {
                     return true;
                 }

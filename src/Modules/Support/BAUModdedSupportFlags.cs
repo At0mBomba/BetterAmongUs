@@ -221,6 +221,7 @@ public static class BAUModdedSupportFlags
     public static string Disable_CustomColorBlindText = "gameplay.disable.customcolorblindtext";
 
     private static readonly HashSet<string> _flags = [];
+    private static readonly HashSet<int> _tempFlags = [];
     private static bool _initialized = false;
 
     private static readonly BAUSupportVar<string[]> BAUSupportFlags = new("bau:flags");
@@ -263,12 +264,54 @@ public static class BAUModdedSupportFlags
     }
 
     /// <summary>
+    /// Manually adds a temporary flag to the internal temporary flag collection.
+    /// </summary>
+    /// <param name="flag">The flag hash to add to the collection.</param>
+    internal static void AddTempFlag(int flag)
+    {
+        _tempFlags.Add(flag);
+    }
+
+    /// <summary>
+    /// CLears all temporary flags.
+    /// </summary>
+    internal static void ClearTempFlags()
+    {
+        _tempFlags.Clear();
+    }
+
+    /// <summary>
     /// Checks if a specific flag has been declared by any loaded mod.
     /// </summary>
     /// <param name="flag">The flag to check for presence in the collected flags.</param>
     /// <returns><c>true</c> if the flag is present; otherwise, <c>false</c>.</returns>
     public static bool HasFlag(string flag)
     {
-        return _flags.Contains(flag);
+        return _flags.Contains(flag) || _tempFlags.Contains(GetFlagHash(flag));
+    }
+
+    /// <summary>
+    /// Generates a integer hash from a string for use as a flag identifier.
+    /// </summary>
+    /// <param name="input">The input string to hash. Can be null or empty.</param>
+    /// <returns>
+    /// A integer hash value. Returns 0 for null or empty strings.
+    /// </returns>
+    internal static int GetFlagHash(string input)
+    {
+        if (string.IsNullOrEmpty(input)) return 0;
+
+        int hash = 17;
+        hash = hash * 31 + input.Length;
+
+        for (int i = 0; i < input.Length; i++)
+        {
+            char c = input[i];
+            hash = hash * 31 + c;
+            hash = hash * 31 + i;
+        }
+
+        hash = hash * 31 + input.Length;
+        return hash;
     }
 }

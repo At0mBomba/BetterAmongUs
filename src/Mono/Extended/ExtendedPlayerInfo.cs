@@ -2,6 +2,9 @@
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
+using BetterAmongUs.Modules.Support;
+using HarmonyLib;
+using Hazel;
 using Il2CppInterop.Runtime.Attributes;
 using InnerNet;
 using UnityEngine;
@@ -21,14 +24,12 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
         }
         catch (Exception ex)
         {
-            Logger_.Error("Handshake disabled: " + ex.Message);
+            Logger_.Log("Handshake disabled: " + ex.Message);
             HandshakeHandler = null;
         }
     }
 
     public NetworkedPlayerInfo? BaseMono { get; set; }
-
-    internal NetworkedPlayerInfo? _Data => BaseMono;
 
     private bool hasSet = false;
 
@@ -75,17 +76,17 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
 
         if (AntiCheatInfo.RPCSentPS > 0)
         {
-            bool flag = _Data.IsCheater();
+            bool flag = BaseMono.IsCheater();
 
             if (AntiCheatInfo.RPCSentPS >= ExtendedAntiCheatInfo.MAX_RPC_SENT && !flag)
             {
                 BetterNotificationManager.NotifyCheat(
-                    _Data.Object,
+                    BaseMono.Object,
                     Translator.GetString("AntiCheat.Reason.RPCSentPS"),
                     Translator.GetString("AntiCheat.UnauthorizedAction")
                 );
 
-                Logger_.LogCheat($"{_Data.Object.ExtendedData().RealName} {AntiCheatInfo.RPCSentPS} Sent.");
+                Logger_.LogCheat($"{BaseMono.Object.ExtendedData().RealName} {AntiCheatInfo.RPCSentPS} Sent.");
             }
 
             timeAccumulator += time;
@@ -95,6 +96,28 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
                 AntiCheatInfo.RPCSentPS -= 1;
                 timeAccumulator = 0f;
             }
+        }
+    }
+
+    internal void Deserialize(MessageReader reader)
+    {
+        if (BaseMono.OwnerId != -2)
+            return;
+
+        if (reader.BytesRemaining > 0)
+        {
+            try
+            {
+                if (reader.ReadString() == ModInfo.Constants.BAU_MODDED_PROTOCOL_FLAG)
+                {
+                    int flagCount = reader.ReadPackedInt32();
+                    for (int i = 0; i < flagCount; i++)
+                    {
+                        BAUModdedSupportFlags.AddTempFlag(reader.ReadPackedInt32());
+                    }
+                }
+            }
+            catch { }
         }
     }
 
@@ -113,7 +136,7 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
     /// <summary>
     /// Gets the player's real name.
     /// </summary>
-    internal string RealName => _Data?.PlayerName ?? "???";
+    internal string RealName => BaseMono?.PlayerName ?? "???";
 
     /// <summary>
     /// Gets or sets the last name set for this player.
@@ -245,6 +268,18 @@ internal sealed class ExtendedRoleInfo
 /// </summary>
 internal static class PlayerControlDataExtension
 {
+    [HarmonyPatch(typeof(NetworkedPlayerInfo))]
+    class NetworkedPlayerInfoPatch
+    {
+        [HarmonyPatch(nameof(NetworkedPlayerInfo.Deserialize))]
+        [HarmonyPriority(Priority.Last)]
+        [HarmonyPostfix]
+        internal static void Deserialize_Postfix(NetworkedPlayerInfo __instance, MessageReader reader)
+        {
+            __instance.ExtendedData()?.Deserialize(reader);
+        }
+    }
+
     /// <summary>
     /// Gets extended player data from a PlayerControl.
     /// </summary>
