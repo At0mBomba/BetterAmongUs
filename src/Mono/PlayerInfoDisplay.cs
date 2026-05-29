@@ -188,7 +188,10 @@ internal class PlayerInfoDisplay : MonoBehaviour
         if (!BAUConfigs.LobbyPlayerInfo.Value && GameState.IsLobby)
         {
             ResetText();
-            _player.RawSetName(_player.Data.PlayerName);
+            if (!BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_NameOverride))
+            {
+                _player.RawSetName(_player.Data.PlayerName);
+            }
             return;
         }
 
@@ -221,26 +224,29 @@ internal class PlayerInfoDisplay : MonoBehaviour
             SetInGameInfo(_sbTagTop);
         }
 
-        if (!_player.IsInShapeshift())
+        if (!BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_NameOverride))
         {
-            if (_player.IsImpostorTeammate())
-                newName = newName.ToColor(Colors.ImpostorRed);
+            if (!_player.IsInShapeshift())
+            {
+                if (_player.IsImpostorTeammate())
+                    newName = newName.ToColor(Colors.ImpostorRed);
 
-            _player.RawSetName(newName);
-        }
-        else
-        {
-            var targetData = Utils.PlayerDataFromPlayerId(_player.shapeshiftTargetPlayerId);
-            if (targetData == null)
-                return;
+                _player.RawSetName(newName);
+            }
+            else
+            {
+                var targetData = Utils.PlayerDataFromPlayerId(_player.shapeshiftTargetPlayerId);
+                if (targetData == null)
+                    return;
 
-            var betterTargetData = targetData.ExtendedData();
-            string name = betterTargetData != null ? betterTargetData.RealName : targetData.PlayerName;
+                var betterTargetData = targetData.ExtendedData();
+                string name = betterTargetData != null ? betterTargetData.RealName : targetData.PlayerName;
 
-            if (_player.IsImpostorTeammate())
-                name = name.ToColor(Colors.ImpostorRed);
+                if (_player.IsImpostorTeammate())
+                    name = name.ToColor(Colors.ImpostorRed);
 
-            _player.RawSetName(name);
+                _player.RawSetName(name);
+            }
         }
 
         UpdateTextIfChanged(_topText, _sbTagTop, ref _lastTopText);
@@ -256,6 +262,12 @@ internal class PlayerInfoDisplay : MonoBehaviour
     /// <param name="lastValue">Reference to last value for comparison.</param>
     private static void UpdateTextIfChanged(TextMeshPro textMesh, StringBuilder sb, ref string lastValue)
     {
+        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_PlayerInfo))
+        {
+            textMesh.SetText(string.Empty);
+            return;
+        }
+
         if (textMesh == null)
             return;
 

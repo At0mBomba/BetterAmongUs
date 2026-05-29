@@ -191,6 +191,30 @@ public static class BAUModdedSupportFlags
     public static string Disable_VentColorGroups = "gameplay.disable.ventcolorgroups";
 
     /// <summary>
+    /// Disables forcibly overriding player name.
+    /// When enabled by another mod, BetterAmongUs will not override the player name.
+    /// </summary>
+    public static string Disable_NameOverride = "gameplay.disable.nameoverride";
+
+    /// <summary>
+    /// Disables forcibly overriding player chat name.
+    /// When enabled by another mod, BetterAmongUs will not override the player name in chat.
+    /// </summary>
+    public static string Disable_ChatNameOverride = "gameplay.disable.chatnameoverride";
+
+    /// <summary>
+    /// Disables custom info displayed above player.
+    /// When enabled by another mod, BetterAmongUs not display custom info above the player.
+    /// </summary>
+    public static string Disable_PlayerInfo = "gameplay.disable.playerinfo";
+
+    /// <summary>
+    /// Disables custom info displayed in player vote area.
+    /// When enabled by another mod, BetterAmongUs not display custom info player vote area.
+    /// </summary>
+    public static string Disable_PlayerMeetingInfo = "gameplay.disable.playermeetinginfo";
+
+    /// <summary>
     /// Disables custom color blind text.
     /// When enabled by another mod, BetterAmongUs will use the default color blind text.
     /// </summary>

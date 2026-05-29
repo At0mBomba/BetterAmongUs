@@ -240,6 +240,37 @@ internal static class GameState
     }
 
     /// <summary>
+    /// Gets whether if the current lobby is on modded protocol.
+    /// </summary>
+    internal static bool IsModdedProtocol
+    {
+        get
+        {
+            if (!IsVanillaServer)
+            {
+                return false;
+            }
+
+            if (PlayerControl.LocalPlayer == null)
+            {
+                return false;
+            }
+
+            if (PlayerControl.LocalPlayer.Data == null)
+            {
+                return false;
+            }
+
+            if (PlayerControl.LocalPlayer.Data.AmOwner)
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    /// <summary>
     /// Gets whether the current game is a local game.
     /// </summary>
     internal static bool IsLocalGame => AmongUsClient.Instance != null &&

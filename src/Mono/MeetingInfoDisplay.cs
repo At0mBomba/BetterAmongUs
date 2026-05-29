@@ -2,6 +2,7 @@
 using BetterAmongUs.Data;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
+using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using Il2CppInterop.Runtime.Attributes;
 using System.Text;
@@ -26,7 +27,7 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
     private int _lastUpdateFrame;
     private const int UPDATE_COOLDOWN = 5;
 
-    private CachedTranslations _cachedTranslations = new();
+    private readonly CachedTranslations _cachedTranslations = new();
 
     /// <summary>
     /// Cached translations for performance optimization.
@@ -100,7 +101,11 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
         }
 
         UpdateTextPositions();
-        _pva.ColorBlindName.transform.localPosition = new Vector3(-0.91f, -0.19f, -0.05f);
+
+        if (!BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_CustomColorBlindText))
+        {
+            _pva.ColorBlindName.transform.localPosition = new Vector3(-0.91f, -0.19f, -0.05f);
+        }
 
         _lastUpdateFrame = Time.frameCount;
     }
@@ -245,6 +250,9 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
     /// <param name="infoText">The info text.</param>
     private void UpdateNameTextPosition(string roleText, string infoText)
     {
+        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_PlayerMeetingInfo))
+            return;
+
         bool hasRole = !string.IsNullOrEmpty(roleText);
         bool hasInfo = !string.IsNullOrEmpty(infoText);
 
@@ -265,6 +273,12 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
     /// <param name="lastValue">Reference to last value for comparison.</param>
     private static void UpdateTextIfChanged(TextMeshPro textMesh, string newText, ref string lastValue)
     {
+        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_PlayerMeetingInfo))
+        {
+            textMesh.SetText(string.Empty);
+            return;
+        }
+
         if (textMesh == null)
             return;
 

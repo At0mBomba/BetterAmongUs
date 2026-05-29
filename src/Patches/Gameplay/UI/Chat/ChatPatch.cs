@@ -3,6 +3,7 @@ using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
+using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using HarmonyLib;
 using System.Text;
@@ -206,8 +207,11 @@ internal static class ChatPatch
 
     [HarmonyPatch(typeof(ChatController), nameof(ChatController.SetChatBubbleName))]
     [HarmonyPostfix]
-    private static void ChatController_SetChatBubbleName_Postfix(ChatController __instance, ChatBubble bubble, NetworkedPlayerInfo playerInfo, bool isDead, bool didVote)
+    private static void ChatController_SetChatBubbleName_Postfix(ChatBubble bubble, NetworkedPlayerInfo playerInfo, bool isDead, bool didVote)
     {
+        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_ChatNameOverride))
+            return;
+
         if (playerInfo == null)
             return;
 
