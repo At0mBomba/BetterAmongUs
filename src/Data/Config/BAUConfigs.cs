@@ -88,7 +88,7 @@ internal static class BAUConfigs
     /// </summary>
     internal static void LoadConfigs()
     {
-        BAUModdedSupportEvents.InvokeAll_OnBAUConfigEntriesLoaded([
+        BAUModdedSupportEvents.OnBAUConfigEntriesLoadedEvent.InvokeAll([
             AntiCheat, SendBetterRpc, BetterNotifications,
             ForceOwnLanguage, ChatDarkMode, ChatInGameplay, LobbyPlayerInfo,
             DisableLobbyTheme, UnlockFPS, ShowFPS,

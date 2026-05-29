@@ -146,7 +146,7 @@ internal class BAUPlugin : BasePlugin
     /// </summary>
     private void OnChainloaderFinished()
     {
-        if (!BAUModdedSupportEvents.InvokeAll_OnBAULoad(this))
+        if (BAUModdedSupportEvents.OnBAULoadEvent.InvokeAll(this).Any(b => b == false))
             return;
 
         BAUModdedSupportFlags.Initialize();
@@ -157,7 +157,7 @@ internal class BAUPlugin : BasePlugin
         Translator.Initialize();
         Harmony.PatchAll();
         GameSettingsPatch.SetupSettings(true);
-        BAUModdedSupportEvents.InvokeAll_OnBAUOptionsLoaded([.. OptionItem.AllOptions.Cast<object>()]);
+        BAUModdedSupportEvents.OnBAUOptionsLoadedEvent.InvokeAll([.. OptionItem.AllOptions.Cast<object>()]);
         InstanceAttribute.RegisterAll();
         OutfitData.Initialize();
 

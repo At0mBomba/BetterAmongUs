@@ -1,9 +1,6 @@
 ﻿#pragma warning disable CA2211
 
-using BepInEx;
 using BepInEx.Unity.IL2CPP;
-using BetterAmongUs.Helpers;
-using System.Reflection;
 
 namespace BetterAmongUs.Modules.Support;
 
@@ -202,6 +199,8 @@ public static class BAUModdedSupportFlags
     private static readonly HashSet<string> _flags = [];
     private static bool _initialized = false;
 
+    private static readonly BAUSupportVar<string[]> BAUSupportFlags = new("bau:flags");
+
     /// <summary>
     /// Initializes the modded support system by collecting flags from all loaded plugins.
     /// </summary>
@@ -211,37 +210,22 @@ public static class BAUModdedSupportFlags
             return;
 
         _initialized = true;
+        List<string> flags = [];
         foreach (var pluginInfo in IL2CPPChainloader.Instance.Plugins.Values)
         {
-            TryGetFlags((BasePlugin)pluginInfo.Instance);
-        }
-    }
+            if (pluginInfo == null)
+                continue;
 
-    /// <summary>
-    /// Attempts to extract BAUFlags from a loaded plugin's fields.
-    /// </summary>
-    /// <param name="plugin">The plugin instance to extract flags from.</param>
-    private static void TryGetFlags(BasePlugin plugin)
-    {
-        var field = plugin.GetType().GetField("BAUFlags",
-            BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
-
-        if (field == null)
-            return;
-
-        var value = field.IsStatic ? field.GetValue(null) : field.GetValue(plugin);
-
-        if (value is not IEnumerable<string> strings)
-            return;
-
-        var pluginName = plugin.GetType().GetCustomAttribute<BepInPlugin>()?.Name ?? plugin.GetType().Name;
-
-        foreach (var flag in strings)
-        {
-            if (_flags.Add(flag))
+            var modFlags = BAUSupportFlags.GetValue(pluginInfo);
+            if (modFlags != null)
             {
-                Logger_.Log($"Loaded '{flag}' flag from {pluginName}", "BAUModdedSupport");
+                flags.AddRange(modFlags);
             }
+        }
+
+        foreach (var flag in flags.ToHashSet())
+        {
+            AddFlag(flag);
         }
     }
 
