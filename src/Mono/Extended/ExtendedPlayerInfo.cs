@@ -113,7 +113,7 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
                     int flagCount = reader.ReadPackedInt32();
                     for (int i = 0; i < flagCount; i++)
                     {
-                        BAUModdedSupportFlags.AddTempFlag(reader.ReadPackedInt32());
+                        BAUModdedSupportFlags.AddTempFlag(reader.ReadInt32());
                     }
                 }
             }
