@@ -40,7 +40,9 @@ internal static class PlayerControlHelper
             var snapshot = AmongUsClient.Instance.allClients.ToArray();
             foreach (var client in snapshot)
             {
-                if (client?.Character == null) continue;
+                if (client == null) continue;
+                if (client.Character == null) continue;
+
                 if (client.Character.PlayerId == player.PlayerId)
                     return client;
             }
