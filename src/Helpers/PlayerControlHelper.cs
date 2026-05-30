@@ -24,14 +24,28 @@ internal static class PlayerControlHelper
         if (AmongUsClient.Instance == null || player == null)
             return null;
 
-        foreach (var client in AmongUsClient.Instance.allClients)
+        try
         {
-            if (client == null) continue;
-            if (client.Character == null) continue;
+            foreach (var client in AmongUsClient.Instance.allClients)
+            {
+                if (client == null) continue;
+                if (client.Character == null) continue;
 
-            if (client.Character.PlayerId == player.PlayerId)
-                return client;
+                if (client.Character.PlayerId == player.PlayerId)
+                    return client;
+            }
         }
+        catch (InvalidOperationException)
+        {
+            var snapshot = AmongUsClient.Instance.allClients.ToArray();
+            foreach (var client in snapshot)
+            {
+                if (client?.Character == null) continue;
+                if (client.Character.PlayerId == player.PlayerId)
+                    return client;
+            }
+        }
+
         return null;
     }
 
