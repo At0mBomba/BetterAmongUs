@@ -34,7 +34,7 @@ internal static class SendBAUSupportFlagsExamplePatch
 
         writer.Write("bau:flags"); // Mark message as BAU flags
         writer.WritePacked(1); // Amount of flags we are sending
-        writer.Write(GetFlagHash("command.force.bau.prefix")); // Send flag hash, most use GetFlagHash with the exact logic in this example!
+        writer.Write(GetFlagHash("command.force.bau.prefix")); // Send flag hash, must use GetFlagHash with the exact logic in this example!
     }
 
     /// <summary>
