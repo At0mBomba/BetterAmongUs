@@ -1,4 +1,5 @@
-﻿using BetterAmongUs.Attributes;
+﻿using BepInEx;
+using BetterAmongUs.Attributes;
 using BetterAmongUs.Data;
 using BetterAmongUs.Modules;
 
@@ -59,23 +60,26 @@ internal sealed class DumpCommand : BaseCommand
             {
                 Directory.CreateDirectory(logFolderPath);
             }
-            string logFileName = "log-" + BAUPlugin.GetVersionText().Replace(' ', '-').ToLower() + "-" + DateTime.Now.ToString("yyyy.MM.dd-HH.mm.ss") + ".log";
-            string newLogFilePath = Path.Combine(logFolderPath, logFileName);
-            File.WriteAllText(newLogFilePath, newLog);
+            string logFileName = "log-" + BAUPlugin.GetVersionText().Replace(' ', '-').ToLower() + "-" + DateTime.Now.ToString("yyyy.MM.dd-HH.mm.ss") + "-bau" + ".log";
+            string logFile = Path.Combine(logFolderPath, logFileName);
+            File.WriteAllText(logFile, newLog);
+
+            string bepInExLog = Path.Combine(Paths.BepInExRootPath, "LogOutput.log");
+            if (File.Exists(bepInExLog))
+            {
+                string logFileBepInExeName = "log-" + BAUPlugin.GetVersionText().Replace(' ', '-').ToLower() + "-" + DateTime.Now.ToString("yyyy.MM.dd-HH.mm.ss") + "-bepinex" + ".log";
+                string logFileBepInExe = Path.Combine(logFolderPath, logFileBepInExeName);
+                File.Copy(bepInExLog, logFileBepInExe);
+            }
+
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
             {
                 FileName = logFolderPath,
                 UseShellExecute = true,
                 Verb = "open"
             });
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
-            {
-                FileName = newLogFilePath,
-                UseShellExecute = true,
-                Verb = "open"
-            });
 
-            CommandResultText($"Dump logs at <color=#b1b1b1>'{newLogFilePath}'</color>");
+            CommandResultText($"Dump logs at <color=#b1b1b1>'{logFolderPath}'</color>");
         }
         else
         {
@@ -89,11 +93,19 @@ internal sealed class DumpCommand : BaseCommand
             string androidLogContent = File.ReadAllText(logFilePath);
             string androidNewLog = DecryptLog(androidLogContent);
 
-            string androidLogFileName = "log-" + BAUPlugin.GetVersionText().Replace(' ', '-').ToLower() + "-" + DateTime.Now.ToString("yyyy.MM.dd-HH.mm.ss") + ".log";
+            string androidLogFileName = "log-" + BAUPlugin.GetVersionText().Replace(' ', '-').ToLower() + "-" + DateTime.Now.ToString("yyyy.MM.dd-HH.mm.ss") + "-bau" + ".log";
             string androidNewLogFilePath = Path.Combine(logFolderPath, androidLogFileName);
             File.WriteAllText(androidNewLogFilePath, androidNewLog);
 
-            CommandResultText($"Dump logs at <color=#b1b1b1>'{androidNewLogFilePath}'</color>");
+            string bepInExLog = Path.Combine(Paths.BepInExRootPath, "LogOutput.log");
+            if (File.Exists(bepInExLog))
+            {
+                string logFileBepInExeName = "log-" + BAUPlugin.GetVersionText().Replace(' ', '-').ToLower() + "-" + DateTime.Now.ToString("yyyy.MM.dd-HH.mm.ss") + "-bepinex" + ".log";
+                string logFileBepInExe = Path.Combine(logFolderPath, logFileBepInExeName);
+                File.Copy(bepInExLog, logFileBepInExe);
+            }
+
+            CommandResultText($"Dump logs at <color=#b1b1b1>'{logFolderPath}'</color>");
         }
     }
 }
