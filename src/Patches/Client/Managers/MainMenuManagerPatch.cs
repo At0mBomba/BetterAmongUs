@@ -68,4 +68,13 @@ internal static class MainMenuManagerPatch
         // Notify UpdateManager that we're in the main menu
         BAUUpdateManager.Instance?.OnMainMenu();
     }
+
+    // Disable eject button to prevent it from blocking update button
+    [HarmonyPatch(typeof(EjectMainMenu), nameof(EjectMainMenu.Start))]
+    [HarmonyPrefix]
+    private static bool EjectMainMenu_Start_Prefix(EjectMainMenu __instance)
+    {
+        __instance.gameObject.SetActive(false);
+        return false;
+    }
 }
