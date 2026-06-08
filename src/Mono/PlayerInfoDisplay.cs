@@ -421,7 +421,8 @@ internal class PlayerInfoDisplay : MonoBehaviour
                 int completedTasks = 0;
                 foreach (var task in _player.Data.Tasks)
                 {
-                    if (task.Complete) completedTasks++;
+                    if (task.Complete)
+                        completedTasks++;
                 }
                 roleInfo += $" <color=#cbcbcb>({completedTasks}/{_player.Data.Tasks.Count})</color>";
             }
