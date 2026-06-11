@@ -19,6 +19,8 @@ internal static class AudioOverrideManager
 
     internal static readonly AudioOverrideData Sounds_ChatNotification = new("Sounds/Chat", "ChatNotification.wav");
 
+    internal static readonly AudioOverrideData Sounds_Kill = new("Sounds/Gameplay", "Kill.wav");
+
     internal static readonly MapAudioOverrideData Sounds_VentEnter = new("Sounds/Gameplay", "VentEnter.wav");
 
     internal static readonly MapAudioOverrideData Sounds_VentExit = new("Sounds/Gameplay", "VentExit.wav");

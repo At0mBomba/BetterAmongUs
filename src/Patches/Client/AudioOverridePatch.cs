@@ -68,6 +68,16 @@ internal static class AudioOverridePatch
         }
     }
 
+    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Awake))]
+    [HarmonyPostfix]
+    private static void PlayerControl_Awake_Postfix(PlayerControl __instance)
+    {
+        if (AudioOverrideManager.Sounds_Kill.TryGetAudioClip(out var audio))
+        {
+            __instance.KillSfx = audio;
+        }
+    }
+
     [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Awake))]
     [HarmonyPostfix]
     private static void ShipStatus_Awake_Postfix(ShipStatus __instance)
