@@ -88,11 +88,26 @@ internal static class ModInfo
     /// <returns>The metadata value, or an empty string if not found.</returns>
     private static string GetAssemblyMetadata(string key)
     {
-        var attribute = Assembly.GetExecutingAssembly()
+        var attribute = Assembly
             .GetCustomAttributes<AssemblyMetadataAttribute>()
             .FirstOrDefault(a => a.Key == key);
 
         return attribute?.Value ?? string.Empty;
+    }
+
+    /// <summary>
+    /// The assembly associated to this mod.
+    /// </summary>
+    internal static Assembly Assembly
+    {
+        get
+        {
+            if (field == null)
+            {
+                field = Assembly.GetExecutingAssembly();
+            }
+            return field;
+        }
     }
 
     /// <summary>

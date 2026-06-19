@@ -1,4 +1,5 @@
-﻿using BetterAmongUs.Data.Config;
+﻿using BetterAmongUs.Attributes;
+using BetterAmongUs.Data.Config;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
 using System.Text;
@@ -12,6 +13,7 @@ namespace BetterAmongUs.Mono;
 /// Provides enhanced ping tracking and display functionality with additional information.
 /// Extends the default Among Us ping tracker with custom features.
 /// </summary>
+[RegisterInIl2Cpp]
 internal sealed class BetterPingTracker : MonoBehaviour
 {
     /// <summary>

@@ -1,4 +1,5 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
+using BetterAmongUs.Attributes;
 using BetterAmongUs.Network.Loaders;
 using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace BetterAmongUs.Network;
 /// <summary>
 /// Manages API connections to GitHub for news, updates, and user data.
 /// </summary>
+[RegisterInIl2Cpp]
 internal sealed class GithubAPI : MonoBehaviour
 {
     /// <summary>

@@ -33,7 +33,7 @@ internal static class Translator
     {
         try
         {
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var assembly = ModInfo.Assembly;
             var jsonFileNames = GetJsonResourceNames(assembly);
 
             TranslateMaps = [];

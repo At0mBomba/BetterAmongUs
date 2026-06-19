@@ -1,4 +1,5 @@
 ﻿using AmongUs.GameOptions;
+using BetterAmongUs.Attributes;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
@@ -14,6 +15,7 @@ namespace BetterAmongUs.Mono.Extended;
 /// <summary>
 /// Extended player information with additional data and anti-cheat features.
 /// </summary>
+[RegisterInIl2Cpp]
 internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<NetworkedPlayerInfo>
 {
     internal ExtendedPlayerInfo()

@@ -1,4 +1,5 @@
-﻿using BetterAmongUs.Modules;
+﻿using BetterAmongUs.Attributes;
+using BetterAmongUs.Modules;
 using HarmonyLib;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace BetterAmongUs.Mono.Extended;
 /// <summary>
 /// Extends PassiveButton with hold and shift-click functionality.
 /// </summary>
+[RegisterInIl2Cpp]
 internal class ExtendedPassiveButton : MonoBehaviour, IMonoExtension<PassiveButton>
 {
     /// <summary>

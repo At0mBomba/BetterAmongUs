@@ -1,7 +1,6 @@
 ﻿using BetterAmongUs.Enums;
 using BetterAmongUs.Helpers;
 using System.Collections;
-using System.Reflection;
 using System.Text.Json.Serialization;
 using UnityEngine;
 
@@ -133,7 +132,7 @@ internal sealed class BAUUpdateData
         }
 
         object waiting = true;
-        var dllPath = Assembly.GetExecutingAssembly().Location;
+        var dllPath = ModInfo.Assembly.Location;
         yield return GitHubFile.CoDownloadFile(DllLink, dllPath + ".temp", path =>
         {
             File.Move(dllPath, dllPath + ".old");

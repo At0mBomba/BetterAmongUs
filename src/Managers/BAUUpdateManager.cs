@@ -1,10 +1,10 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
+using BetterAmongUs.Attributes;
 using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Network.Loaders;
 using Il2CppInterop.Runtime.Attributes;
 using System.Collections;
-using System.Reflection;
 using TMPro;
 using UnityEngine;
 
@@ -13,6 +13,7 @@ namespace BetterAmongUs.Managers;
 /// <summary>
 /// Manages update functionality for BetterAmongUs, including download and installation.
 /// </summary>
+[RegisterInIl2Cpp]
 internal sealed class BAUUpdateManager : MonoBehaviour
 {
     private bool _updateing;
@@ -91,7 +92,7 @@ internal sealed class BAUUpdateManager : MonoBehaviour
 
     private void Start()
     {
-        var oldDll = Assembly.GetExecutingAssembly().Location + ".old";
+        var oldDll = ModInfo.Assembly.Location + ".old";
         if (File.Exists(oldDll))
         {
             File.Delete(oldDll);

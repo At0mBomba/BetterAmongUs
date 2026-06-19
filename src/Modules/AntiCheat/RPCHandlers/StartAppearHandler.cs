@@ -13,7 +13,7 @@ internal sealed class StartAppearHandler : RPCHandler
     internal override bool HandleAntiCheatCancel(PlayerControl? sender, MessageReader reader)
     {
         bool shouldAnimate = reader.ReadBoolean();
-        if (RegisterRPCHandlerAttribute.GetClassInstance<StartVanishHandler>().RoleCheck(sender) == false)
+        if (RegisterRPCHandlerAttribute.GetInstance<StartVanishHandler>().RoleCheck(sender) == false)
         {
             return false;
         }

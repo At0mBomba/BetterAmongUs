@@ -1,4 +1,5 @@
-﻿using BetterAmongUs.Helpers;
+﻿using BetterAmongUs.Attributes;
+using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Network.Configs;
 using Il2CppInterop.Runtime.Attributes;
@@ -12,6 +13,7 @@ namespace BetterAmongUs.Network.Loaders;
 /// <summary>
 /// Handles downloading and processing of news data from a remote repository.
 /// </summary>
+[RegisterInIl2Cpp]
 internal sealed class NewsLoader : MonoBehaviour
 {
     /// <summary>
@@ -117,7 +119,7 @@ internal sealed class NewsLoader : MonoBehaviour
     private IEnumerator CoLoadNewsTest()
     {
         string yamlDirectory = "BetterAmongUs.Resources.NewsTest";
-        var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+        var assembly = ModInfo.Assembly;
         using Stream? resourceStream = assembly.GetManifestResourceStream(yamlDirectory);
         if (resourceStream != null)
         {

@@ -2,7 +2,6 @@
 using BetterAmongUs.Modules;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
 using InnerNet;
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -480,7 +479,7 @@ internal static class Utils
     {
         try
         {
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(path);
+            var stream = ModInfo.Assembly.GetManifestResourceStream(path);
             if (stream == null)
                 return null;
 

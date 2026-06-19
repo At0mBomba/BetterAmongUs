@@ -1,4 +1,5 @@
-﻿using BetterAmongUs.Helpers;
+﻿using BetterAmongUs.Attributes;
+using BetterAmongUs.Helpers;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Network.Configs;
 using Il2CppInterop.Runtime.Attributes;
@@ -11,6 +12,7 @@ namespace BetterAmongUs.Network.Loaders;
 /// <summary>
 /// Handles downloading and processing of update data from a remote repository.
 /// </summary>
+[RegisterInIl2Cpp]
 internal sealed class BAUUpdateLoader : MonoBehaviour
 {
     /// <summary>

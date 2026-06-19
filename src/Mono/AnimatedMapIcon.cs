@@ -1,4 +1,5 @@
-﻿using Il2CppInterop.Runtime.Attributes;
+﻿using BetterAmongUs.Attributes;
+using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
 
 namespace BetterAmongUs.Mono;
@@ -6,6 +7,7 @@ namespace BetterAmongUs.Mono;
 /// <summary>
 /// Animates a map icon by smoothly scaling it up and down when conditions are met.
 /// </summary>
+[RegisterInIl2Cpp]
 internal class AnimatedMapIcon : MonoBehaviour
 {
     /// <summary>

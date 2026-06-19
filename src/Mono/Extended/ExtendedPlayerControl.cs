@@ -1,4 +1,5 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
+using BetterAmongUs.Attributes;
 using BetterAmongUs.Modules;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Attributes;
@@ -10,6 +11,7 @@ namespace BetterAmongUs.Mono.Extended;
 /// <summary>
 /// Extends PlayerControl with additional functionality.
 /// </summary>
+[RegisterInIl2Cpp]
 internal sealed class ExtendedPlayerControl : MonoBehaviour, IMonoExtension<PlayerControl>
 {
     /// <summary>

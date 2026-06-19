@@ -15,8 +15,6 @@ using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Network;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using HarmonyLib;
-using Il2CppInterop.Runtime.Injection;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -133,7 +131,7 @@ internal class BAUPlugin : BasePlugin
                 SetupConsole();
             }
 
-            RegisterAllMonoBehavioursInAssembly();
+            RegisterInIl2Cpp.RegisterAll();
             IL2CPPChainloader.Instance.Finished += OnChainloaderFinished;
         }
         catch (Exception ex)
@@ -159,7 +157,7 @@ internal class BAUPlugin : BasePlugin
         Harmony.PatchAll();
         GameSettingsPatch.SetupSettings(true);
         BAUModdedSupportEvents.OnBAUOptionsLoadedEvent.InvokeAll([.. OptionItem.AllOptions.Cast<object>()]);
-        InstanceAttribute.RegisterAll();
+        AutoRegisterAttribute.RegisterAll();
         OutfitData.Initialize();
         SceneManager.add_sceneLoaded((Action<Scene, LoadSceneMode>)OnSceneLoaded);
 
@@ -199,29 +197,5 @@ internal class BAUPlugin : BasePlugin
         BepInEx.Logging.Logger.Listeners.Add(customLogListener);
         ConsoleManager.SetConsoleColor(ConsoleColor.Green);
         ConsoleManager.ConsoleStream.WriteLine($".--------------------------------------------------------------------------------.\r\n|  ____       _   _                 _                                  _   _     |\r\n| | __ )  ___| |_| |_ ___ _ __     / \\   _ __ ___   ___  _ __   __ _  | | | |___ |\r\n| |  _ \\ / _ \\ __| __/ _ \\ '__|   / _ \\ | '_ ` _ \\ / _ \\| '_ \\ / _` | | | | / __||\r\n| | |_) |  __/ |_| ||  __/ |     / ___ \\| | | | | | (_) | | | | (_| | | |_| \\__ \\|\r\n| |____/ \\___|\\__|\\__\\___|_|    /_/   \\_\\_| |_| |_|\\___/|_| |_|\\__, |  \\___/|___/|\r\n|                                                              |___/             |\r\n'--------------------------------------------------------------------------------'");
-    }
-
-    /// <summary>
-    /// Registers all MonoBehaviour classes for IL2CPP injection.
-    /// </summary>
-    private static void RegisterAllMonoBehavioursInAssembly()
-    {
-        var assembly = Assembly.GetExecutingAssembly();
-
-        var monoBehaviourTypes = assembly.GetTypes()
-            .Where(type => type.IsSubclassOf(typeof(MonoBehaviour)) && !type.IsAbstract)
-            .OrderBy(type => type.Name);
-
-        foreach (var type in monoBehaviourTypes)
-        {
-            try
-            {
-                ClassInjector.RegisterTypeInIl2Cpp(type);
-            }
-            catch (Exception ex)
-            {
-                Logger_.Error($"Failed to register MonoBehaviour: {type.FullName}\n{ex}");
-            }
-        }
     }
 }

@@ -267,7 +267,7 @@ internal static class BetterAntiCheat
     internal static bool RpcUpdateSystemCheck(PlayerControl player, SystemTypes systemType, MessageReader oldReader)
     {
         MessageReader reader = MessageReader.Get(oldReader);
-        RegisterRPCHandlerAttribute.GetClassInstance<UpdateSystemHandler>().CatchedSystemType = systemType;
+        RegisterRPCHandlerAttribute.GetInstance<UpdateSystemHandler>().CatchedSystemType = systemType;
         if (!RPCHandler.HandleRPC((byte)RpcCalls.UpdateSystem, player, reader, HandlerFlag.AntiCheatCancel))
         {
             reader.Recycle();

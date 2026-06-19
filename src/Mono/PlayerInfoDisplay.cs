@@ -1,5 +1,6 @@
 ﻿using AmongUs.Data;
 using AmongUs.GameOptions;
+using BetterAmongUs.Attributes;
 using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Helpers;
@@ -19,6 +20,7 @@ namespace BetterAmongUs.Mono;
 /// <summary>
 /// Displays extended player information during gameplay.
 /// </summary>
+[RegisterInIl2Cpp]
 internal class PlayerInfoDisplay : MonoBehaviour
 {
     protected PlayerControl? _player;
