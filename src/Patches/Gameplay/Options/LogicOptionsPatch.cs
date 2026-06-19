@@ -9,7 +9,7 @@ internal static class LogicOptionsPatch
 {
     [HarmonyPatch(typeof(LogicOptionsNormal), nameof(LogicOptionsNormal.GetAnonymousVotes))]
     [HarmonyPostfix]
-    private static void LogicOptionsNormal_Update_Postfix(MeetingHud __instance, ref bool __result)
+    private static void LogicOptionsNormal_Update_Postfix(ref bool __result)
     {
         if (PlayerControl.LocalPlayer == null)
             return;

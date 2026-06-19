@@ -8,10 +8,12 @@ using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Data.Json;
 using BetterAmongUs.Enums;
+using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.OptionItems;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Network;
+using BetterAmongUs.Patches.Client;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using BetterAmongUs.Utilities;
 using HarmonyLib;
@@ -169,6 +171,19 @@ internal class BAUPlugin : BasePlugin
 
         string SupportedVersions = string.Join(" ", ModInfo.SupportedAmongUsVersions);
         Logger_.Log($"BetterAmongUs {BetterAmongUsVersion}-{ModInfo.BuildDate} - [{AppVersion} --> {SupportedVersions}] {Utils.GetPlatformName(PlatformData.Platform)}");
+    }
+
+    /// <summary>
+    /// Unloads the mod to switch to vanilla.
+    /// </summary>
+    internal void UnloadBAU()
+    {
+        ConsoleManager.DetachConsole();
+        BetterNotificationManager.Detach();
+        ClientPatch.Unpatch();
+        Harmony.UnpatchAll();
+        ModManager.Instance.ModStamp.gameObject.SetActive(false);
+        SceneChanger.ChangeScene("MainMenu");
     }
 
     private static void OnSceneLoaded(Scene scene, LoadSceneMode _)

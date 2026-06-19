@@ -1,17 +1,16 @@
-﻿using BepInEx;
-using BetterAmongUs.Data;
+﻿using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Utilities;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
+using BetterAmongUs.Utilities;
+using BetterAmongUs.Utilities.Extension;
 using HarmonyLib;
 using System.Diagnostics;
 using TMPro;
 using UnityEngine;
-using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Patches.Client;
 
@@ -72,7 +71,7 @@ internal static class OptionsMenuBehaviourPatch
             });
         }
 
-        ClientOptionItem.CreateButton(Translator.GetString("BetterOption.ToVanilla"), -1, __instance, SwitchToVanilla, () =>
+        ClientOptionItem.CreateButton(Translator.GetString("BetterOption.ToVanilla"), -1, __instance, BAUPlugin.Instance.UnloadBAU, () =>
         {
             // Prevent switching to vanilla while in a game
             bool cannotSwitch = GameState.IsInGame;
@@ -82,17 +81,6 @@ internal static class OptionsMenuBehaviourPatch
             }
             return !cannotSwitch;
         });
-    }
-
-    private static void SwitchToVanilla()
-    {
-        // Clean up BAU mod components and return to vanilla Among Us
-        ConsoleManager.DetachConsole();
-        BetterNotificationManager.Detach();
-        ClientPatch.Unpatch();
-        Harmony.UnpatchAll();
-        ModManager.Instance.ModStamp.gameObject.SetActive(false);
-        SceneChanger.ChangeScene("MainMenu");
     }
 
     private static void SendBetterRpcAction()
