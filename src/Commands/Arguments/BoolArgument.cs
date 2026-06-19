@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="command">The command this argument belongs to.</param>
 /// <param name="argInfo">Information about the argument (default: "{bool}").</param>
-internal sealed class BoolArgument(BaseCommand command, string argInfo = "{bool}") : BaseArgument(command, argInfo)
+internal sealed class BoolArgument(BaseCommand command, string argInfo = "{bool}") : BaseArgument<bool>(command, argInfo)
 {
     protected override string[] GetArgSuggestions()
     {
@@ -17,7 +17,7 @@ internal sealed class BoolArgument(BaseCommand command, string argInfo = "{bool}
     /// </summary>
     /// <param name="result"></param>
     /// <returns></returns>
-    internal bool TryParseBool(out bool result)
+    internal override bool TryParse(out bool result)
     {
         if (Arg.ToLower() == "true")
         {
@@ -32,7 +32,7 @@ internal sealed class BoolArgument(BaseCommand command, string argInfo = "{bool}
         else
         {
             BaseCommand.CommandErrorText($"Invalid Syntax!");
-            result = false;
+            result = default;
             return false;
         }
     }

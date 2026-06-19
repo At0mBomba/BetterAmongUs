@@ -7,7 +7,7 @@ namespace BetterAmongUs.Commands.Arguments;
 /// </summary>
 /// <param name="command">The command this argument belongs to.</param>
 /// <param name="argInfo">Information about the argument (default: "{player}").</param>
-internal sealed class PlayerArgument(BaseCommand command, string argInfo = "{player}") : BaseArgument(command, argInfo)
+internal sealed class PlayerArgument(BaseCommand command, string argInfo = "{player}") : BaseArgument<PlayerControl>(command, argInfo)
 {
     protected override string[] GetArgSuggestions()
     {
@@ -38,7 +38,7 @@ internal sealed class PlayerArgument(BaseCommand command, string argInfo = "{pla
     /// </summary>
     /// <param name="result"></param>
     /// <returns></returns>
-    internal bool TryParsePlayer(out PlayerControl? result)
+    internal override bool TryParse(out PlayerControl result)
     {
         foreach (var player in BAUPlugin.AllPlayerControls)
         {
@@ -51,7 +51,7 @@ internal sealed class PlayerArgument(BaseCommand command, string argInfo = "{pla
             }
         }
 
-        result = null;
+        result = default!;
         BaseCommand.CommandErrorText("Player not found!");
         return false;
     }

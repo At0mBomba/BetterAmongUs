@@ -5,7 +5,7 @@
 /// </summary>
 /// <param name="command">The command this argument belongs to.</param>
 /// <param name="argInfo">Information about the argument (default: "{String}").</param>
-internal sealed class StringArgument(BaseCommand command, string argInfo = "{String}") : BaseArgument(command, argInfo)
+internal sealed class StringArgument(BaseCommand command, string argInfo = "{String}") : BaseArgument<string>(command, argInfo)
 {
     protected override string[] GetArgSuggestions()
     {
@@ -17,12 +17,9 @@ internal sealed class StringArgument(BaseCommand command, string argInfo = "{Str
     /// </summary>
     internal Func<string[]> ArgSuggestions { get; set; } = () => { return []; };
 
-    /// <summary>
-    /// Gets the string argument.
-    /// </summary>
-    /// <returns></returns>
-    internal string GetString()
+    internal override bool TryParse(out string result)
     {
-        return Arg;
+        result = Arg;
+        return true;
     }
 }
