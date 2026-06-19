@@ -1,4 +1,5 @@
-﻿using BetterAmongUs.Helpers;
+﻿using BetterAmongUs.Utilities;
+using BetterAmongUs.Utilities.Extension;
 using UnityEngine;
 
 namespace BetterAmongUs.Modules.OptionItems;

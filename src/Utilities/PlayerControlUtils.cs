@@ -7,12 +7,12 @@ using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using InnerNet;
 using UnityEngine;
 
-namespace BetterAmongUs.Helpers;
+namespace BetterAmongUs.Utilities;
 
 /// <summary>
 /// Provides extension methods and utilities for working with PlayerControl instances.
 /// </summary>
-internal static class PlayerControlHelper
+internal static class PlayerControlUtils
 {
     /// <summary>
     /// Gets the ClientData associated with a player.

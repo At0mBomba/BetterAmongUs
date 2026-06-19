@@ -1,5 +1,5 @@
 ﻿using BetterAmongUs.Enums;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Modules;
 using System.Collections;
 using System.Text.Json.Serialization;
 using UnityEngine;

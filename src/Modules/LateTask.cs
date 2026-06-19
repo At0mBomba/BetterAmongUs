@@ -1,4 +1,4 @@
-namespace BetterAmongUs.Helpers;
+namespace BetterAmongUs.Modules;
 
 /// <summary>
 /// Represents a delayed task that executes after a specified time interval.

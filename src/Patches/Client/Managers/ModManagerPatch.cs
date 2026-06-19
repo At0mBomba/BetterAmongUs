@@ -1,9 +1,10 @@
-﻿using BetterAmongUs.Helpers;
+﻿using BetterAmongUs.Utilities;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules.AntiCheat;
 using BetterAmongUs.Modules.Support;
 using HarmonyLib;
 using UnityEngine;
+using BetterAmongUs.Modules;
 
 namespace BetterAmongUs.Patches.Client.Managers;
 

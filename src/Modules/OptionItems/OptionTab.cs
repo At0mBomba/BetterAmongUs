@@ -1,7 +1,8 @@
-﻿using BetterAmongUs.Helpers;
+﻿using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules.OptionItems.NoneOption;
 using TMPro;
 using UnityEngine;
+using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Modules.OptionItems;
 

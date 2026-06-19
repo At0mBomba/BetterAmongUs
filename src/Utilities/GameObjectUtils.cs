@@ -1,12 +1,12 @@
 ﻿using BetterAmongUs.Modules.Support;
 using UnityEngine;
 
-namespace BetterAmongUs.Helpers;
+namespace BetterAmongUs.Utilities;
 
 /// <summary>
 /// Provides helper methods for working with Unity GameObjects, components, and visual elements.
 /// </summary>
-internal static class ObjectHelper
+internal static class GameObjectUtils
 {
     /// <summary>
     /// Destroys a GameObject if it is not null.

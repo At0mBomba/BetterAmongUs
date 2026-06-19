@@ -1,6 +1,6 @@
 using AmongUs.GameOptions;
 using BetterAmongUs.Attributes;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Mono.Extended;
 using Hazel;

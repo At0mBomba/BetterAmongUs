@@ -1,13 +1,14 @@
 ﻿using AmongUs.InnerNet.GameDataMessages;
+using BetterAmongUs.Utilities.Extension;
 using Hazel;
 using InnerNet;
 
-namespace BetterAmongUs.Helpers;
+namespace BetterAmongUs.Utilities;
 
 /// <summary>
 /// Provides helper methods for working with InnerNet messaging, RPC handling, and message serialization.
 /// </summary>
-internal static class InnerNetClientHelper
+internal static class InnerNetClientUtils
 {
     /// <summary>
     /// Broadcasts an RPC message to all clients with optional reliability.
@@ -130,7 +131,7 @@ internal static class InnerNetClientHelper
     /// </summary>
     /// <param name="writer">The MessageWriter to convert.</param>
     /// <returns>An array of MessageReaders.</returns>
-    internal static MessageReader[] ToReaders(this MessageWriter writer)
+    internal static MessageReader[] MessagesToReaders(this MessageWriter writer)
     {
         var reader = writer.ToReader();
         List<MessageReader> readers = [];
@@ -148,7 +149,7 @@ internal static class InnerNetClientHelper
     /// </summary>
     /// <param name="reader">The MessageReader to convert.</param>
     /// <returns>An array of MessageReaders.</returns>
-    internal static MessageReader[] ToReaders(this MessageReader reader)
+    internal static MessageReader[] MessagesToReaders(this MessageReader reader)
     {
         List<MessageReader> readers = [];
 
@@ -165,7 +166,7 @@ internal static class InnerNetClientHelper
     /// </summary>
     /// <param name="reader">The MessageReader to convert.</param>
     /// <returns>An array of MessageReaders with new buffers.</returns>
-    internal static MessageReader[] ToReadersNewBuffer(this MessageReader reader)
+    internal static MessageReader[] MessagesToReadersNewBuffer(this MessageReader reader)
     {
         List<MessageReader> readers = [];
 

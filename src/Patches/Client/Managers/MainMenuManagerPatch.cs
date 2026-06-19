@@ -1,4 +1,4 @@
-﻿using BetterAmongUs.Helpers;
+﻿using BetterAmongUs.Utilities;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules.Support;
 using HarmonyLib;
@@ -54,7 +54,7 @@ internal static class MainMenuManagerPatch
         }
 
         // Apply custom colors to main menu background
-        __instance.transform.Find("MainUI/AspectScaler/BackgroundTexture")?.gameObject?.SetSpriteColors(sprite => ObjectHelper.AddColor(sprite));
+        __instance.transform.Find("MainUI/AspectScaler/BackgroundTexture")?.gameObject?.SetSpriteColors(sprite => GameObjectUtils.AddColor(sprite));
 
         // Create a reusable button prefab if it doesn't exist yet
         if (ButtonPrefab == null)

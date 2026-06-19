@@ -1,6 +1,6 @@
 ﻿using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;

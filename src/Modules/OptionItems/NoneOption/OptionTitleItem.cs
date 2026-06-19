@@ -1,4 +1,4 @@
-﻿using BetterAmongUs.Helpers;
+﻿using BetterAmongUs.Utilities;
 using UnityEngine;
 
 namespace BetterAmongUs.Modules.OptionItems.NoneOption;

@@ -1,5 +1,5 @@
 ﻿using BetterAmongUs.Attributes;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using System.Text;
 
 namespace BetterAmongUs.Commands;

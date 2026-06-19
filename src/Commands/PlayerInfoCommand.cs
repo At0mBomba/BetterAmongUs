@@ -1,6 +1,6 @@
 ﻿using BetterAmongUs.Attributes;
 using BetterAmongUs.Commands.Arguments;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using System.Text;
 
 namespace BetterAmongUs.Commands;

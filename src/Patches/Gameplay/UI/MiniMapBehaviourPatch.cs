@@ -1,10 +1,11 @@
 ﻿using BetterAmongUs.Data.Config;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono;
 using HarmonyLib;
 using UnityEngine;
+using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Patches.Gameplay.UI;
 

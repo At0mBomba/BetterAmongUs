@@ -1,6 +1,5 @@
 ﻿using BetterAmongUs.Attributes;
 using BetterAmongUs.Enums;
-using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using Hazel;

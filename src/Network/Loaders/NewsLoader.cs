@@ -1,5 +1,4 @@
 ﻿using BetterAmongUs.Attributes;
-using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Network.Configs;
 using Il2CppInterop.Runtime.Attributes;

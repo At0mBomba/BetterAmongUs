@@ -1,9 +1,10 @@
 ﻿using BetterAmongUs.Data;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules.Support;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Modules.OptionItems;
 

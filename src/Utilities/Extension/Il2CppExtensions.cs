@@ -1,6 +1,6 @@
 ﻿using Il2CppInterop.Runtime.InteropTypes;
 
-namespace BetterAmongUs.Helpers;
+namespace BetterAmongUs.Utilities.Extension;
 
 /// <summary>
 /// Provides extension methods for working with Il2Cpp collections in a LINQ-like manner.

@@ -1,4 +1,4 @@
-﻿using BetterAmongUs.Helpers;
+﻿using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules.Support;
 using HarmonyLib;
 using UnityEngine;

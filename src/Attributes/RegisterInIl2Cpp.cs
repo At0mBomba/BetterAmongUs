@@ -1,4 +1,4 @@
-﻿using BetterAmongUs.Helpers;
+﻿using BetterAmongUs.Modules;
 using Il2CppInterop.Runtime.Injection;
 using System.Reflection;
 

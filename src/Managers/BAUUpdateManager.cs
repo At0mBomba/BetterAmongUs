@@ -1,12 +1,13 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
 using BetterAmongUs.Attributes;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Network.Loaders;
 using Il2CppInterop.Runtime.Attributes;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Managers;
 

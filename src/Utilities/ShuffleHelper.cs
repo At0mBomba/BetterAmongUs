@@ -1,9 +1,9 @@
-﻿namespace BetterAmongUs.Helpers;
+﻿namespace BetterAmongUs.Utilities;
 
 /// <summary>
 /// Provides extension methods for shuffling collections.
 /// </summary>
-internal static class ShuffleListExtension
+internal static class ShuffleExtensions
 {
     /// <summary>
     /// Shuffles all elements in a collection randomly using the Fisher-Yates algorithm.

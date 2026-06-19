@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BetterAmongUs.Helpers;
+namespace BetterAmongUs.Utilities;
 
 /// <summary>
 /// Provides extension methods and utilities for working with colors in Unity.

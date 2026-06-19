@@ -1,9 +1,9 @@
-﻿using BetterAmongUs.Helpers;
-using BetterAmongUs.Modules.Support;
+﻿using BetterAmongUs.Modules.Support;
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Patches.Gameplay.UI;
 

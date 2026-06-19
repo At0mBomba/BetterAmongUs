@@ -1,4 +1,4 @@
-﻿using BetterAmongUs.Helpers;
+﻿using BetterAmongUs.Utilities;
 
 namespace BetterAmongUs.Commands.Arguments;
 

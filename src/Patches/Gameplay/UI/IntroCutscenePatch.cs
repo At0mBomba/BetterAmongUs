@@ -1,5 +1,5 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
 using System.Collections;
 using UnityEngine;

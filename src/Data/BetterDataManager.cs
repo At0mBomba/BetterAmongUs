@@ -1,6 +1,6 @@
 ﻿using BetterAmongUs.Data.Config;
 using BetterAmongUs.Data.Json;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using UnityEngine;
 
 namespace BetterAmongUs.Data;

@@ -1,7 +1,7 @@
 ﻿using BepInEx.Configuration;
-using BetterAmongUs.Helpers;
 using BetterAmongUs.Patches.Client;
 using UnityEngine;
+using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Modules;
 

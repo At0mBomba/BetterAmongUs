@@ -1,9 +1,9 @@
-﻿using BetterAmongUs.Helpers;
-using BetterAmongUs.Managers;
+﻿using BetterAmongUs.Managers;
 using Il2CppInterop.Runtime.Attributes;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using BetterAmongUs.Modules;
 
 namespace BetterAmongUs.Network;
 

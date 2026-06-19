@@ -1,11 +1,11 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using BetterAmongUs.Data;
-using BetterAmongUs.Modules;
+using BetterAmongUs.Utilities;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace BetterAmongUs.Helpers;
+namespace BetterAmongUs.Modules;
 
 /// <summary>
 /// Provides logging utilities for BetterAmongUs with various log levels and destinations.

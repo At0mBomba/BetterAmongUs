@@ -1,7 +1,7 @@
 ﻿using BetterAmongUs.Attributes;
 using BetterAmongUs.Commands.Arguments;
-using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules.Support;
+using BetterAmongUs.Utilities;
 
 namespace BetterAmongUs.Commands;
 

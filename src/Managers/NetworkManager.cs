@@ -1,12 +1,12 @@
 ﻿using AmongUs.InnerNet.GameDataMessages;
 using BepInEx.Unity.IL2CPP.Utils;
 using BetterAmongUs.Enums;
-using BetterAmongUs.Helpers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.AntiCheat;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Network;
 using BetterAmongUs.Structs;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
 using Hazel;
 using InnerNet;
@@ -71,7 +71,7 @@ internal static class NetworkManager
             return;
         }
 
-        MessageReader[] allReaders = writer.ToReaders();
+        MessageReader[] allReaders = writer.MessagesToReaders();
 
         foreach (MessageReader reader in allReaders)
         {
@@ -100,7 +100,7 @@ internal static class NetworkManager
             ClientId = reader.ReadPackedInt32();
         }
 
-        MessageReader[] allDataReaders = reader.ToReadersNewBuffer();
+        MessageReader[] allDataReaders = reader.MessagesToReadersNewBuffer();
 
         foreach (MessageReader dataReader in allDataReaders)
         {

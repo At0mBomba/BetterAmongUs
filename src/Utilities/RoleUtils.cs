@@ -1,11 +1,11 @@
 ﻿using AmongUs.GameOptions;
 
-namespace BetterAmongUs.Helpers;
+namespace BetterAmongUs.Utilities;
 
 /// <summary>
 /// Provides helper methods for working with Among Us roles and their properties.
 /// </summary>
-internal static class RoleHelper
+internal static class RoleUtils
 {
     /// <summary>
     /// Provides a lazily initialized lookup dictionary that maps each role type to its corresponding role behavior.

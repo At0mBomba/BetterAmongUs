@@ -1,5 +1,5 @@
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using System.Globalization;
 using System.Text.Json;
@@ -263,7 +263,7 @@ internal static class Translator
     /// </summary>
     private static string GetVanillaStringFallback(string key, string fallbackText)
     {
-        var matchingStringNames = EnumHelper.GetAllValues<StringNames>()
+        var matchingStringNames = EnumUtils.GetAllValues<StringNames>()
             .Where(x => x.ToString() == key)
             .ToArray();
 

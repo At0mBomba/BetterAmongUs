@@ -1,9 +1,9 @@
-namespace BetterAmongUs.Helpers;
+namespace BetterAmongUs.Utilities;
 
 /// <summary>
 /// Provides utility methods for working with enumerations.
 /// </summary>
-internal static class EnumHelper
+internal static class EnumUtils
 {
     /// <summary>
     /// Gets all values of an enumeration type.

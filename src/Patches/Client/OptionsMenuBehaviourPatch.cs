@@ -1,7 +1,7 @@
 ﻿using BepInEx;
 using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Mono.Extended;
@@ -11,6 +11,7 @@ using HarmonyLib;
 using System.Diagnostics;
 using TMPro;
 using UnityEngine;
+using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Patches.Client;
 

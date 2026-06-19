@@ -1,4 +1,4 @@
-﻿using BetterAmongUs.Helpers;
+﻿using BetterAmongUs.Modules;
 using System.Security.Cryptography;
 
 namespace BetterAmongUs.Data;

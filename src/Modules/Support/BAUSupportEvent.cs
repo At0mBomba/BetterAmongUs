@@ -1,6 +1,5 @@
 ﻿using BepInEx;
 using BepInEx.Unity.IL2CPP;
-using BetterAmongUs.Helpers;
 using System.ComponentModel;
 using System.Reflection;
 

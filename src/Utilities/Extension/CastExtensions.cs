@@ -1,9 +1,9 @@
-﻿namespace BetterAmongUs.Helpers;
+﻿namespace BetterAmongUs.Utilities.Extension;
 
 /// <summary>
 /// Provides extension methods for safe type casting operations.
 /// </summary>
-internal static class CastHelper
+internal static class CastExtensions
 {
     /// <summary>
     /// Checks if an object can be cast to the specified type.

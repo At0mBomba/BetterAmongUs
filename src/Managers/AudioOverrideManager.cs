@@ -1,5 +1,5 @@
 ﻿using BetterAmongUs.Data;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using System.Reflection;
 using UnityEngine;
 

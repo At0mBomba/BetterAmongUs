@@ -1,11 +1,11 @@
 ﻿using BetterAmongUs.Attributes;
-using BetterAmongUs.Helpers;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Network.Configs;
 using Il2CppInterop.Runtime.Attributes;
 using System.Collections;
 using System.Text.Json;
 using UnityEngine;
+using BetterAmongUs.Modules;
 
 namespace BetterAmongUs.Network.Loaders;
 

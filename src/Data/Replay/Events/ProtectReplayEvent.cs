@@ -1,5 +1,5 @@
 ﻿using AmongUs.GameOptions;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Interfaces;
 using System.Text.Json.Serialization;
 

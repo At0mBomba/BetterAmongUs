@@ -1,5 +1,5 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
@@ -9,6 +9,7 @@ using InnerNet;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Patches.Client;
 

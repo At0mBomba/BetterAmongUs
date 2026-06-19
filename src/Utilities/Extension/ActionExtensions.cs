@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Events;
 
-namespace BetterAmongUs.Helpers;
+namespace BetterAmongUs.Utilities.Extension;
 
 /// <summary>
 /// Provides extension methods for UnityEvent classes to simplify adding listeners with Action delegates.

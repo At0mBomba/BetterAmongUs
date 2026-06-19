@@ -1,8 +1,9 @@
 using BetterAmongUs.Attributes;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Mono.Extended;
 using Hazel;
+using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Modules.AntiCheat.RPCHandlers;
 

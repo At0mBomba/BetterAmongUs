@@ -1,4 +1,4 @@
-﻿using BetterAmongUs.Helpers;
+﻿using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Structs;
 using System.Text.Json.Serialization;

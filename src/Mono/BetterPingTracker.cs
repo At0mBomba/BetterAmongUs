@@ -1,6 +1,6 @@
 ﻿using BetterAmongUs.Attributes;
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Helpers;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules;
 using System.Text;
 using TMPro;

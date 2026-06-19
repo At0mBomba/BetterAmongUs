@@ -1,13 +1,14 @@
 ﻿using AmongUs.Data;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
+using BetterAmongUs.Utilities.Extension;
 using InnerNet;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace BetterAmongUs.Helpers;
+namespace BetterAmongUs.Utilities;
 
 /// <summary>
 /// Provides utility methods for string manipulation, network operations, player lookups, and game utilities.

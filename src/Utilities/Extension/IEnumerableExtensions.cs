@@ -1,11 +1,11 @@
 ﻿using Il2CppSystem.Linq;
 
-namespace BetterAmongUs.Helpers;
+namespace BetterAmongUs.Utilities.Extension;
 
 /// <summary>
 /// Provides extension methods for IEnumerable collections, including shuffling, selecting a random element, and retrieving the middle element.
 /// </summary>
-internal static class IEnumerableExtension
+internal static class IEnumerableExtensions
 {
     private static readonly Random rng = new();
 
