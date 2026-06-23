@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using BetterAmongUs.Managers;
+using HarmonyLib;
 
 namespace BetterAmongUs.Patches.Client;
 

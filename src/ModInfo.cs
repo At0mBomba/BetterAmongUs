@@ -17,12 +17,12 @@ internal static class ModInfo
     /// <summary>
     /// Gets the Git commit hash from assembly metadata.
     /// </summary>
-    public static string CommitHash = GetAssemblyMetadata("CommitHash");
+    public static string CommitHash = ThisAssembly.Git.Commit;
 
     /// <summary>
     /// Gets the build date from assembly metadata.
     /// </summary>
-    public static string BuildDate = GetAssemblyMetadata("BuildDate");
+    public static string BuildDate = ThisAssembly.Metadata.BuildDate;
 
     /// <summary>
     /// The beta number for beta releases.

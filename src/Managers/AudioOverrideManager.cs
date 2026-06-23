@@ -3,6 +3,8 @@ using BetterAmongUs.Utilities;
 using System.Reflection;
 using UnityEngine;
 
+namespace BetterAmongUs.Managers;
+
 /// <summary>
 /// Manages audio override files and their corresponding AudioClip data.
 /// </summary>
