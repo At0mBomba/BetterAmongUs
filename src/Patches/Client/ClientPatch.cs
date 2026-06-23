@@ -1,15 +1,15 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
-using BetterAmongUs.Utilities;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
+using BetterAmongUs.Utilities;
+using BetterAmongUs.Utilities.Extension;
 using HarmonyLib;
 using InnerNet;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Patches.Client;
 
@@ -96,6 +96,9 @@ internal static class ClientPatch
         // Preserve all player GameObjects during scene transitions
         foreach (var data in GameData.Instance.AllPlayers)
         {
+            if (data == null || data.gameObject == null)
+                continue;
+
             UnityEngine.Object.DontDestroyOnLoad(data.gameObject);
         }
 
@@ -104,6 +107,9 @@ internal static class ClientPatch
         {
             foreach (var data in GameData.Instance.AllPlayers)
             {
+                if (data == null || data.gameObject == null)
+                    continue;
+
                 SceneManager.MoveGameObjectToScene(data.gameObject, SceneManager.GetActiveScene());
             }
         }, 0.6f, shouldLog: false);

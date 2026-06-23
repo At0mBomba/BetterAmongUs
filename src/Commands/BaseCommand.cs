@@ -26,7 +26,7 @@ internal abstract class BaseCommand
     internal abstract string Name { get; }
 
     /// <summary>
-    /// Gets the short names (aliases) for the command.
+    /// Gets the short names for the command.
     /// </summary>
     internal virtual string[] ShortNames => [];
 
