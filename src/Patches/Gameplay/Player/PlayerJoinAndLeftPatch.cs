@@ -1,13 +1,15 @@
+using BepInEx.Unity.IL2CPP.Utils;
 using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
 using InnerNet;
+using System.Collections;
 
 namespace BetterAmongUs.Patches.Gameplay.Player;
 
@@ -31,45 +33,52 @@ internal static class PlayerJoinAndLeftPatch
 
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnPlayerJoined))]
     [HarmonyPostfix]
-    private static void AmongUsClient_OnPlayerJoined_Postfix(ClientData data)
+    private static void AmongUsClient_OnPlayerJoined_Postfix(AmongUsClient __instance, ClientData data)
     {
-        // Schedule ban list checks 2.5 seconds after player joins
-        LateTask.Schedule(() =>
+        if (GameState.IsHost)
         {
-            if (GameState.IsHost)
+            __instance.StartCoroutine(CoCheckPlayerOnJoin(data));
+        }
+    }
+
+    private static IEnumerator CoCheckPlayerOnJoin(ClientData data)
+    {
+        while (!data.InScene || data.Character == null || data.Character.Data == null || data.Character.Data.IsIncomplete)
+        {
+            yield return null;
+        }
+
+        if (GameState.IsInGame)
+        {
+            var player = Utils.PlayerFromClientId(data.Id);
+
+            // Check if player is in ban list by friend code or PUID
+            if (BetterGameSettings.UseBanPlayerList.GetBool())
             {
-                if (GameState.IsInGame)
+                if (player != null)
                 {
-                    var player = Utils.PlayerFromClientId(data.Id);
-
-                    // Check if player is in ban list by friend code or PUID
-                    if (BetterGameSettings.UseBanPlayerList.GetBool())
+                    if (TextFileHandler.CompareStringMatch(BetterDataManager.Files.banPlayerListFilePath,
+                        BAUPlugin.AllPlayerControls.Select(player => player.Data.FriendCode)
+                        .Concat(BAUPlugin.AllPlayerControls.Select(player => player.GetHashPuid())).ToArray()))
                     {
-                        if (player != null)
-                        {
-                            if (TextFileHandler.CompareStringMatch(BetterDataManager.Files.banPlayerListFilePath,
-                                BAUPlugin.AllPlayerControls.Select(player => player.Data.FriendCode)
-                                .Concat(BAUPlugin.AllPlayerControls.Select(player => player.GetHashPuid())).ToArray()))
-                            {
-                                player.Kick(true, Translator.GetString("AntiCheat.BanPlayerListMessage"), bypassDataCheck: true);
-                            }
-                        }
-                    }
-
-                    // Check if player name matches banned name patterns
-                    if (BetterGameSettings.UseBanNameList.GetBool())
-                    {
-                        if (player != null)
-                        {
-                            if (TextFileHandler.CompareStringFilters(BetterDataManager.Files.banNameListFilePath, [player.Data.PlayerName]))
-                            {
-                                player?.Kick(true, Translator.GetString("AntiCheat.BanPlayerListMessage"), bypassDataCheck: true);
-                            }
-                        }
+                        player.Kick(true, Translator.GetString("AntiCheat.BanPlayerListMessage"), bypassDataCheck: true);
+                        yield break;
                     }
                 }
             }
-        }, 2.5f, "OnPlayerJoinedPatch", false);
+
+            // Check if player name matches banned name patterns
+            if (BetterGameSettings.UseBanNameList.GetBool())
+            {
+                if (player != null)
+                {
+                    if (TextFileHandler.CompareStringFilters(BetterDataManager.Files.banNameListFilePath, [player.Data.PlayerName]))
+                    {
+                        player?.Kick(true, Translator.GetString("AntiCheat.BanPlayerListMessage"), bypassDataCheck: true);
+                    }
+                }
+            }
+        }
     }
 
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnPlayerLeft))]

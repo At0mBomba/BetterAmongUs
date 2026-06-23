@@ -1,8 +1,11 @@
-﻿using BetterAmongUs.Data.Config;
-using BetterAmongUs.Utilities;
+﻿using BepInEx.Unity.IL2CPP.Utils;
+using BetterAmongUs.Data.Config;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
+using System.Collections;
+using UnityEngine;
 
 namespace BetterAmongUs.Patches.Gameplay.Managers;
 
@@ -19,22 +22,24 @@ internal static class HudManagerPatch
     [HarmonyPostfix]
     private static void HudManager_Start_Postfix(HudManager __instance)
     {
-        // Create custom BAU notification system if it doesn't exist
+        __instance.StartCoroutine(CoHudManagerStart());
+    }
+
+    private static IEnumerator CoHudManagerStart()
+    {
         BetterNotificationManager.Init();
 
-        // Show welcome message after 1 second delay (only once per session)
-        LateTask.Schedule(() =>
-        {
-            if (!HasBeenWelcomed && GameState.IsInGame && GameState.IsLobby && !GameState.IsFreePlay)
-            {
-                // Show notification with welcome text
-                BetterNotificationManager.Notify($"<b><color=#00751f>{string.Format(Translator.GetString("WelcomeMsg.WelcomeToBAU"), Translator.GetString("BetterAmongUs"))}!</color></b>", 8f);
+        yield return new WaitForSeconds(1f);
 
-                // Send detailed welcome message to private chat
-                Utils.AddChatPrivate(WelcomeMessage, overrideName: " ");
-                HasBeenWelcomed = true;
-            }
-        }, 1f, shouldLog: false);
+        if (!HasBeenWelcomed && GameState.IsInGame && GameState.IsLobby && !GameState.IsFreePlay)
+        {
+            // Show notification with welcome text
+            BetterNotificationManager.Notify($"<b><color=#00751f>{string.Format(Translator.GetString("WelcomeMsg.WelcomeToBAU"), Translator.GetString("BetterAmongUs"))}!</color></b>", 8f);
+
+            // Send detailed welcome message to private chat
+            Utils.AddChatPrivate(WelcomeMessage, overrideName: " ");
+            HasBeenWelcomed = true;
+        }
     }
 
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]

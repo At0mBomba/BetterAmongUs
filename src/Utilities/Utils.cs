@@ -1,8 +1,10 @@
 ﻿using AmongUs.Data;
+using BepInEx.Unity.IL2CPP.Utils;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
 using BetterAmongUs.Utilities.Extension;
 using InnerNet;
+using System.Collections;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -411,21 +413,24 @@ internal static class Utils
     /// <param name="showReason">Whether to show the reason in a popup.</param>
     internal static void DisconnectSelf(string reason, bool showReason = true)
     {
-        AmongUsClient.Instance.ExitGame(0);
+        AmongUsClient.Instance.StartCoroutine(CoDisconnectSelf(reason, showReason));
+    }
 
-        LateTask.Schedule(() =>
+    private static IEnumerator CoDisconnectSelf(string reason, bool showReason = true)
+    {
+        AmongUsClient.Instance.ExitGame(DisconnectReasons.ExitGame);
+
+        yield return new WaitForSeconds(0.2f);
+
+        SceneChanger.ChangeScene(Constants.MAIN_MENU_SCENE);
+
+        if (showReason)
         {
-            SceneChanger.ChangeScene("MainMenu");
+            yield return new WaitForSeconds(0.1f);
 
-            if (showReason)
-            {
-                LateTask.Schedule(() =>
-                {
-                    var lines = "<color=#ebbd34>----------------------------------------------------------------------------------------------</color>";
-                    ShowPopUp($"{lines}\n\n\n<size=150%>{reason}</size>\n\n\n{lines}");
-                }, 0.1f, "DisconnectSelf 2");
-            }
-        }, 0.2f, "DisconnectSelf 1");
+            var lines = "<color=#ebbd34>----------------------------------------------------------------------------------------------</color>";
+            ShowPopUp($"{lines}\n\n\n<size=150%>{reason}</size>\n\n\n{lines}");
+        }
     }
 
     /// <summary>

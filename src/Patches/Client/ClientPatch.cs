@@ -91,9 +91,15 @@ internal static class ClientPatch
 
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameEnd))]
     [HarmonyPrefix]
-    private static void AmongUsClient_OnGameEnd_Prefix()
+    private static void AmongUsClient_OnGameEnd_Prefix(AmongUsClient __instance)
     {
         // Preserve all player GameObjects during scene transitions
+        __instance.StartCoroutine(CoMovePlayerData());
+    }
+
+
+    private static IEnumerator CoMovePlayerData()
+    {
         foreach (var data in GameData.Instance.AllPlayers)
         {
             if (data == null || data.gameObject == null)
@@ -102,8 +108,12 @@ internal static class ClientPatch
             UnityEngine.Object.DontDestroyOnLoad(data.gameObject);
         }
 
-        // Move player GameObjects to active scene after a short delay
-        LateTask.Schedule(() =>
+        while (SceneManager.GetActiveScene().name == Constants.ONLINE_SCENE)
+        {
+            yield return null;
+        }
+
+        if (SceneManager.GetActiveScene().name == "EndGame")
         {
             foreach (var data in GameData.Instance.AllPlayers)
             {
@@ -112,7 +122,18 @@ internal static class ClientPatch
 
                 SceneManager.MoveGameObjectToScene(data.gameObject, SceneManager.GetActiveScene());
             }
-        }, 0.6f, shouldLog: false);
+        }
+        else
+        {
+            foreach (var data in GameData.Instance.AllPlayers)
+            {
+                if (data == null || data.gameObject == null)
+                    continue;
+
+                UnityEngine.Object.Destroy(data.gameObject);
+            }
+            GameData.Instance.AllPlayers.Clear();
+        }
     }
 
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.CoStartGame))]

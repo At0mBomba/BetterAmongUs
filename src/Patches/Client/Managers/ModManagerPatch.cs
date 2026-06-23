@@ -1,10 +1,9 @@
-﻿using BetterAmongUs.Utilities;
-using BetterAmongUs.Managers;
+﻿using BetterAmongUs.Managers;
 using BetterAmongUs.Modules.AntiCheat;
 using BetterAmongUs.Modules.Support;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
 using UnityEngine;
-using BetterAmongUs.Modules;
 
 namespace BetterAmongUs.Patches.Client.Managers;
 
@@ -44,7 +43,6 @@ internal static class ModManagerPatch
 
         // Update various BAU systems each frame
         BetterAntiCheat.Update();
-        LateTask.UpdateAll(Time.deltaTime);
         BetterNotificationManager.Update();
     }
 }
