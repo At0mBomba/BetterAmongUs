@@ -1,9 +1,10 @@
 ﻿using AmongUs.GameOptions;
+using BetterAmongUs.Attributes;
 using BetterAmongUs.Data;
-using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.Utilities;
 using Il2CppInterop.Runtime.Attributes;
 using System.Text;
 using TMPro;
@@ -14,6 +15,7 @@ namespace BetterAmongUs.Mono;
 /// <summary>
 /// Displays extended player information during meetings.
 /// </summary>
+[RegisterInIl2Cpp]
 internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
 {
     private PlayerVoteArea? _pva;
