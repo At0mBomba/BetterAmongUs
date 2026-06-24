@@ -1,6 +1,6 @@
 ﻿using BetterAmongUs.Enums;
-using BetterAmongUs.Utilities;
 using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.Utilities;
 using Hazel;
 
 namespace BetterAmongUs.Network;
@@ -40,10 +40,10 @@ internal static class RPC
     /// </summary>
     /// <param name="player">The player who sent the RPC message.</param>
     /// <param name="oldReader">The message reader containing the RPC data.</param>
-    internal static void HandleCustomRPCPacked(PlayerControl player, MessageReader oldReader)
+    internal static bool HandleCustomRPCPacked(PlayerControl player, MessageReader oldReader)
     {
         if (player == null || player.IsLocalPlayer() || player.Data == null)
-            return;
+            return false;
 
         MessageReader reader = MessageReader.Get(oldReader);
 
@@ -63,9 +63,13 @@ internal static class RPC
                     }
                     break;
             }
+
+            reader.Recycle();
+            return true;
         }
 
         reader.Recycle();
+        return false;
     }
 
     /// <summary>

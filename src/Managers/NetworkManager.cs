@@ -278,7 +278,10 @@ internal static class NetworkManager
                     {
                         if (rpcCall == (byte)RPC.CUSTOM_RPC_CALL)
                         {
-                            RPC.HandleCustomRPCPacked(player, reader);
+                            if (RPC.HandleCustomRPCPacked(player, reader))
+                            {
+                                break;
+                            }
                         }
                     }
 
