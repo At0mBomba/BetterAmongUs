@@ -34,17 +34,12 @@ public static class TranslationStrings
     }
 
     /// <summary>
-    /// Base Translation: BetterAmongUs
-    /// </summary>
-    public static readonly TranslationString bau = new("bau");
-
-    /// <summary>
-    /// Base Translation: BetterAmongUs
+    /// Base Translation: BAU
     /// </summary>
     public static readonly TranslationString BAU = new("BAU");
 
     /// <summary>
-    /// Base Translation: Better Among Us
+    /// Base Translation: BetterAmongUs
     /// </summary>
     public static readonly TranslationString BetterAmongUs = new("BetterAmongUs");
 

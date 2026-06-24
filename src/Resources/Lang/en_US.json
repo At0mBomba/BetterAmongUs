@@ -1,8 +1,7 @@
 {
   "LanguageID": "0",
-  "bau": "BAU",
-  "BAU": "BetterAmongUs",
-  "BetterAmongUs": "Better Among Us",
+  "BAU": "BAU",
+  "BetterAmongUs": "BetterAmongUs",
   "BAUMark": "♻",
   "WarningIcon": "⚠",
   "Host": "Host",
