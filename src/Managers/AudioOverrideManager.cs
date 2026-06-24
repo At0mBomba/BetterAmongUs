@@ -80,12 +80,6 @@ internal static class AudioOverrideManager
         private AudioClip? audioClip;
 
         /// <summary>
-        /// Gets or sets the original audio clip that this override replaces.
-        /// </summary>
-        /// <value>The original game audio clip, or null if not set.</value>
-        internal AudioClip? Original;
-
-        /// <summary>
         /// Loads the audio clip from disk. Creates the file and directory structure if they don't exist.
         /// </summary>
         internal virtual void Load()
