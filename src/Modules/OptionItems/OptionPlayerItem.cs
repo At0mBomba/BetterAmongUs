@@ -42,11 +42,11 @@ public sealed class OptionPlayerItem : OptionItem<int>
     /// </summary>
     /// <param name="id">The unique identifier for this option.</param>
     /// <param name="tab">The tab this option belongs to.</param>
-    /// <param name="tranStr">The translation key for the option name.</param>
+    /// <param name="translationString">The translation key for the option name.</param>
     /// <param name="parent">Optional parent option for hierarchical organization.</param>
     /// <param name="canBeRandom">Whether this option allows random player selection.</param>
     /// <returns>A new or existing OptionPlayerItem instance.</returns>
-    internal static OptionPlayerItem Create(int id, OptionTab tab, TranslationStrings.TranslationString tranStr, OptionItem? parent = null, bool canBeRandom = true)
+    internal static OptionPlayerItem Create(int id, OptionTab tab, TranslationStrings.TranslationString translationString, OptionItem? parent = null, bool canBeRandom = true)
     {
         if (optionPlayerItems.FirstOrDefault(opt => opt.Id == id) is OptionPlayerItem playerItem)
         {
@@ -59,7 +59,7 @@ public sealed class OptionPlayerItem : OptionItem<int>
         Item.Value = canBeRandom ? -1 : 0; ;
         Item._id = id;
         Item.Tab = tab;
-        Item.TranslationName = tranStr;
+        Item.TranslationName = translationString;
         Item.CanBeRandom = canBeRandom;
 
         if (parent != null)
@@ -256,27 +256,12 @@ public sealed class OptionPlayerItem : OptionItem<int>
     /// Gets the integer value (player index) of this option.
     /// </summary>
     /// <returns>The current player index.</returns>
-    public sealed override int GetInt() =>
-        GetValue();
-
-    /// <summary>
-    /// Gets the float representation of the player index.
-    /// </summary>
-    /// <returns>The current player index as a float.</returns>
-    public sealed override float GetFloat() =>
-        GetValue();
+    public int GetInt() => GetValue();
 
     /// <summary>
     /// Checks if the option value matches a specific integer.
     /// </summary>
-    /// <param name="@int">The integer value to compare against.</param>
+    /// <param name="value">The integer value to compare against.</param>
     /// <returns>True if the option value matches, false otherwise.</returns>
-    public sealed override bool Is(int @int) => @int == GetInt();
-
-    /// <summary>
-    /// Checks if the option value matches a specific float.
-    /// </summary>
-    /// <param name="@float">The float value to compare against.</param>
-    /// <returns>True if the option value matches (as integer), false otherwise.</returns>
-    public sealed override bool Is(float @float) => @float == GetFloat();
+    public sealed override bool Is(int value) => value == GetInt();
 }

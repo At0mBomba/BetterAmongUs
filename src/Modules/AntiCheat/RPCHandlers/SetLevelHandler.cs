@@ -34,7 +34,7 @@ internal sealed class SetLevelHandler : RPCHandler
     {
         uint level = reader.ReadPackedUInt32() + 1;
 
-        if (level > BetterGameSettings.DetectedLevelAbove.GetInt())
+        if (BetterGameSettings.DetectedLevel.GetBool() && level > BetterGameSettings.DetectedLevelAbove.GetInt())
         {
             if (BetterNotificationManager.NotifyCheat(sender, TranslationStrings.AntiCheat_InvalidLevelRPC.Format(level)))
             {

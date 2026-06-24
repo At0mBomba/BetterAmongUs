@@ -444,12 +444,22 @@ public static class TranslationStrings
     public static readonly TranslationString BetterSetting_Setting_CensorDetectionReason = new("BetterSetting.Setting.CensorDetectionReason");
 
     /// <summary>
-    /// Base Translation: Detected player levels &gt;
+    /// Base Translation: Detected player levels
+    /// </summary>
+    public static readonly TranslationString BetterSetting_Setting_DetectedLevel = new("BetterSetting.Setting.DetectedLevel");
+
+    /// <summary>
+    /// Base Translation: Detected player level above
     /// </summary>
     public static readonly TranslationString BetterSetting_Setting_DetectedLevelAbove = new("BetterSetting.Setting.DetectedLevelAbove");
 
     /// <summary>
-    /// Base Translation: Kick player levels &lt;
+    /// Base Translation: Kick player levels
+    /// </summary>
+    public static readonly TranslationString BetterSetting_Setting_KickLevel = new("BetterSetting.Setting.KickLevel");
+
+    /// <summary>
+    /// Base Translation: Kick player level below
     /// </summary>
     public static readonly TranslationString BetterSetting_Setting_KickLevelBelow = new("BetterSetting.Setting.KickLevelBelow");
 

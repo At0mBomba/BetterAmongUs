@@ -20,11 +20,11 @@ public sealed class OptionCheckboxItem : OptionItem<bool>
     /// </summary>
     /// <param name="id">The unique identifier for this option.</param>
     /// <param name="tab">The tab this option belongs to.</param>
-    /// <param name="tranStr">The translation key for the option name.</param>
+    /// <param name="translationString">The translation key for the option name.</param>
     /// <param name="defaultValue">The default value for the checkbox.</param>
     /// <param name="parent">Optional parent option for hierarchical organization.</param>
     /// <returns>A new or existing OptionCheckboxItem instance.</returns>
-    internal static OptionCheckboxItem Create(int id, OptionTab tab, TranslationStrings.TranslationString tranStr, bool defaultValue, OptionItem? parent = null)
+    internal static OptionCheckboxItem Create(int id, OptionTab tab, TranslationStrings.TranslationString translationString, bool defaultValue, OptionItem? parent = null)
     {
         if (GetOptionById(id) is OptionCheckboxItem checkboxItem)
         {
@@ -36,7 +36,7 @@ public sealed class OptionCheckboxItem : OptionItem<bool>
         AllOptions.Add(Item);
         Item._id = id;
         Item.Tab = tab;
-        Item.TranslationName = tranStr;
+        Item.TranslationName = translationString;
         Item.DefaultValue = defaultValue;
 
         if (parent != null)
@@ -118,12 +118,12 @@ public sealed class OptionCheckboxItem : OptionItem<bool>
     /// Gets the boolean value of this checkbox option.
     /// </summary>
     /// <returns>The current boolean value.</returns>
-    public sealed override bool GetBool() => GetValue();
+    public bool GetBool() => GetValue();
 
     /// <summary>
     /// Checks if the checkbox value matches a specific boolean.
     /// </summary>
-    /// <param name="@bool">The boolean value to compare against.</param>
+    /// <param name="value">The boolean value to compare against.</param>
     /// <returns>True if the checkbox value matches, false otherwise.</returns>
-    public sealed override bool Is(bool @bool) => @bool == GetBool();
+    public sealed override bool Is(bool value) => value == GetBool();
 }

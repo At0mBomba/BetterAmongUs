@@ -63,12 +63,12 @@ internal sealed class OptionDividerItem : OptionItem
         Tab.Children.Add(this);
     }
 
-    /// <summary>
-    /// Gets the string representation of the divider value (not applicable).
-    /// </summary>
-    /// <returns>NotImplementedException as dividers don't have values.</returns>
-    /// <exception cref="NotImplementedException">Always thrown since dividers have no values.</exception>
     public sealed override string ValueAsString()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override object GetBoxedValue()
     {
         throw new NotImplementedException();
     }

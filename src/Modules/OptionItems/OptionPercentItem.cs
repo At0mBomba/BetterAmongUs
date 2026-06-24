@@ -12,11 +12,11 @@ public sealed class OptionPercentItem : OptionFloatItem
     /// </summary>
     /// <param name="id">The unique identifier for this option.</param>
     /// <param name="tab">The tab this option belongs to.</param>
-    /// <param name="tranStr">The translation key for the option name.</param>
+    /// <param name="translationString">The translation key for the option name.</param>
     /// <param name="defaultValue">The default percentage value (0-100).</param>
     /// <param name="parent">Optional parent option for hierarchical organization.</param>
     /// <returns>A new or existing OptionPercentItem instance.</returns>
-    internal static OptionPercentItem Create(int id, OptionTab tab, TranslationStrings.TranslationString tranStr, float defaultValue, OptionItem? parent = null)
+    internal static OptionPercentItem Create(int id, OptionTab tab, TranslationStrings.TranslationString translationString, float defaultValue, OptionItem? parent = null)
     {
         if (GetOptionById(id) is OptionPercentItem floatItem)
         {
@@ -28,7 +28,7 @@ public sealed class OptionPercentItem : OptionFloatItem
         AllOptions.Add(Item);
         Item._id = id;
         Item.Tab = tab;
-        Item.TranslationName = tranStr;
+        Item.TranslationName = translationString;
         Item.Increment = 5;
         Item.Range = new FloatRange(0f, 100f);
         Item.DefaultValue = defaultValue;

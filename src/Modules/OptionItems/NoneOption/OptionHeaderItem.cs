@@ -85,12 +85,12 @@ internal sealed class OptionHeaderItem : OptionItem
         }
     }
 
-    /// <summary>
-    /// Gets the string representation of the header value (not applicable).
-    /// </summary>
-    /// <returns>NotImplementedException as headers don't have values.</returns>
-    /// <exception cref="NotImplementedException">Always thrown since headers have no values.</exception>
     public sealed override string ValueAsString()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override object GetBoxedValue()
     {
         throw new NotImplementedException();
     }

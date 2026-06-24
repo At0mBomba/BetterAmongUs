@@ -1,11 +1,11 @@
 ﻿using AmongUs.GameOptions;
-using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
-using HarmonyLib;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Utilities.Extension;
+using HarmonyLib;
 
 namespace BetterAmongUs.Patches.Gameplay.Managers;
 
@@ -319,7 +319,7 @@ internal static class RoleManagerPatch
     internal static int RNG()
     {
         // Choose random number generator based on settings
-        switch (BetterGameSettings.RoleRandomizer.GetStringValue())
+        switch (BetterGameSettings.RoleRandomizer.GetStringIndex())
         {
             case 1:
                 return UnityEngine.Random.Range(0, 100); // Unity RNG

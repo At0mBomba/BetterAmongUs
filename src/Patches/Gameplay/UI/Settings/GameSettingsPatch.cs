@@ -17,7 +17,9 @@ internal sealed class BetterGameSettings
     internal static OptionCheckboxItem? UseBanNameList;
     internal static OptionCheckboxItem? UseBanWordList;
     internal static OptionCheckboxItem? UseBanWordListOnlyLobby;
+    internal static OptionCheckboxItem? DetectedLevel;
     internal static OptionIntItem? DetectedLevelAbove;
+    internal static OptionCheckboxItem? KickLevel;
     internal static OptionIntItem? KickLevelBelow;
     internal static OptionCheckboxItem? DetectCheatClients;
     internal static OptionCheckboxItem? DetectInvalidRPCs;
@@ -47,7 +49,7 @@ internal static class GameSettingsPatch
     // Creates all custom game settings and organizes them in tabs
     internal static void SetupSettings(bool IsPreload = false)
     {
-        // Note: Use 1800 next ID
+        // Note: Use 2000 next ID
 
         // Create main settings tab
         BetterSettingsTab = OptionTab.Create(3, TranslationStrings.BetterSetting, TranslationStrings.BetterSetting_Description, Color.green);
@@ -73,11 +75,13 @@ internal static class GameSettingsPatch
                 BetterGameSettings.UseBanWordListOnlyLobby = OptionCheckboxItem.Create(1400, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanWordListOnlyLobby, true, BetterGameSettings.UseBanWordList);
             }
 
-            // General detection settings (visible to all)
+            // General detection settings
             OptionTitleItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_TextHeader_Detections);
             BetterGameSettings.CensorDetectionReason = OptionCheckboxItem.Create(1300, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_CensorDetectionReason, false);
-            BetterGameSettings.DetectedLevelAbove = OptionIntItem.Create(600, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectedLevelAbove, (100, 10000, 5), 500, ("Lv ", ""));
-            BetterGameSettings.KickLevelBelow = OptionIntItem.Create(1700, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_KickLevelBelow, (0, 10000, 1), 0, ("Lv ", ""));
+            BetterGameSettings.DetectedLevel = OptionCheckboxItem.Create(1800, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectedLevel, false);
+            BetterGameSettings.DetectedLevelAbove = OptionIntItem.Create(600, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectedLevelAbove, (100, 10000, 5), 500, ("Lv ", ""), BetterGameSettings.DetectedLevel);
+            BetterGameSettings.KickLevel = OptionCheckboxItem.Create(1900, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_KickLevel, false);
+            BetterGameSettings.KickLevelBelow = OptionIntItem.Create(1700, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_KickLevelBelow, (0, 10000, 1), 0, ("Lv ", ""), BetterGameSettings.KickLevel);
             BetterGameSettings.DetectCheatClients = OptionCheckboxItem.Create(700, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectCheatClients, true);
             BetterGameSettings.DetectInvalidRPCs = OptionCheckboxItem.Create(800, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectInvalidRPCs, true);
         }
