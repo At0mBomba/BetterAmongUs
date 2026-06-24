@@ -65,7 +65,32 @@ internal sealed class BetterGameSettingsFile : AbstractJsonFile
         foreach (var kvp in settingsDict.EnumerateObject())
         {
             if (sb.Length > 0) sb.Append('|');
-            sb.Append(kvp.Name).Append('/').Append(kvp.Value.GetRawText());
+            sb.Append(kvp.Name).Append('/');
+
+            // Check if the value is a float and format it with a decimal point
+            var valueKind = kvp.Value.ValueKind;
+            if (valueKind == JsonValueKind.Number)
+            {
+                if (kvp.Value.TryGetSingle(out float floatValue))
+                {
+                    if (Settings.TryGetValue(int.Parse(kvp.Name), out var originalValue) && originalValue is float)
+                    {
+                        sb.Append(floatValue.ToString("0.0########", System.Globalization.CultureInfo.InvariantCulture));
+                    }
+                    else
+                    {
+                        sb.Append(kvp.Value.GetRawText());
+                    }
+                }
+                else
+                {
+                    sb.Append(kvp.Value.GetRawText());
+                }
+            }
+            else
+            {
+                sb.Append(kvp.Value.GetRawText());
+            }
         }
 
         byte[] flattenedData = Encoding.UTF8.GetBytes(sb.ToString());
@@ -77,7 +102,6 @@ internal sealed class BetterGameSettingsFile : AbstractJsonFile
         ms.Position = 0;
         File.WriteAllText(FilePath, Convert.ToBase64String(ms.ToArray()));
     }
-
     /// <summary>
     /// Reads compressed JSON data from the file and decompresses it.
     /// </summary>
