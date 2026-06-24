@@ -1,6 +1,6 @@
-﻿using BetterAmongUs.Utilities;
-using BetterAmongUs.Modules;
+﻿using BetterAmongUs.Generated;
 using BetterAmongUs.Structs;
+using BetterAmongUs.Utilities;
 using System.Text.Json.Serialization;
 
 namespace BetterAmongUs.Data.Json;
@@ -52,27 +52,27 @@ internal sealed class BetterDataFile : AbstractJsonFile
 
         if (SickoData.Any(info => info.CheckPlayerData(data)))
         {
-            info = (Translator.GetString("Player.SickoUser"), Colors.SickoHexColor);
+            info = (TranslationStrings.Player_SickoUser.LocalizedString, Colors.SickoHexColor);
             return true;
         }
         else if (AUMData.Any(info => info.CheckPlayerData(data)))
         {
-            info = (Translator.GetString("Player.AUMUser"), Colors.AUMHexColor);
+            info = (TranslationStrings.Player_AUMUser.LocalizedString, Colors.AUMHexColor);
             return true;
         }
         else if (KNData.Any(info => info.CheckPlayerData(data)))
         {
-            info = (Translator.GetString("Player.KNUser"), Colors.KNHexColor);
+            info = (TranslationStrings.Player_KNUser.LocalizedString, Colors.KNHexColor);
             return true;
         }
         else if (MMCData.Any(info => info.CheckPlayerData(data)))
         {
-            info = (Translator.GetString("Player.MMCUser"), Colors.MMCHexColor);
+            info = (TranslationStrings.Player_MMCUser.LocalizedString, Colors.MMCHexColor);
             return true;
         }
         else if (CheatData.Any(info => info.CheckPlayerData(data)))
         {
-            info = (Translator.GetString("Player.FlaggedPlayer"), Colors.CheaterHexColor);
+            info = (TranslationStrings.Player_FlaggedPlayer.LocalizedString, Colors.CheaterHexColor);
             return true;
         }
 

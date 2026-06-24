@@ -3,11 +3,12 @@ using AmongUs.GameOptions;
 using BetterAmongUs.Attributes;
 using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Attributes;
 using System.Text;
@@ -41,8 +42,6 @@ internal class PlayerInfoDisplay : MonoBehaviour
     /// </summary>
     private static readonly Regex _friendCodePattern = new(@"^[a-zA-Z0-9#]+$", RegexOptions.Compiled);
 
-    private CachedTranslations _cachedTranslations = new();
-
     /// <summary>
     /// Cached color values for performance optimization.
     /// </summary>
@@ -54,17 +53,6 @@ internal class PlayerInfoDisplay : MonoBehaviour
         [Colors.MMCHexColor] = Utils.HexToColor32(Colors.MMCHexColor),
         [Colors.CheaterHexColor] = Utils.HexToColor32(Colors.CheaterHexColor)
     };
-
-    /// <summary>
-    /// Cached translations for performance optimization.
-    /// </summary>
-    private class CachedTranslations
-    {
-        internal readonly string Loading = Translator.GetString("Player.Loading");
-        internal readonly string PlatformHidden = Translator.GetString("Player.PlatformHidden");
-        internal readonly string NoFriendCode = Translator.GetString("Player.NoFriendCode");
-        internal readonly string BetterUser = Translator.GetString("Player.BetterUser");
-    }
 
     /// <summary>
     /// Initializes the player info display.
@@ -170,9 +158,6 @@ internal class PlayerInfoDisplay : MonoBehaviour
         if (_nameText == null)
             return;
 
-        if (_cachedTranslations == null)
-            return;
-
         if (_sbTag == null || _sbTagTop == null || _sbTagBottom == null)
             return;
 
@@ -183,7 +168,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
 
         if (!_player.DataIsCollected())
         {
-            _nameText.text = _cachedTranslations.Loading;
+            _nameText.text = TranslationStrings.Player_Loading.LocalizedString;
             return;
         }
 
@@ -207,7 +192,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
             return;
 
         if (DataManager.Settings.Gameplay.StreamerMode)
-            platform = _cachedTranslations.PlatformHidden;
+            platform = TranslationStrings.Player_PlatformHidden.LocalizedString;
 
         if (!_player.IsInShapeshift())
             SetPlayerOutline(_sbTag);
@@ -296,9 +281,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
         {
             if (GameState.IsHost && BetterGameSettings.InvalidFriendCode.GetBool())
             {
-                string kickMessage = string.Format(Translator.GetString("AntiCheat.KickMessage"),
-                    Translator.GetString("AntiCheat.ByAntiCheat"),
-                    Translator.GetString("AntiCheat.Reason.InvalidFriendCode"));
+                string kickMessage = TranslationStrings.AntiCheat_KickMessage.Format(TranslationStrings.AntiCheat_ByAntiCheat, TranslationStrings.AntiCheat_Reason_InvalidFriendCode);
                 _player.Kick(true, kickMessage, true);
             }
         }
@@ -310,7 +293,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
 
         if (string.IsNullOrEmpty(friendCode))
         {
-            friendCode = _cachedTranslations.NoFriendCode;
+            friendCode = TranslationStrings.Player_NoFriendCode.LocalizedString;
             color = "#ff0000";
             isValidFriendCode = false;
             TryKick();
@@ -401,7 +384,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
             string verificationSymbol = betterData.IsVerifiedBetterUser || _player.IsLocalPlayer() ? "✓ " : "";
 
             sbTag.AppendFormat("<color=#0dff00>{1}{0}</color>+++",
-                _cachedTranslations.BetterUser, verificationSymbol);
+                TranslationStrings.Player_BetterUser.LocalizedString, verificationSymbol);
         }
         sbTag.Append($"<color=#b554ff>ID: {_player.PlayerId}</color>+++");
     }

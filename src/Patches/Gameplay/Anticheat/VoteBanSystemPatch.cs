@@ -1,8 +1,9 @@
-﻿using BetterAmongUs.Utilities;
+﻿using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Structs;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
 
 namespace BetterAmongUs.Patches.Gameplay.Anticheat;
@@ -52,7 +53,7 @@ internal static class VoteBanSystemPatch
             var player = client.Character;
             if (player != null)
             {
-                BetterNotificationManager.NotifyCheat(player, string.Format(Translator.GetString("AntiCheat.InvalidLobbyRPC"), "VoteKick"));
+                BetterNotificationManager.NotifyCheat(player, TranslationStrings.AntiCheat_Reason_VoteKick.LocalizedString, TranslationStrings.AntiCheat_HasBeenDetectedWithCheat.LocalizedString);
             }
         }
 

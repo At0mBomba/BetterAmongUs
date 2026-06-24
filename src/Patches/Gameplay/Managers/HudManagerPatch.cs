@@ -1,5 +1,6 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
 using BetterAmongUs.Data.Config;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Utilities;
@@ -12,9 +13,9 @@ namespace BetterAmongUs.Patches.Gameplay.Managers;
 [HarmonyPatch]
 internal static class HudManagerPatch
 {
-    internal static string WelcomeMessage = $"<b><color=#00b530><size=125%><align=\"center\">{string.Format(Translator.GetString("WelcomeMsg.WelcomeToBAU"), Translator.GetString("BetterAmongUs"))}\n{BAUPlugin.GetVersionText()}</size>\n" +
-        $"{Translator.GetString("WelcomeMsg.ThanksForDownloading")}</align></color></b>\n<size=120%> </size>\n" +
-        string.Format(Translator.GetString("WelcomeMsg.BAUDescription1"), Translator.GetString("bau"), Translator.GetString("BetterOption.AntiCheat"));
+    internal static string WelcomeMessage => $"<b><color=#00b530><size=125%><align=\"center\">{TranslationStrings.WelcomeMsg_WelcomeToBAU.Format(TranslationStrings.BetterAmongUs)}\n{BAUPlugin.GetVersionText()}</size>\n" +
+        $"{TranslationStrings.WelcomeMsg_ThanksForDownloading}</align></color></b>\n<size=120%> </size>\n" +
+        TranslationStrings.WelcomeMsg_BAUDescription1.Format(TranslationStrings.bau, TranslationStrings.BetterOption_AntiCheat);
 
     private static bool HasBeenWelcomed = false;
 
@@ -34,7 +35,7 @@ internal static class HudManagerPatch
         if (!HasBeenWelcomed && GameState.IsInGame && GameState.IsLobby && !GameState.IsFreePlay)
         {
             // Show notification with welcome text
-            BetterNotificationManager.Notify($"<b><color=#00751f>{string.Format(Translator.GetString("WelcomeMsg.WelcomeToBAU"), Translator.GetString("BetterAmongUs"))}!</color></b>", 8f);
+            BetterNotificationManager.Notify($"<b><color=#00751f>{TranslationStrings.WelcomeMsg_WelcomeToBAU.Format(TranslationStrings.BetterAmongUs)}!</color></b>", 8f);
 
             // Send detailed welcome message to private chat
             Utils.AddChatPrivate(WelcomeMessage, overrideName: " ");

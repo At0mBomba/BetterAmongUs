@@ -1,4 +1,5 @@
-﻿using BetterAmongUs.Utilities;
+﻿using BetterAmongUs.Generated;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Utilities.Extension;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ public sealed class OptionCheckboxItem : OptionItem<bool>
     /// <param name="defaultValue">The default value for the checkbox.</param>
     /// <param name="parent">Optional parent option for hierarchical organization.</param>
     /// <returns>A new or existing OptionCheckboxItem instance.</returns>
-    internal static OptionCheckboxItem Create(int id, OptionTab tab, string tranStr, bool defaultValue, OptionItem? parent = null)
+    internal static OptionCheckboxItem Create(int id, OptionTab tab, TranslationStrings.TranslationString tranStr, bool defaultValue, OptionItem? parent = null)
     {
         if (GetOptionById(id) is OptionCheckboxItem checkboxItem)
         {
@@ -35,7 +36,7 @@ public sealed class OptionCheckboxItem : OptionItem<bool>
         AllOptions.Add(Item);
         Item._id = id;
         Item.Tab = tab;
-        Item.Translation = tranStr;
+        Item.TranslationName = tranStr;
         Item.DefaultValue = defaultValue;
 
         if (parent != null)

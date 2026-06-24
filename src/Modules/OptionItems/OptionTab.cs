@@ -1,8 +1,9 @@
-﻿using BetterAmongUs.Utilities;
+﻿using BetterAmongUs.Generated;
 using BetterAmongUs.Modules.OptionItems.NoneOption;
+using BetterAmongUs.Utilities;
+using BetterAmongUs.Utilities.Extension;
 using TMPro;
 using UnityEngine;
-using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Modules.OptionItems;
 
@@ -23,22 +24,22 @@ internal sealed class OptionTab
     /// <summary>
     /// Gets the translated name of this tab.
     /// </summary>
-    internal string? Name => Translator.GetString(TranName);
+    internal string Name => TranslationName.LocalizedString;
 
     /// <summary>
     /// Gets or sets the translation key for the tab name.
     /// </summary>
-    internal string? TranName { get; private set; }
+    internal TranslationStrings.TranslationString TranslationName { get; private set; }
 
     /// <summary>
     /// Gets the translated description of this tab.
     /// </summary>
-    internal string? Description => Translator.GetString(TranDescription);
+    internal string Description => TranslationName.LocalizedString;
 
     /// <summary>
     /// Gets or sets the translation key for the tab description.
     /// </summary>
-    internal string? TranDescription { get; private set; }
+    internal TranslationStrings.TranslationString TranslationDescription { get; private set; }
 
     /// <summary>
     /// Gets or sets the Among Us options menu tab instance.
@@ -59,12 +60,12 @@ internal sealed class OptionTab
     /// Creates a new option tab or returns an existing one with the same ID.
     /// </summary>
     /// <param name="Id">The unique identifier for the tab.</param>
-    /// <param name="tranName">Translation key for the tab name.</param>
-    /// <param name="tranDescription">Translation key for the tab description.</param>
+    /// <param name="translationStringName">Translation key for the tab name.</param>
+    /// <param name="translationStringDescription">Translation key for the tab description.</param>
     /// <param name="Color">The color theme for the tab.</param>
     /// <param name="doNotDestroyMapPicker">Whether to preserve the map picker UI.</param>
     /// <returns>A new or existing OptionTab instance.</returns>
-    internal static OptionTab Create(int Id, string tranName, string tranDescription, Color Color, bool doNotDestroyMapPicker = false)
+    internal static OptionTab Create(int Id, TranslationStrings.TranslationString translationStringName, TranslationStrings.TranslationString translationStringDescription, Color Color, bool doNotDestroyMapPicker = false)
     {
         if (GetTabById(Id) is OptionTab optionTab)
         {
@@ -76,8 +77,8 @@ internal sealed class OptionTab
         var Item = new OptionTab
         {
             Id = Id,
-            TranName = tranName,
-            TranDescription = tranDescription,
+            TranslationName = translationStringName,
+            TranslationDescription = translationStringDescription,
             Color = Color
         };
         AllTabs.Add(Item);

@@ -1,4 +1,5 @@
-﻿using BetterAmongUs.Utilities;
+﻿using BetterAmongUs.Generated;
+using BetterAmongUs.Utilities;
 using UnityEngine;
 
 namespace BetterAmongUs.Modules.OptionItems.NoneOption;
@@ -26,15 +27,15 @@ internal sealed class OptionTitleItem : OptionItem
     /// Creates a new title option item.
     /// </summary>
     /// <param name="tab">The tab where this title item will be placed.</param>
-    /// <param name="tranStr">The translation string for the title text.</param>
+    /// <param name="translationString">The translation string for the title text.</param>
     /// <param name="topDistance">The top spacing distance (default: 0.15f).</param>
     /// <param name="bottomDistance">The bottom spacing distance (default: 0.50f).</param>
     /// <returns>A new <see cref="OptionTitleItem"/> instance.</returns>
-    internal static OptionTitleItem Create(OptionTab tab, string tranStr, float topDistance = 0.15f, float bottomDistance = 0.50f)
+    internal static OptionTitleItem Create(OptionTab tab, TranslationStrings.TranslationString translationString, float topDistance = 0.15f, float bottomDistance = 0.50f)
     {
         var Item = new OptionTitleItem
         {
-            Translation = tranStr,
+            TranslationName = translationString,
             Tab = tab,
             Distance = (topDistance, bottomDistance)
         };

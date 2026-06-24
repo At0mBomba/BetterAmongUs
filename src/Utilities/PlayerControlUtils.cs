@@ -1,5 +1,6 @@
 ﻿using AmongUs.GameOptions;
 using BetterAmongUs.Data;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.Player;
@@ -111,7 +112,7 @@ internal static class PlayerControlUtils
         if (player.cosmetics.nameText == null)
             return false;
 
-        string loading = Translator.GetString("Player.Loading");
+        string loading = TranslationStrings.Player_Loading.LocalizedString;
         string nameText = player.cosmetics.nameText.text;
 
         if (nameText == "???" || nameText == "Player" || nameText == loading ||
@@ -156,7 +157,7 @@ internal static class PlayerControlUtils
 
         if (setReasonInfo != "")
         {
-            PlayerJoinAndLeftPatch.BetterShowNotification(player.Data, forceReasonText: string.Format(setReasonInfo, Ban ? Translator.GetString("AntiCheat.Ban").ToLower() : Translator.GetString("AntiCheat.Kick").ToLower()));
+            PlayerJoinAndLeftPatch.BetterShowNotification(player.Data, forceReasonText: string.Format(setReasonInfo, Ban ? TranslationStrings.AntiCheat_Ban.LocalizedString.ToLower() : TranslationStrings.AntiCheat_Kick.LocalizedString.ToLower()));
         }
 
         AmongUsClient.Instance.KickPlayer(player.GetClientId(), Ban);

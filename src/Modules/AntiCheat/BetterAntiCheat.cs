@@ -2,12 +2,13 @@
 using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Enums;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules.AntiCheat.RPCHandlers.NetObjectHandlers;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
+using BetterAmongUs.Utilities;
 using Hazel;
 
 namespace BetterAmongUs.Modules.AntiCheat;
@@ -48,32 +49,32 @@ internal static class BetterAntiCheat
             {
                 if (BetterDataManager.Files.BetterDataFile.SickoData.Any(info => info.CheckPlayerData(player.Data)))
                 {
-                    string reason = Translator.GetString("AntiCheat.Reason.SickoMenuUser");
-                    string kickMessage = string.Format(Translator.GetString("AntiCheat.KickMessage"), Translator.GetString("AntiCheat.ByAntiCheat"), reason);
+                    string reason = TranslationStrings.AntiCheat_Reason_SickoMenuUser.LocalizedString;
+                    string kickMessage = TranslationStrings.AntiCheat_KickMessage.Format(TranslationStrings.AntiCheat_ByAntiCheat, reason);
                     player.Kick(true, kickMessage, true);
                 }
                 else if (BetterDataManager.Files.BetterDataFile.AUMData.Any(info => info.CheckPlayerData(player.Data)))
                 {
-                    string reason = Translator.GetString("AntiCheat.Reason.AUMUser");
-                    string kickMessage = string.Format(Translator.GetString("AntiCheat.KickMessage"), Translator.GetString("AntiCheat.ByAntiCheat"), reason);
+                    string reason = TranslationStrings.AntiCheat_Reason_AUMUser.LocalizedString;
+                    string kickMessage = TranslationStrings.AntiCheat_KickMessage.Format(TranslationStrings.AntiCheat_ByAntiCheat, reason);
                     player.Kick(true, kickMessage, true);
                 }
                 else if (BetterDataManager.Files.BetterDataFile.KNData.Any(info => info.CheckPlayerData(player.Data)))
                 {
-                    string reason = Translator.GetString("AntiCheat.Reason.KNUser");
-                    string kickMessage = string.Format(Translator.GetString("AntiCheat.KickMessage"), Translator.GetString("AntiCheat.ByAntiCheat"), reason);
+                    string reason = TranslationStrings.AntiCheat_Reason_KNUser.LocalizedString;
+                    string kickMessage = TranslationStrings.AntiCheat_KickMessage.Format(TranslationStrings.AntiCheat_ByAntiCheat, reason);
                     player.Kick(true, kickMessage, true);
                 }
                 else if (BetterDataManager.Files.BetterDataFile.MMCData.Any(info => info.CheckPlayerData(player.Data)))
                 {
-                    string reason = Translator.GetString("AntiCheat.Reason.MMCUser");
-                    string kickMessage = string.Format(Translator.GetString("AntiCheat.KickMessage"), Translator.GetString("AntiCheat.ByAntiCheat"), reason);
+                    string reason = TranslationStrings.AntiCheat_Reason_MMCUser.LocalizedString;
+                    string kickMessage = TranslationStrings.AntiCheat_KickMessage.Format(TranslationStrings.AntiCheat_ByAntiCheat, reason);
                     player.Kick(true, kickMessage, true);
                 }
                 else if (BetterDataManager.Files.BetterDataFile.CheatData.Any(info => info.CheckPlayerData(player.Data)))
                 {
-                    string reason = Translator.GetString("AntiCheat.Reason.KnownCheater");
-                    string kickMessage = string.Format(Translator.GetString("AntiCheat.KickMessage"), Translator.GetString("AntiCheat.ByAntiCheat"), reason);
+                    string reason = TranslationStrings.AntiCheat_Reason_KnownCheater.LocalizedString;
+                    string kickMessage = TranslationStrings.AntiCheat_KickMessage.Format(TranslationStrings.AntiCheat_ByAntiCheat, reason);
                     player.Kick(true, kickMessage, true);
                 }
             }
@@ -161,7 +162,7 @@ internal static class BetterAntiCheat
                 or (byte)RpcCalls.ExtendLobbyTimer
                 or (byte)RpcCalls.CloseMeeting)
                 {
-                    if (BetterNotificationManager.NotifyCheat(player, string.Format(Translator.GetString("AntiCheat.InvalidHostRPC"), Enum.GetName((RpcCalls)callId))))
+                    if (BetterNotificationManager.NotifyCheat(player, TranslationStrings.AntiCheat_InvalidHostRPC.Format(Enum.GetName((RpcCalls)callId))))
                     {
                         Logger_.LogCheat($"{player.ExtendedData().RealName} {Enum.GetName((RpcCalls)callId)}: {!player.IsHost()}");
                     }
@@ -180,7 +181,7 @@ internal static class BetterAntiCheat
                     or (byte)RpcCalls.SetPetStr
                     or (byte)RpcCalls.SetNamePlateStr)
                 {
-                    if (BetterNotificationManager.NotifyCheat(player, string.Format(Translator.GetString("AntiCheat.InvalidSetRPC"), Enum.GetName((RpcCalls)callId))))
+                    if (BetterNotificationManager.NotifyCheat(player, TranslationStrings.AntiCheat_InvalidSetRPC.Format(Enum.GetName((RpcCalls)callId))))
                     {
                         Logger_.LogCheat($"{player.ExtendedData().RealName} {Enum.GetName((RpcCalls)callId)}: {GameState.IsInGamePlay}");
                     }
@@ -220,7 +221,7 @@ internal static class BetterAntiCheat
                     or (byte)RpcCalls.CheckVanish
                     or (byte)RpcCalls.StartVanish)
                 {
-                    if (BetterNotificationManager.NotifyCheat(player, string.Format(Translator.GetString("AntiCheat.InvalidLobbyRPC"), Enum.GetName((RpcCalls)callId))))
+                    if (BetterNotificationManager.NotifyCheat(player, TranslationStrings.AntiCheat_InvalidLobbyRPC.Format(Enum.GetName((RpcCalls)callId))))
                     {
                         Logger_.LogCheat($"{player.ExtendedData().RealName} {Enum.GetName((RpcCalls)callId)}: {GameState.IsInGame} && {GameState.IsLobby}");
                     }

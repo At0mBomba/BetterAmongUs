@@ -1,13 +1,14 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
 using BepInEx.Unity.IL2CPP.Utils.Collections;
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.OptionItems;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
 using System.Collections;
 using UnityEngine;
@@ -49,7 +50,7 @@ internal static class PlayerControlPatch
 
                 if (GameState.IsModdedProtocol)
                 {
-                    BetterNotificationManager.Notify(Translator.GetString("AntiCheat.DisabledModdedProtocol"), 6f, true);
+                    BetterNotificationManager.Notify(TranslationStrings.AntiCheat_DisabledModdedProtocol.LocalizedString, 6f, true);
                 }
             }
         }

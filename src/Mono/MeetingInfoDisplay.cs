@@ -1,7 +1,7 @@
 ﻿using AmongUs.GameOptions;
 using BetterAmongUs.Attributes;
 using BetterAmongUs.Data;
-using BetterAmongUs.Modules;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Utilities;
@@ -28,21 +28,6 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
     private string _lastInfoText = "", _lastTopText = "";
     private int _lastUpdateFrame;
     private const int UPDATE_COOLDOWN = 5;
-
-    private readonly CachedTranslations _cachedTranslations = new();
-
-    /// <summary>
-    /// Cached translations for performance optimization.
-    /// </summary>
-    private class CachedTranslations
-    {
-        internal readonly string DisconnectLeft = Translator.GetString("DisconnectReasonMeeting.Left");
-        internal readonly string DisconnectAntiCheat = Translator.GetString("DisconnectReasonMeeting.AntiCheat");
-        internal readonly string DisconnectBanned = Translator.GetString("DisconnectReasonMeeting.Banned");
-        internal readonly string DisconnectKicked = Translator.GetString("DisconnectReasonMeeting.Kicked");
-        internal readonly string DisconnectCheater = Translator.GetString("DisconnectReasonMeeting.Cheater");
-        internal readonly string DisconnectDefault = Translator.GetString("DisconnectReasonMeeting.Disconnect");
-    }
 
     /// <summary>
     /// Initializes the meeting info display.
@@ -347,22 +332,22 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
         switch (betterData.DisconnectReason)
         {
             case DisconnectReasons.ExitGame:
-                return _cachedTranslations.DisconnectLeft;
+                return TranslationStrings.DisconnectReasonMeeting_Left.LocalizedString;
 
             case DisconnectReasons.Banned:
                 if (betterData.AntiCheatInfo != null && betterData.AntiCheatInfo.BannedByAntiCheat)
-                    return _cachedTranslations.DisconnectAntiCheat;
+                    return TranslationStrings.DisconnectReasonMeeting_AntiCheat.LocalizedString;
                 else
-                    return _cachedTranslations.DisconnectBanned;
+                    return TranslationStrings.DisconnectReasonMeeting_Banned.LocalizedString;
 
             case DisconnectReasons.Kicked:
-                return _cachedTranslations.DisconnectKicked;
+                return TranslationStrings.DisconnectReasonMeeting_Kicked.LocalizedString;
 
             case DisconnectReasons.Hacking:
-                return _cachedTranslations.DisconnectCheater;
+                return TranslationStrings.DisconnectReasonMeeting_Cheater.LocalizedString;
 
             default:
-                return _cachedTranslations.DisconnectDefault;
+                return TranslationStrings.DisconnectReasonMeeting_Left.LocalizedString;
         }
     }
 }

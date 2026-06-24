@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BetterAmongUs.Generated;
+using UnityEngine;
 
 namespace BetterAmongUs.Modules.OptionItems.NoneOption;
 
@@ -28,15 +29,15 @@ internal sealed class OptionHeaderItem : OptionItem
     /// Creates a new header option item.
     /// </summary>
     /// <param name="tab">The tab this header belongs to.</param>
-    /// <param name="tranStr">The translation key for the header title.</param>
+    /// <param name="translationString">The translation key for the header title.</param>
     /// <param name="topDistance">Spacing distance above the header.</param>
     /// <param name="bottomDistance">Spacing distance below the header.</param>
     /// <returns>A new OptionHeaderItem instance.</returns>
-    internal static OptionHeaderItem Create(OptionTab tab, string tranStr, float topDistance = 0.35f, float bottomDistance = 0.80f)
+    internal static OptionHeaderItem Create(OptionTab tab, TranslationStrings.TranslationString translationString, float topDistance = 0.35f, float bottomDistance = 0.80f)
     {
         var Item = new OptionHeaderItem
         {
-            Translation = tranStr,
+            TranslationName = translationString,
             Tab = tab,
             Distance = (topDistance, bottomDistance)
         };

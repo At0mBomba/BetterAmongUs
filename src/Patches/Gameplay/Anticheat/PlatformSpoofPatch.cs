@@ -1,5 +1,6 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
 using BetterAmongUs.Data.Config;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
@@ -47,10 +48,10 @@ internal class PlatformSpoofPatch
                     // Invalid ID length, likely spoofing
                     player.ReportPlayer(ReportReasons.Cheating_Hacking);
                     BetterNotificationManager.NotifyCheat(player,
-                        Translator.GetString("AntiCheat.Reason.PlatformSpoofer"),
-                        Translator.GetString("AntiCheat.HasBeenDetectedWithCheat")
+                        TranslationStrings.AntiCheat_Reason_PlatformSpoofer.LocalizedString,
+                        TranslationStrings.AntiCheat_HasBeenDetectedWithCheat.LocalizedString
                     );
-                    Logger_.LogCheat($"{player.ExtendedData().RealName} {Translator.GetString("AntiCheat.PlatformSpoofer")}: {__instance.XboxPlatformId}");
+                    Logger_.LogCheat($"{player.ExtendedData().RealName} {TranslationStrings.AntiCheat_Reason_PlatformSpoofer}: {__instance.XboxPlatformId}");
                 }
             }
 
@@ -62,19 +63,20 @@ internal class PlatformSpoofPatch
                     // Invalid ID length, likely spoofing
                     player.ReportPlayer(ReportReasons.Cheating_Hacking);
                     BetterNotificationManager.NotifyCheat(player,
-                        Translator.GetString("AntiCheat.Reason.PlatformSpoofer"),
-                        Translator.GetString("AntiCheat.HasBeenDetectedWithCheat")
+                        TranslationStrings.AntiCheat_Reason_PlatformSpoofer.LocalizedString,
+                        TranslationStrings.AntiCheat_HasBeenDetectedWithCheat.LocalizedString
                     );
-                    Logger_.LogCheat($"{player.ExtendedData().RealName} {Translator.GetString("AntiCheat.PlatformSpoofer")}: {__instance.PsnPlatformId}");
+                    Logger_.LogCheat($"{player.ExtendedData().RealName} {TranslationStrings.AntiCheat_Reason_PlatformSpoofer}: {__instance.PsnPlatformId}");
                 }
             }
 
             // Check for unknown or undefined platforms
             if (__instance.Platform is Platforms.Unknown || !Enum.IsDefined(__instance.Platform))
             {
+                player.ReportPlayer(ReportReasons.Cheating_Hacking);
                 BetterNotificationManager.NotifyCheat(player,
-                    Translator.GetString("AntiCheat.Reason.PlatformSpoofer"),
-                    Translator.GetString("AntiCheat.HasBeenDetectedWithCheat")
+                    TranslationStrings.AntiCheat_Reason_PlatformSpoofer.LocalizedString,
+                    TranslationStrings.AntiCheat_HasBeenDetectedWithCheat.LocalizedString
                 );
             }
         }

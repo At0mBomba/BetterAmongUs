@@ -1,7 +1,8 @@
 ﻿using BetterAmongUs.Attributes;
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
+using BetterAmongUs.Utilities;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -65,13 +66,13 @@ internal sealed class BetterPingTracker : MonoBehaviour
         if (AmongUsClient.Instance != null && !GameState.IsFreePlay)
         {
             string pingColor = Utils.Color32ToHex(Utils.LerpColor([Color.green, Color.yellow, new Color(1f, 0.5f, 0f), Color.red], (25, 250), AmongUsClient.Instance.Ping));
-            sb.AppendFormat("{0}: <b>{1}</b>\n", Translator.GetString("Ping").ToUpper(), $"<{pingColor}>{AmongUsClient.Instance.Ping}</color>");
+            sb.AppendFormat("{0}: <b>{1}</b>\n", TranslationStrings.Ping.LocalizedString.ToUpper(), $"<{pingColor}>{AmongUsClient.Instance.Ping}</color>");
         }
 
         if (GameState.IsLobby && GameState.IsHost && GameState.IsVanillaServer && !GameState.IsLocalGame)
         {
             string timeColor = Utils.Color32ToHex(Utils.LerpColor([Color.green, Color.yellow, new Color(1f, 0.5f, 0f), Color.red], (0, 300), lobbyTimer, true));
-            sb.AppendFormat("{0}: <b>{1}</b>\n", Translator.GetString("Timer").ToUpper(), $"<{timeColor}>{lobbyTimerDisplay}</color>");
+            sb.AppendFormat("{0}: <b>{1}</b>\n", TranslationStrings.Timer.LocalizedString.ToUpper(), $"<{timeColor}>{lobbyTimerDisplay}</color>");
         }
 
         sb.Append($"<color=#00dbdb><size=75%>BetterAmongUs {BAUPlugin.GetVersionText(true)}</size></color>\n");
@@ -89,7 +90,7 @@ internal sealed class BetterPingTracker : MonoBehaviour
             var hostInfo = AmongUsClient.Instance.GetHost();
             if (hostInfo != null && hostInfo.Character != null)
             {
-                sb.AppendFormat("<size=75%>{0}: {1}</size>\n", Translator.GetString("Host"), hostInfo.Character.GetPlayerNameAndColor());
+                sb.AppendFormat("<size=75%>{0}: {1}</size>\n", TranslationStrings.Host.LocalizedString, hostInfo.Character.GetPlayerNameAndColor());
             }
         }
 

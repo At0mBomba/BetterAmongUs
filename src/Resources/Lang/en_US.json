@@ -23,7 +23,6 @@
   "Player.Loading": "Loading",
   "Player.NoFriendCode": "No Friend Code",
   "Player.PlatformHidden": "Platform Hidden",
-  "Player.Dev": "Dev",
   "Player.BetterUser": "Better User",
   "Player.SickoUser": "Sicko User",
   "Player.AUMUser": "AUM User",
@@ -48,9 +47,11 @@
 
   "WelcomeMsg.WelcomeToBAU": "Welcome To {0}",
   "WelcomeMsg.ThanksForDownloading": "Thanks for downloading!",
-  "WelcomeMsg.BAUDescription1": "<color=#0dff00>{0}</color> Is a mod for improving the vanilla Among Us experience with a built-in {1} and other futures, <color=#0dff00>{0}</color> is a client-sided mod so it can be used with other vanilla Among Us players.",
+  "WelcomeMsg.BAUDescription1": "<color=#0dff00>{0}</color> Is a mod for improving the vanilla Among Us experience with a built-in {1} and other features, <color=#0dff00>{0}</color> is a client-sided mod so it can be used with other vanilla Among Us players.",
 
   "BetterOption": "Better Options",
+  "BetterOption.Next": "Next >",
+  "BetterOption.Previous": "< Prev",
   "BetterOption.AntiCheat": "<color=#4f92ff>Anti-Cheat</color>",
   "BetterOption.SendBetterRpc": "<color=#4f92ff>Send Better RPC</color>",
   "BetterOption.BetterNotifications": "<color=#4f92ff>Better Notifications</color>",
@@ -102,12 +103,6 @@
   "BetterSetting.Setting.HideAndSeekImpNum": "# Seekers",
   "BetterSetting.TempSetting.HideAndSeekImpNum": "Seeker",
 
-  "FileChecker.UnauthorizedTextDetectedMsg": "Unauthorized {0} Detected",
-  "FileChecker.UnauthorizedFileMsg": "Unauthorized Game Files Detected",
-  "FileChecker.OnlineMsg": "Online access has been temporarily disabled!",
-  "FileChecker.UnsupportedBepInExModMsg": "Unsupported BepInEx Mod Detected",
-  "FileChecker.BannedBepInExModMsg": "Unauthorized BepInEx Mod Detected",
-
   "AntiCheat": "Anti-Cheat",
   "AntiCheat.Ban": "Banned",
   "AntiCheat.Kick": "Kicked",
@@ -137,9 +132,11 @@
   "AntiCheat.Reason.InvalidFriendCode": "Invalid Friend Code",
   "AntiCheat.Reason.PlatformSpoofer": "Platform Spoofer",
   "AntiCheat.Reason.RPCSentPS": "RPC Spam",
+  "AntiCheat.Reason.VoteKick": "Vote Kick Exploit",
   "AntiCheat.Reason.SickoMenuUser": "Known Sicko User",
   "AntiCheat.Reason.AUMUser": "Known AUM User",
   "AntiCheat.Reason.KNUser": "Known KN User",
+  "AntiCheat.Reason.MMCUser": "Known MMC User",
   "AntiCheat.Reason.KnownCheater": "Known Cheater",
 
   "GameSummary": "Game Summary",
@@ -154,8 +151,5 @@
   "Game.Summary.Result.Sabotage": "Sabotage",
   "Game.Summary.Result.CrematesDisconnected": "Cremates Disconnected",
   "Game.Summary.Result.TimeOut": "Time Out",
-  "Game.Summary.Result.NoSurvivors": "No Survivors",
-
-  "DataBaseConnect.InitFailure": "Error while connecting to BAU API, please check your network connection and retry login!",
-  "DataBaseConnect.InitFailurePublic": "Error while connecting to BAU API, this could be caused by your internet connection. And so user perks are not available, you may continue to play as usual without these."
+  "Game.Summary.Result.NoSurvivors": "No Survivors"
 }

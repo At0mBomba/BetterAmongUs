@@ -1,5 +1,6 @@
 ﻿using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Mono.Extended;
@@ -24,7 +25,7 @@ internal static class OptionsMenuBehaviourPatch
     private static void Start_Postfix(OptionsMenuBehaviour __instance)
     {
         // Create custom "Better Options" tab in settings menu
-        BetterOptionsTab = CreateTabPage(__instance, Translator.GetString("BetterOption"));
+        BetterOptionsTab = CreateTabPage(__instance, TranslationStrings.BetterOption.LocalizedString);
 
         // Populate the tab with all BAU client options
         SetupAllClientOptions(__instance);
@@ -42,24 +43,24 @@ internal static class OptionsMenuBehaviourPatch
         ClientOptionItem.ClientOptions.Clear();
 
         // Toggle options with config binding
-        ClientOptionItem.CreateToggle(Translator.GetString("BetterOption.AntiCheat"), BAUConfigs.AntiCheat, 1, __instance);
-        ClientOptionItem.CreateToggle(Translator.GetString("BetterOption.SendBetterRpc"), BAUConfigs.SendBetterRpc, 1, __instance, SendBetterRpcAction);
-        ClientOptionItem.CreateToggle(Translator.GetString("BetterOption.BetterNotifications"), BAUConfigs.BetterNotifications, 1, __instance, BetterNotificationManager.ClearNotifications);
-        ClientOptionItem.CreateToggle(Translator.GetString("BetterOption.ForceOwnLanguage"), BAUConfigs.ForceOwnLanguage, 1, __instance);
-        ClientOptionItem.CreateToggle(Translator.GetString("BetterOption.ChatDarkMode"), BAUConfigs.ChatDarkMode, 1, __instance, ChatPatch.SetChatTheme);
-        ClientOptionItem.CreateToggle(Translator.GetString("BetterOption.ChatInGame"), BAUConfigs.ChatInGameplay, 1, __instance);
-        ClientOptionItem.CreateToggle(Translator.GetString("BetterOption.LobbyInfo"), BAUConfigs.LobbyPlayerInfo, 1, __instance);
-        ClientOptionItem.CreateToggle(Translator.GetString("BetterOption.LobbyTheme"), BAUConfigs.DisableLobbyTheme, 1, __instance, ToggleLobbyTheme);
-        ClientOptionItem.CreateToggle(Translator.GetString("BetterOption.UnlockFPS"), BAUConfigs.UnlockFPS, 1, __instance, UpdateFrameRate);
-        ClientOptionItem.CreateToggle(Translator.GetString("BetterOption.ShowFPS"), BAUConfigs.ShowFPS, 1, __instance);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_AntiCheat, BAUConfigs.AntiCheat, 1, __instance);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_SendBetterRpc, BAUConfigs.SendBetterRpc, 1, __instance, SendBetterRpcAction);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_BetterNotifications, BAUConfigs.BetterNotifications, 1, __instance, BetterNotificationManager.ClearNotifications);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_ForceOwnLanguage, BAUConfigs.ForceOwnLanguage, 1, __instance);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_ChatDarkMode, BAUConfigs.ChatDarkMode, 1, __instance, ChatPatch.SetChatTheme);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_ChatInGame, BAUConfigs.ChatInGameplay, 1, __instance);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_LobbyInfo, BAUConfigs.LobbyPlayerInfo, 1, __instance);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_LobbyTheme, BAUConfigs.DisableLobbyTheme, 1, __instance, ToggleLobbyTheme);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_UnlockFPS, BAUConfigs.UnlockFPS, 1, __instance, UpdateFrameRate);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_ShowFPS, BAUConfigs.ShowFPS, 1, __instance);
 
-        ClientOptionItem.CreateToggle(Translator.GetString("BetterOption.VentColorGroups"), BAUConfigs.VentColorGroups, 2, __instance, MiniMapBehaviourPatch.ClearMapIcons);
-        ClientOptionItem.CreateToggle(Translator.GetString("BetterOption.MinimapIcons"), BAUConfigs.MinimapIcons, 2, __instance, MiniMapBehaviourPatch.ClearMapIcons);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_VentColorGroups, BAUConfigs.VentColorGroups, 2, __instance, MiniMapBehaviourPatch.ClearMapIcons);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_MinimapIcons, BAUConfigs.MinimapIcons, 2, __instance, MiniMapBehaviourPatch.ClearMapIcons);
 
         // Button options (no toggle)
         if (!ModInfo.Starlight)
         {
-            ClientOptionItem.CreateButton(Translator.GetString("BetterOption.SaveData"), -1, __instance, OpenSaveData, () =>
+            ClientOptionItem.CreateButton(TranslationStrings.BetterOption_SaveData, -1, __instance, OpenSaveData, () =>
             {
                 // Only allow opening save data in lobby/main menu, not during gameplay
                 bool cannotOpen = GameState.IsInGame && !GameState.IsLobby;
@@ -71,7 +72,7 @@ internal static class OptionsMenuBehaviourPatch
             });
         }
 
-        ClientOptionItem.CreateButton(Translator.GetString("BetterOption.ToVanilla"), -1, __instance, BAUPlugin.Instance.UnloadBAU, () =>
+        ClientOptionItem.CreateButton(TranslationStrings.BetterOption_ToVanilla, -1, __instance, BAUPlugin.Instance.UnloadBAU, () =>
         {
             // Prevent switching to vanilla while in a game
             bool cannotSwitch = GameState.IsInGame;

@@ -2,11 +2,12 @@ using BetterAmongUs.Attributes;
 using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Enums;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
+using BetterAmongUs.Utilities;
 using Hazel;
 using InnerNet;
 
@@ -30,7 +31,7 @@ internal sealed class KillNetworkChatHandler : RPCHandler
             sender.ReportPlayer(ReportReasons.Cheating_Hacking);
             BetterDataManager.Files.BetterDataFile.KNData.Add(new(sender?.ExtendedData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "KillNetwork Chat RPC"));
             BetterDataManager.Files.BetterDataFile.Save();
-            BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.KNChat"), Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
+            BetterNotificationManager.NotifyCheat(sender, TranslationStrings.AntiCheat_Cheat_AUM.LocalizedString, TranslationStrings.AntiCheat_HasBeenDetectedWithCheatClient.LocalizedString);
         }
     }
 }

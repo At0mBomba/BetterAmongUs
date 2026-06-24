@@ -1,8 +1,9 @@
 using BetterAmongUs.Attributes;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
+using BetterAmongUs.Utilities;
 using Hazel;
 
 namespace BetterAmongUs.Modules.AntiCheat.RPCHandlers;
@@ -35,7 +36,7 @@ internal sealed class SetLevelHandler : RPCHandler
 
         if (level > BetterGameSettings.DetectedLevelAbove.GetInt())
         {
-            if (BetterNotificationManager.NotifyCheat(sender, string.Format(Translator.GetString("AntiCheat.InvalidLevelRPC"), level)))
+            if (BetterNotificationManager.NotifyCheat(sender, TranslationStrings.AntiCheat_InvalidLevelRPC.Format(level)))
             {
                 LogRpcInfo($"Suspicious level set: {level} (max allowed: {BetterGameSettings.DetectedLevelAbove.GetInt()})");
             }

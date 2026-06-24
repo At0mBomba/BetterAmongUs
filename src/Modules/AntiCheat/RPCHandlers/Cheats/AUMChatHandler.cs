@@ -2,11 +2,12 @@ using BetterAmongUs.Attributes;
 using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Enums;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
+using BetterAmongUs.Utilities;
 using Hazel;
 using InnerNet;
 
@@ -29,7 +30,7 @@ internal sealed class AUMChatHandler : RPCHandler
             var alreadyContainsMessage = betterData.AntiCheatInfo.AUMChats.Count > 0 && betterData.AntiCheatInfo.AUMChats.Last() == msgString;
             if (!alreadyContainsMessage)
             {
-                Utils.AddChatPrivate($"{msgString}", overrideName: $"<b>{Translator.GetString("AntiCheat.Cheat.AUMChat").ToColor(Colors.AUMHexColor)} - {sender.GetPlayerNameAndColor()}</b>");
+                Utils.AddChatPrivate($"{msgString}", overrideName: $"<b>{TranslationStrings.AntiCheat_Cheat_AUMChat.LocalizedString.ToColor(Colors.AUMHexColor)} - {sender.GetPlayerNameAndColor()}</b>");
                 betterData.AntiCheatInfo.AUMChats.Add(msgString);
             }
 
@@ -48,7 +49,7 @@ internal sealed class AUMChatHandler : RPCHandler
                 sender.ReportPlayer(ReportReasons.Cheating_Hacking);
                 BetterDataManager.Files.BetterDataFile.AUMData.Add(new(betterData.RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "AUM Chat RPC"));
                 BetterDataManager.Files.BetterDataFile.Save();
-                BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.AUMChat"), Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
+                BetterNotificationManager.NotifyCheat(sender, TranslationStrings.AntiCheat_Cheat_AUMChat.LocalizedString, TranslationStrings.AntiCheat_HasBeenDetectedWithCheatClient.LocalizedString);
             }
         }
         catch
@@ -64,7 +65,7 @@ internal sealed class AUMChatHandler : RPCHandler
                 sender.ReportPlayer(ReportReasons.Cheating_Hacking);
                 BetterDataManager.Files.BetterDataFile.AUMData.Add(new(sender?.ExtendedData().RealName ?? sender.Data.PlayerName, sender.GetHashPuid(), sender.Data.FriendCode, "AUM Chat RPC"));
                 BetterDataManager.Files.BetterDataFile.Save();
-                BetterNotificationManager.NotifyCheat(sender, Translator.GetString("AntiCheat.Cheat.AUMChat"), Translator.GetString("AntiCheat.HasBeenDetectedWithCheatClient"));
+                BetterNotificationManager.NotifyCheat(sender, TranslationStrings.AntiCheat_Cheat_AUMChat.LocalizedString, TranslationStrings.AntiCheat_HasBeenDetectedWithCheatClient.LocalizedString);
             }
         }
     }

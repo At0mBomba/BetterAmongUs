@@ -1,12 +1,13 @@
-﻿using BetterAmongUs.Utilities;
+﻿using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.Utilities;
+using BetterAmongUs.Utilities.Extension;
 using HarmonyLib;
 using System.Text;
 using TMPro;
 using UnityEngine;
-using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Patches.Gameplay.Managers;
 
@@ -107,49 +108,49 @@ internal static class GameSummaryPatch
             // Classic mode wins
             GameOverReason.CrewmatesByTask => (
                 Translator.GetString(StringNames.Crewmates),
-                Translator.GetString("Game.Summary.Result.TasksCompletion"),
+                TranslationStrings.Game_Summary_Result_TasksCompletion.LocalizedString,
                 Colors.CrewmateBlue.ColorToHex()
             ),
             GameOverReason.CrewmatesByVote => (
                 Translator.GetString(StringNames.Crewmates),
-                Translator.GetString("Game.Summary.Result.ImpostersVotedOut"),
+                TranslationStrings.Game_Summary_Result_ImpostersVotedOut.LocalizedString,
                 Colors.CrewmateBlue.ColorToHex()
             ),
             GameOverReason.ImpostorDisconnect => (
                 Translator.GetString(StringNames.Crewmates),
-                Translator.GetString("Game.Summary.Result.ImpostorsDisconnected"),
+                TranslationStrings.Game_Summary_Result_ImpostorsDisconnected.LocalizedString,
                 Colors.CrewmateBlue.ColorToHex()
             ),
             GameOverReason.ImpostorsByKill => (
                 Translator.GetString(StringNames.ImpostorsCategory),
-                Translator.GetString("Game.Summary.Result.CrewOutnumbered"),
+                TranslationStrings.Game_Summary_Result_CrewOutnumbered.LocalizedString,
                 Colors.ImpostorRed.ColorToHex()
             ),
             GameOverReason.ImpostorsBySabotage => (
                 Translator.GetString(StringNames.ImpostorsCategory),
-                Translator.GetString("Game.Summary.Result.Sabotage"),
+                TranslationStrings.Game_Summary_Result_Sabotage.LocalizedString,
                 Colors.ImpostorRed.ColorToHex()
             ),
             GameOverReason.ImpostorsByVote => (
                 Translator.GetString(StringNames.ImpostorsCategory),
-                Translator.GetString("Game.Summary.Result.CrewOutnumbered"),
+                TranslationStrings.Game_Summary_Result_CrewOutnumbered.LocalizedString,
                 Colors.ImpostorRed.ColorToHex()
             ),
             GameOverReason.CrewmateDisconnect => (
                 Translator.GetString(StringNames.ImpostorsCategory),
-                Translator.GetString("Game.Summary.Result.CrematesDisconnected"),
+                TranslationStrings.Game_Summary_Result_CrematesDisconnected.LocalizedString,
                 Colors.ImpostorRed.ColorToHex()
             ),
 
             // Hide & Seek mode wins
             GameOverReason.HideAndSeek_CrewmatesByTimer => (
-                Translator.GetString("Game.Summary.Hiders"),
-                Translator.GetString("Game.Summary.Result.TimeOut"),
+                TranslationStrings.Game_Summary_Hiders.LocalizedString,
+                TranslationStrings.Game_Summary_Result_TimeOut.LocalizedString,
                 Colors.CrewmateBlue.ColorToHex()
             ),
             GameOverReason.HideAndSeek_ImpostorsByKills => (
-                Translator.GetString("Game.Summary.Seekers"),
-                Translator.GetString("Game.Summary.Result.NoSurvivors"),
+                TranslationStrings.Game_Summary_Seekers.LocalizedString,
+                TranslationStrings.Game_Summary_Result_NoSurvivors.LocalizedString,
                 Colors.ImpostorRed.ColorToHex()
             ),
 
@@ -161,9 +162,9 @@ internal static class GameSummaryPatch
     // Builds the header text with win info
     private static string BuildSummaryHeader(string winTeam, string winTag, string winColor)
     {
-        return $"<align=\"center\"><size=150%>   {Translator.GetString("GameSummary")}</size></align>" +
-               $"\n\n<size=90%><color={winColor}>{winTeam} {Translator.GetString("Game.Summary.Won")}</color></size>" +
-               $"\n<size=60%>\n{Translator.GetString("Game.Summary.By")} {winTag}</size>";
+        return $"<align=\"center\"><size=150%>   {TranslationStrings.GameSummary}</size></align>" +
+               $"\n\n<size=90%><color={winColor}>{winTeam} {TranslationStrings.Game_Summary_Won}</color></size>" +
+               $"\n<size=60%>\n{TranslationStrings.Game_Summary_By} {winTag}</size>";
     }
 
     // Sorts players for display: disconnected first, then dead, then alive
@@ -214,25 +215,25 @@ internal static class GameSummaryPatch
         if (playerData.Role.IsImpostor)
         {
             var kills = playerData.ExtendedData().RoleInfo.Kills;
-            return $"({roleName}) → {theme($"{Translator.GetString("Kills")}: {kills}")}";
+            return $"({roleName}) → {theme($"{TranslationStrings.Kills}: {kills}")}";
         }
 
         var completedTasks = playerData.Tasks.WhereIl2Cpp(task => task.Complete).Count;
         var totalTasks = playerData.Tasks.Count;
-        return $"({roleName}) → {theme($"{Translator.GetString("Tasks")}: {completedTasks}/{totalTasks}")}";
+        return $"({roleName}) → {theme($"{TranslationStrings.Tasks}: {completedTasks}/{totalTasks}")}";
     }
 
     // Builds player status (DC/Dead/Alive)
     private static string BuildDeathReason(NetworkedPlayerInfo playerData)
     {
         if (playerData.Disconnected)
-            return $"『<color=#838383><b>{Translator.GetString("DC")}</b></color>』";
+            return $"『<color=#838383><b>{TranslationStrings.DC}</b></color>』";
 
         if (!playerData.IsDead)
-            return $"『<color=#80ff00><b>{Translator.GetString("Alive")}</b></color>』";
+            return $"『<color=#80ff00><b>{TranslationStrings.Alive}</b></color>』";
 
         if (playerData.IsDead)
-            return $"『<color=#ff0600><b>{Translator.GetString("Dead")}</b></color>』";
+            return $"『<color=#ff0600><b>{TranslationStrings.Dead}</b></color>』";
 
         return $"『<color=#838383><b>Unknown</b></color>』";
     }

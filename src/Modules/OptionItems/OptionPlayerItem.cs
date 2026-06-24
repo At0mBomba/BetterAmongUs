@@ -1,4 +1,5 @@
-﻿using BetterAmongUs.Utilities;
+﻿using BetterAmongUs.Generated;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Utilities.Extension;
 using UnityEngine;
 
@@ -45,7 +46,7 @@ public sealed class OptionPlayerItem : OptionItem<int>
     /// <param name="parent">Optional parent option for hierarchical organization.</param>
     /// <param name="canBeRandom">Whether this option allows random player selection.</param>
     /// <returns>A new or existing OptionPlayerItem instance.</returns>
-    internal static OptionPlayerItem Create(int id, OptionTab tab, string tranStr, OptionItem? parent = null, bool canBeRandom = true)
+    internal static OptionPlayerItem Create(int id, OptionTab tab, TranslationStrings.TranslationString tranStr, OptionItem? parent = null, bool canBeRandom = true)
     {
         if (optionPlayerItems.FirstOrDefault(opt => opt.Id == id) is OptionPlayerItem playerItem)
         {
@@ -58,7 +59,7 @@ public sealed class OptionPlayerItem : OptionItem<int>
         Item.Value = canBeRandom ? -1 : 0; ;
         Item._id = id;
         Item.Tab = tab;
-        Item.Translation = tranStr;
+        Item.TranslationName = tranStr;
         Item.CanBeRandom = canBeRandom;
 
         if (parent != null)

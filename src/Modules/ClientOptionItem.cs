@@ -1,7 +1,8 @@
 ﻿using BepInEx.Configuration;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Patches.Client;
-using UnityEngine;
 using BetterAmongUs.Utilities.Extension;
+using UnityEngine;
 
 namespace BetterAmongUs.Modules;
 
@@ -28,10 +29,10 @@ internal sealed class ClientOptionItem
     /// <summary>
     /// Creates a toggle option with configuration binding.
     /// </summary>
-    public static ClientOptionItem CreateToggle(string name, ConfigEntry<bool> config, int page, OptionsMenuBehaviour optionsMenuBehaviour, Action? onToggle = null, Func<bool>? toggleCheck = null)
+    public static ClientOptionItem CreateToggle(TranslationStrings.TranslationString translationStringName, ConfigEntry<bool> config, int page, OptionsMenuBehaviour optionsMenuBehaviour, Action? onToggle = null, Func<bool>? toggleCheck = null)
     {
-        var toggleButton = CreateToggleButton(name, optionsMenuBehaviour, GetOrCreatePage(page, optionsMenuBehaviour).transform);
-        var item = new ClientOptionItem(name, config, toggleButton);
+        var toggleButton = CreateToggleButton(translationStringName, optionsMenuBehaviour, GetOrCreatePage(page, optionsMenuBehaviour).transform);
+        var item = new ClientOptionItem(translationStringName, config, toggleButton);
 
         item.SetupToggleButton(onToggle, toggleCheck);
         if (!ClientOptions.TryGetValue(page, out var options))
@@ -48,10 +49,10 @@ internal sealed class ClientOptionItem
     /// <summary>
     /// Creates a button option without toggle state.
     /// </summary>
-    public static ClientOptionItem CreateButton(string name, int page, OptionsMenuBehaviour optionsMenuBehaviour, Action onClick, Func<bool>? clickCheck = null)
+    public static ClientOptionItem CreateButton(TranslationStrings.TranslationString translationStringName, int page, OptionsMenuBehaviour optionsMenuBehaviour, Action onClick, Func<bool>? clickCheck = null)
     {
-        var toggleButton = CreateToggleButton(name, optionsMenuBehaviour, GetOrCreatePage(page, optionsMenuBehaviour).transform);
-        var item = new ClientOptionItem(name, null, toggleButton);
+        var toggleButton = CreateToggleButton(translationStringName, optionsMenuBehaviour, GetOrCreatePage(page, optionsMenuBehaviour).transform);
+        var item = new ClientOptionItem(translationStringName, null, toggleButton);
 
         item.SetupButton(onClick, clickCheck);
         if (!ClientOptions.TryGetValue(page, out var options))
@@ -68,22 +69,22 @@ internal sealed class ClientOptionItem
     /// <summary>
     /// Initializes a new instance of the ClientOptionItem class.
     /// </summary>
-    internal ClientOptionItem(string name, ConfigEntry<bool>? config, ToggleButtonBehaviour toggleButton)
+    internal ClientOptionItem(TranslationStrings.TranslationString translationStringName, ConfigEntry<bool>? config, ToggleButtonBehaviour toggleButton)
     {
         Config = config;
         ToggleButton = toggleButton;
-        ToggleButton.name = name;
+        ToggleButton.name = translationStringName.LocalizedString;
     }
 
     /// <summary>
     /// Creates a toggle button GameObject for the options menu.
     /// </summary>
-    private static ToggleButtonBehaviour CreateToggleButton(string name, OptionsMenuBehaviour optionsMenuBehaviour, Transform parent)
+    private static ToggleButtonBehaviour CreateToggleButton(TranslationStrings.TranslationString translationStringName, OptionsMenuBehaviour optionsMenuBehaviour, Transform parent)
     {
         var mouseMoveToggle = optionsMenuBehaviour.DisableMouseMovement;
         var toggleButton = UnityEngine.Object.Instantiate(mouseMoveToggle, parent);
-        toggleButton.name = name;
-        toggleButton.Text.text = name;
+        toggleButton.name = translationStringName.LocalizedString;
+        toggleButton.Text.text = translationStringName.LocalizedString;
 
         return toggleButton;
     }
@@ -251,7 +252,7 @@ internal sealed class ClientOptionItem
     /// </summary>
     private static void CreateNextButton(GameObject page, GameObject nextPage, OptionsMenuBehaviour optionsMenuBehaviour)
     {
-        var button = CreateToggleButton("Next >", optionsMenuBehaviour, page.transform);
+        var button = CreateToggleButton(TranslationStrings.BetterOption_Next, optionsMenuBehaviour, page.transform);
         button.transform.localPosition = new Vector3(2f, -2.5f, 0f);
         var background = button.transform.Find("Background");
         if (background != null)
@@ -277,7 +278,7 @@ internal sealed class ClientOptionItem
     /// </summary>
     private static void CreatePreviousButton(GameObject page, GameObject previousPage, OptionsMenuBehaviour optionsMenuBehaviour)
     {
-        var button = CreateToggleButton("< Prev", optionsMenuBehaviour, page.transform);
+        var button = CreateToggleButton(TranslationStrings.BetterOption_Previous, optionsMenuBehaviour, page.transform);
         button.transform.localPosition = new Vector3(-2f, -2.5f, 0f);
         var background = button.transform.Find("Background");
         if (background != null)

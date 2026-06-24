@@ -1,15 +1,16 @@
 ﻿using AmongUs.GameOptions;
 using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.Utilities;
+using BetterAmongUs.Utilities.Extension;
 using HarmonyLib;
 using System.Text;
 using TMPro;
 using UnityEngine;
-using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Patches.Gameplay.UI.Chat;
 
@@ -255,7 +256,7 @@ internal static class ChatPatch
             // Show BAU user tag
             if (sourcePlayer.IsLocalPlayer() || betterData.IsBetterUser)
             {
-                sbTag.AppendFormat("<color=#0dff00>{1}{0}</color>+++", Translator.GetString("Player.BetterUser"), betterData.IsVerifiedBetterUser || sourcePlayer.IsLocalPlayer() ? "✓ " : "");
+                sbTag.AppendFormat("<color=#0dff00>{1}{0}</color>+++", TranslationStrings.Player_BetterUser, betterData.IsVerifiedBetterUser || sourcePlayer.IsLocalPlayer() ? "✓ " : "");
             }
 
             // Show mod-specific tags based on player data

@@ -1,4 +1,5 @@
-﻿using BetterAmongUs.Utilities;
+﻿using BetterAmongUs.Generated;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Utilities.Extension;
 using UnityEngine;
 
@@ -46,7 +47,7 @@ public class OptionFloatItem : OptionItem<float>
     /// <param name="parent">Optional parent option for hierarchical organization.</param>
     /// <param name="canBeInfinite">Whether this option can represent infinite values.</param>
     /// <returns>A new or existing OptionFloatItem instance.</returns>
-    internal static OptionFloatItem Create(int id, OptionTab tab, string tranStr, (float minValue, float maxValue, float incrementValue) Min_Max_Increment, float defaultValue, (string prefix, string postfix) Prefix_Postfix = new(), OptionItem? parent = null, bool canBeInfinite = false)
+    internal static OptionFloatItem Create(int id, OptionTab tab, TranslationStrings.TranslationString tranStr, (float minValue, float maxValue, float incrementValue) Min_Max_Increment, float defaultValue, (string prefix, string postfix) Prefix_Postfix = new(), OptionItem? parent = null, bool canBeInfinite = false)
     {
         if (GetOptionById(id) is OptionFloatItem floatItem)
         {
@@ -58,7 +59,7 @@ public class OptionFloatItem : OptionItem<float>
         AllOptions.Add(Item);
         Item._id = id;
         Item.Tab = tab;
-        Item.Translation = tranStr;
+        Item.TranslationName = tranStr;
         Item.Increment = Min_Max_Increment.incrementValue;
         Item.CanBeInfinite = canBeInfinite;
         Item.Range = new FloatRange(Min_Max_Increment.minValue, Min_Max_Increment.maxValue);

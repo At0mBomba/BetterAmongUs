@@ -1,7 +1,8 @@
 using BetterAmongUs.Attributes;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Patches.Gameplay.UI;
+using BetterAmongUs.Utilities;
 using Hazel;
 
 namespace BetterAmongUs.Modules.AntiCheat.RPCHandlers;
@@ -15,7 +16,7 @@ internal sealed class ReportDeadBodyHandler : RPCHandler
     {
         if (!GameState.IsInGamePlay || !BAUPlugin.AllPlayerControls.All(pc => pc.roleAssigned))
         {
-            if (BetterNotificationManager.NotifyCheat(sender, string.Format(Translator.GetString("AntiCheat.InvalidActionRPC"), Enum.GetName((RpcCalls)CallId)), forceBan: true))
+            if (BetterNotificationManager.NotifyCheat(sender, TranslationStrings.AntiCheat_InvalidActionRPC.Format(Enum.GetName((RpcCalls)CallId)), forceBan: true))
             {
                 LogRpcInfo($"Report dead body blocked: Game not in play or roles not assigned");
             }
@@ -26,7 +27,7 @@ internal sealed class ReportDeadBodyHandler : RPCHandler
         if (GameState.IsMeeting && MeetingHudPatch.timeOpen > 5f || GameState.IsHideNSeek || sender.IsInVent() || sender.shapeshifting
             || sender.inMovingPlat || sender.onLadder || sender.MyPhysics.Animations.IsPlayingAnyLadderAnimation())
         {
-            if (BetterNotificationManager.NotifyCheat(sender, string.Format(Translator.GetString("AntiCheat.InvalidActionRPC"), Enum.GetName((RpcCalls)CallId))))
+            if (BetterNotificationManager.NotifyCheat(sender, TranslationStrings.AntiCheat_InvalidActionRPC.Format(Enum.GetName((RpcCalls)CallId))))
             {
                 string issue = GetReportBlockedIssue(sender);
                 LogRpcInfo($"Report blocked: {issue}");
@@ -42,7 +43,7 @@ internal sealed class ReportDeadBodyHandler : RPCHandler
         {
             if (!deadPlayerInfo.IsDead || deadPlayerInfo == sender.Data)
             {
-                if (BetterNotificationManager.NotifyCheat(sender, string.Format(Translator.GetString("AntiCheat.InvalidActionRPC"), Enum.GetName((RpcCalls)CallId))))
+                if (BetterNotificationManager.NotifyCheat(sender, TranslationStrings.AntiCheat_InvalidActionRPC.Format(Enum.GetName((RpcCalls)CallId))))
                 {
                     string issue = GetBodyReportIssue(deadPlayerInfo, sender);
                     LogRpcInfo($"Invalid body report: {issue}");
@@ -55,7 +56,7 @@ internal sealed class ReportDeadBodyHandler : RPCHandler
         {
             if (sender.RemainingEmergencies <= 0)
             {
-                if (BetterNotificationManager.NotifyCheat(sender, string.Format(Translator.GetString("AntiCheat.InvalidActionRPC"), Enum.GetName((RpcCalls)CallId))))
+                if (BetterNotificationManager.NotifyCheat(sender, TranslationStrings.AntiCheat_InvalidActionRPC.Format(Enum.GetName((RpcCalls)CallId))))
                 {
                     LogRpcInfo($"Emergency meeting: No meetings remaining ({sender.RemainingEmergencies} left)");
                 }

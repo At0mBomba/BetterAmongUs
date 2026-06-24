@@ -1,8 +1,9 @@
 using AmongUs.GameOptions;
 using BetterAmongUs.Attributes;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.Utilities;
 using Hazel;
 using InnerNet;
 
@@ -25,7 +26,7 @@ internal sealed class MurderPlayerHandler : RPCHandler
 
                 if (target.ExtendedData().AntiCheatInfo.TimesAttemptedKilled >= 10 && !target.IsAlive())
                 {
-                    if (BetterNotificationManager.NotifyCheat(player, string.Format(Translator.GetString("AntiCheat.InvalidAction"), Translator.GetString("AntiCheat.TryBanExploit"))))
+                    if (BetterNotificationManager.NotifyCheat(player, TranslationStrings.AntiCheat_InvalidAction.Format(TranslationStrings.AntiCheat_TryBanExploit)))
                     {
                         LogRpcInfo($"Ban exploit detected: Player attempted to kill dead target {target.ExtendedData().AntiCheatInfo.TimesAttemptedKilled} times");
                     }

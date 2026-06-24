@@ -16,6 +16,27 @@
 		<Error Condition="'$(ScriptExitCode)' != '0'" Text="Il2Cpp compatibility check failed. See errors in error list." />
 	</Target>
 
+	<!-- Generate Translation Strings -->
+	<PropertyGroup>
+		<TranslationKeysClassName>TranslationStrings</TranslationKeysClassName>
+		<TranslationJsonPath>$(MSBuildProjectDirectory)\Resources\Lang\en_US.json</TranslationJsonPath>
+		<GeneratedOutputDir>$(MSBuildProjectDirectory)\build\Generated</GeneratedOutputDir>
+	</PropertyGroup>
+
+	<Target Name="GenerateTranslationKeys" BeforeTargets="BeforeBuild">
+		<MakeDir Directories="$(GeneratedOutputDir)" Condition="!Exists('$(GeneratedOutputDir)')" />
+
+		<Exec Command="powershell.exe -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\build\GenerateTranslationStrings.ps1&quot; -JsonPath &quot;$(TranslationJsonPath)&quot; -OutputPath &quot;$(GeneratedOutputDir)\$(TranslationKeysClassName).cs&quot; -ProjectDir &quot;$(MSBuildProjectDirectory)&quot;" IgnoreExitCode="true">
+			<Output TaskParameter="ExitCode" PropertyName="ScriptExitCode" />
+		</Exec>
+
+		<Error Condition="'$(ScriptExitCode)' != '0'" Text="Translation key generation failed. See errors in error list." />
+	</Target>
+
+	<Target Name="CleanTranslationKeys" AfterTargets="Clean">
+		<Delete Files="$(GeneratedOutputDir)\$(TranslationKeysClassName).cs" />
+	</Target>
+
 	<!-- Build Metadata -->
 	<PropertyGroup>
 		<BuildDate>$([System.DateTime]::Now.ToString("MM.dd.yyyy"))</BuildDate>
@@ -83,5 +104,4 @@
 	<ItemGroup>
 		<EmbeddedResource Include="Resources\**\*" />
 	</ItemGroup>
-
 </Project>

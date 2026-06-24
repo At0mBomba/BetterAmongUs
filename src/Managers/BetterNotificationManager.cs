@@ -1,9 +1,10 @@
 ﻿using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
+using BetterAmongUs.Utilities;
 using Cpp2IL.Core.Extensions;
 using TMPro;
 using UnityEngine;
@@ -106,7 +107,7 @@ internal static class BetterNotificationManager
 
         showTime = time;
         BAUNotificationManagerObj.SetActive(true);
-        NameText.text = $"<color=#00ff44>{Translator.GetString("SystemNotification")}</color>";
+        NameText.text = $"<color=#00ff44>{TranslationStrings.SystemNotification}</color>";
         TextArea.text = text;
         SoundManager.Instance.PlaySound(HudManager.Instance.TaskCompleteSound, false, 1f);
         Notifying = true;
@@ -149,11 +150,11 @@ internal static class BetterNotificationManager
             Reason = string.Concat('*').Repeat(reason.Length);
         }
 
-        string playerDetected = Translator.GetString("AntiCheat.PlayerDetected");
-        string unauthorizedAction = Translator.GetString("AntiCheat.UnauthorizedAction");
-        string byAntiCheat = Translator.GetString("AntiCheat.ByAntiCheat");
-        string playerDetectedLog = Translator.GetString("AntiCheat.PlayerDetected", useConsoleLanguage: true);
-        string unauthorizedActionLog = Translator.GetString("AntiCheat.UnauthorizedAction", useConsoleLanguage: true);
+        string playerDetected = TranslationStrings.AntiCheat_PlayerDetected.LocalizedString;
+        string unauthorizedAction = TranslationStrings.AntiCheat_UnauthorizedAction.LocalizedString;
+        string byAntiCheat = TranslationStrings.AntiCheat_ByAntiCheat.LocalizedString;
+        string playerDetectedLog = Translator.GetString(TranslationStrings.AntiCheat_PlayerDetected, useConsoleLanguage: true);
+        string unauthorizedActionLog = Translator.GetString(TranslationStrings.AntiCheat_UnauthorizedAction, useConsoleLanguage: true);
 
         string text = $"{playerDetected}: <color=#0097b5>{player?.ExtendedData().RealName}</color> {unauthorizedAction}: <b><color=#fc0000>{Reason}</color></b>";
         string rawText = $"{playerDetectedLog}: <color=#0097b5>{player?.ExtendedData().RealName}</color> {unauthorizedActionLog}: <b><color=#fc0000>{reason}</color></b>";
@@ -176,7 +177,7 @@ internal static class BetterNotificationManager
 
         if (GameState.IsHost && kickPlayer)
         {
-            string kickMessage = string.Format(Translator.GetString("AntiCheat.KickMessage"), byAntiCheat, Reason);
+            string kickMessage = string.Format(TranslationStrings.AntiCheat_KickMessage.LocalizedString, byAntiCheat, Reason);
             player.Kick(true, kickMessage, true, false, forceBan);
         }
 

@@ -1,8 +1,9 @@
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Mono;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
@@ -75,7 +76,7 @@ internal static class MeetingHudPatch
             return;
 
         PlayerMaterial.SetColors(hostColor, MeetingHud.Instance.HostIcon);
-        MeetingHud.Instance.ProceedButton.gameObject.GetComponentInChildren<TextMeshPro>().text = string.Format(Translator.GetString("HostInMeeting"), hostRealName);
+        MeetingHud.Instance.ProceedButton.gameObject.GetComponentInChildren<TextMeshPro>().text = TranslationStrings.HostInMeeting.Format(hostRealName);
     }
 
     internal static float timeOpen = 0f;

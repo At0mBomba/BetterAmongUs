@@ -1,5 +1,6 @@
 ﻿using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
 
 namespace BetterAmongUs.Modules.OptionItems;
@@ -30,8 +31,8 @@ internal sealed class OptionPresetItem : OptionStringItem
         AllOptions.Add(Item);
         Item._id = id;
         Item.Tab = GameSettingsPatch.BetterSettingsTab;
-        Item.Translation = "Setting.Presets";
-        Item.TranslatorStrings = Enumerable.Repeat(string.Empty, 10).ToArray();
+        Item.TranslationName = TranslationStrings.Setting_Presets;
+        Item.TranslatorStrings = Enumerable.Repeat(new TranslationStrings.TranslationString(string.Empty), 10).ToArray();
         Item.Range = new IntRange(0, 10);
         Item.DefaultValue = 0;
         Item.Value = BAUConfigs.SettingsPreset.Value;
@@ -54,6 +55,6 @@ internal sealed class OptionPresetItem : OptionStringItem
 
     public sealed override string ValueAsString()
     {
-        return Translator.GetString("Setting.Preset", [Value.ToString()]);
+        return TranslationStrings.Setting_Preset.Format(Value.ToString());
     }
 }

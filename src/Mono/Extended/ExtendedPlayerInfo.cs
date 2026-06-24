@@ -1,9 +1,10 @@
 ﻿using AmongUs.GameOptions;
 using BetterAmongUs.Attributes;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
 using Hazel;
 using Il2CppInterop.Runtime.Attributes;
@@ -84,8 +85,8 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
             {
                 BetterNotificationManager.NotifyCheat(
                     BaseMono.Object,
-                    Translator.GetString("AntiCheat.Reason.RPCSentPS"),
-                    Translator.GetString("AntiCheat.UnauthorizedAction")
+                    TranslationStrings.AntiCheat_Reason_RPCSentPS.LocalizedString,
+                    TranslationStrings.AntiCheat_UnauthorizedAction.LocalizedString
                 );
 
                 Logger_.LogCheat($"{BaseMono.Object.ExtendedData().RealName} {AntiCheatInfo.RPCSentPS} Sent.");

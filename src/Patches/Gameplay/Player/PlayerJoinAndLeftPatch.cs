@@ -1,6 +1,7 @@
 using BepInEx.Unity.IL2CPP.Utils;
 using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
@@ -61,7 +62,7 @@ internal static class PlayerJoinAndLeftPatch
                         BAUPlugin.AllPlayerControls.Select(player => player.Data.FriendCode)
                         .Concat(BAUPlugin.AllPlayerControls.Select(player => player.GetHashPuid())).ToArray()))
                     {
-                        player.Kick(true, Translator.GetString("AntiCheat.BanPlayerListMessage"), bypassDataCheck: true);
+                        player.Kick(true, TranslationStrings.AntiCheat_BanPlayerListMessage.LocalizedString, bypassDataCheck: true);
                         yield break;
                     }
                 }
@@ -74,7 +75,7 @@ internal static class PlayerJoinAndLeftPatch
                 {
                     if (TextFileHandler.CompareStringFilters(BetterDataManager.Files.banNameListFilePath, [player.Data.PlayerName]))
                     {
-                        player?.Kick(true, Translator.GetString("AntiCheat.BanPlayerListMessage"), bypassDataCheck: true);
+                        player?.Kick(true, TranslationStrings.AntiCheat_BanPlayerListMessage.LocalizedString, bypassDataCheck: true);
                     }
                 }
             }
@@ -160,28 +161,28 @@ internal static class PlayerJoinAndLeftPatch
             switch (reason)
             {
                 case DisconnectReasons.ExitGame:
-                    ReasonText = string.Format(Translator.GetString("DisconnectReason.Left"), playerName);
+                    ReasonText = TranslationStrings.DisconnectReason_Left.Format(playerName);
                     break;
                 case DisconnectReasons.ClientTimeout:
-                    ReasonText = string.Format(Translator.GetString("DisconnectReason.Disconnect"), playerName);
+                    ReasonText = TranslationStrings.DisconnectReason_Disconnect.Format(playerName);
                     break;
                 case DisconnectReasons.Kicked:
-                    ReasonText = string.Format(Translator.GetString("DisconnectReason.Kicked"), playerName, AmongUsClient.Instance.GetHost().Character.Data.PlayerName);
+                    ReasonText = TranslationStrings.DisconnectReason_Kicked.Format(playerName, AmongUsClient.Instance.GetHost().Character.Data.PlayerName);
                     break;
                 case DisconnectReasons.Banned:
-                    ReasonText = string.Format(Translator.GetString("DisconnectReason.Banned"), playerName, AmongUsClient.Instance.GetHost().Character.Data.PlayerName);
+                    ReasonText = TranslationStrings.DisconnectReason_Banned.Format(playerName, AmongUsClient.Instance.GetHost().Character.Data.PlayerName);
                     break;
                 case DisconnectReasons.Hacking:
-                    ReasonText = string.Format(Translator.GetString("DisconnectReason.Cheater"), playerName);
+                    ReasonText = TranslationStrings.DisconnectReason_Cheater.Format(playerName);
                     break;
                 case DisconnectReasons.Error:
-                    ReasonText = string.Format(Translator.GetString("DisconnectReason.Error"), playerName);
+                    ReasonText = TranslationStrings.DisconnectReason_Error.Format(playerName);
                     break;
                 case DisconnectReasons.Unknown:
-                    ReasonText = string.Format(Translator.GetString("DisconnectReason.Unknown"), playerName);
+                    ReasonText = TranslationStrings.DisconnectReason_Unknown.Format(playerName);
                     break;
                 default:
-                    ReasonText = string.Format(Translator.GetString("DisconnectReason.Left"), playerName);
+                    ReasonText = TranslationStrings.DisconnectReason_Left.Format(playerName);
                     break;
             }
 

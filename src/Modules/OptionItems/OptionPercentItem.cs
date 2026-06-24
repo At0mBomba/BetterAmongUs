@@ -1,4 +1,6 @@
-﻿namespace BetterAmongUs.Modules.OptionItems;
+﻿using BetterAmongUs.Generated;
+
+namespace BetterAmongUs.Modules.OptionItems;
 
 /// <summary>
 /// Represents a percentage option item that displays values from 0% to 100% with color coding.
@@ -14,7 +16,7 @@ public sealed class OptionPercentItem : OptionFloatItem
     /// <param name="defaultValue">The default percentage value (0-100).</param>
     /// <param name="parent">Optional parent option for hierarchical organization.</param>
     /// <returns>A new or existing OptionPercentItem instance.</returns>
-    internal static OptionPercentItem Create(int id, OptionTab tab, string tranStr, float defaultValue, OptionItem? parent = null)
+    internal static OptionPercentItem Create(int id, OptionTab tab, TranslationStrings.TranslationString tranStr, float defaultValue, OptionItem? parent = null)
     {
         if (GetOptionById(id) is OptionPercentItem floatItem)
         {
@@ -26,7 +28,7 @@ public sealed class OptionPercentItem : OptionFloatItem
         AllOptions.Add(Item);
         Item._id = id;
         Item.Tab = tab;
-        Item.Translation = tranStr;
+        Item.TranslationName = tranStr;
         Item.Increment = 5;
         Item.Range = new FloatRange(0f, 100f);
         Item.DefaultValue = defaultValue;

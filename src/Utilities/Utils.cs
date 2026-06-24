@@ -1,5 +1,5 @@
-﻿using AmongUs.Data;
-using BepInEx.Unity.IL2CPP.Utils;
+﻿using BepInEx.Unity.IL2CPP.Utils;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
 using BetterAmongUs.Utilities.Extension;
@@ -169,7 +169,7 @@ internal static class Utils
             return;
 
         var pooledBubble = chat.GetPooledBubble();
-        var messageName = $"<color=#ffffff><b>(<color=#00ff44>{Translator.GetString("SystemMessage")}</color>)</b>" + ChatPatch.COMMAND_POSTFIX_ID;
+        var messageName = $"<color=#ffffff><b>(<color=#00ff44>{TranslationStrings.SystemMessage}</color>)</b>" + ChatPatch.COMMAND_POSTFIX_ID;
 
         if (!string.IsNullOrEmpty(overrideName))
             messageName = overrideName + ChatPatch.COMMAND_POSTFIX_ID;
@@ -343,27 +343,6 @@ internal static class Utils
         float segmentT = (normalizedT - segmentIndex * segmentSize) / segmentSize;
 
         return Color.Lerp(colors[segmentIndex], colors[segmentIndex + 1], segmentT);
-    }
-
-    // Network and UI operations
-    /// <summary>
-    /// Disconnects the player's account from online services.
-    /// </summary>
-    /// <param name="apiError">Whether this is due to an API error.</param>
-    internal static void DisconnectAccountFromOnline(bool apiError = false)
-    {
-        if (GameState.IsInGame)
-        {
-            AmongUsClient.Instance.ExitGame(DisconnectReasons.ExitGame);
-        }
-
-        DataManager.Player.Account.LoginStatus = EOSManager.AccountLoginStatus.Offline;
-        DataManager.Player.Save();
-
-        if (apiError)
-        {
-            ShowPopUp(Translator.GetString("DataBaseConnect.InitFailure"), true);
-        }
     }
 
     /// <summary>

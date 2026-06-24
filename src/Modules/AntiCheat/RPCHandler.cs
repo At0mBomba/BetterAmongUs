@@ -1,5 +1,6 @@
 ﻿using BetterAmongUs.Attributes;
 using BetterAmongUs.Enums;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono.Extended;
 using Hazel;
@@ -190,7 +191,7 @@ internal abstract class RPCHandler
     internal string GetFormatActionText()
     {
         string Name = Enum.GetName((RpcCalls)CallId) ?? Enum.GetName((CustomRPC)CallId) ?? $"Unregistered({CallId})";
-        return string.Format(Translator.GetString("AntiCheat.InvalidActionRPC"), Name);
+        return TranslationStrings.AntiCheat_InvalidActionRPC.Format(Name);
     }
 
     /// <summary>
@@ -200,6 +201,6 @@ internal abstract class RPCHandler
     internal string GetFormatSetText()
     {
         string Name = Enum.GetName((RpcCalls)CallId) ?? Enum.GetName((CustomRPC)CallId) ?? $"Unregistered({CallId})";
-        return string.Format(Translator.GetString("AntiCheat.InvalidSetRPC"), Name);
+        return TranslationStrings.AntiCheat_InvalidSetRPC.Format(Name);
     }
 }

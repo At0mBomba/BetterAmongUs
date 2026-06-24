@@ -1,4 +1,5 @@
-﻿using BetterAmongUs.Utilities;
+﻿using BetterAmongUs.Generated;
+using BetterAmongUs.Utilities;
 using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Modules.OptionItems;
@@ -16,12 +17,7 @@ public class OptionStringItem : OptionItem<int>
     /// <summary>
     /// Gets or sets the array of translation keys for the string options.
     /// </summary>
-    protected string[] TranslatorStrings { get; set; } = [];
-
-    /// <summary>
-    /// Gets or sets whether this option includes a random selection.
-    /// </summary>
-    private bool CanBeRandom { get; set; }
+    protected TranslationStrings.TranslationString[] TranslatorStrings { get; set; } = [];
 
     /// <summary>
     /// Creates a new string option item or returns an existing one with the same ID.
@@ -32,10 +28,9 @@ public class OptionStringItem : OptionItem<int>
     /// <param name="tranStrings">Array of translation keys for the selectable string values.</param>
     /// <param name="defaultValue">The default index value.</param>
     /// <param name="parent">Optional parent option for hierarchical organization.</param>
-    /// <param name="canBeRandom">Whether this option includes a random selection.</param>
     /// <returns>A new or existing OptionStringItem instance.</returns>
     /// <exception cref="ArgumentException">Thrown when tranStrings has less than 2 elements.</exception>
-    internal static OptionStringItem Create(int id, OptionTab tab, string tranStr, string[] tranStrings, int defaultValue, OptionItem? parent = null, bool canBeRandom = false)
+    internal static OptionStringItem Create(int id, OptionTab tab, TranslationStrings.TranslationString tranStr, TranslationStrings.TranslationString[] tranStrings, int defaultValue, OptionItem? parent = null)
     {
         if (tranStrings.Length < 2)
         {
@@ -48,27 +43,14 @@ public class OptionStringItem : OptionItem<int>
             return stringItem;
         }
 
-        if (defaultValue < 0)
-        {
-            canBeRandom = true;
-        }
-
         OptionStringItem Item = new();
         AllOptions.Add(Item);
         Item._id = id;
         Item.Tab = tab;
-        Item.Translation = tranStr;
+        Item.TranslationName = tranStr;
         Item.TranslatorStrings = tranStrings;
         Item.Range = new IntRange(0, tranStrings.Length - 1);
-        Item.DefaultValue = !canBeRandom ? defaultValue : defaultValue + 1;
-        Item.CanBeRandom = canBeRandom;
-        if (canBeRandom)
-        {
-            var list = Item.TranslatorStrings.ToList();
-            list.Insert(0, "Option.RandomWithColor");
-            Item.TranslatorStrings = [.. list];
-            Item.Range = new IntRange(0, list.Count - 1);
-        }
+        Item.DefaultValue = defaultValue;
 
         if (parent != null)
         {
@@ -187,22 +169,7 @@ public class OptionStringItem : OptionItem<int>
     /// <returns>The actual string index (random if selected).</returns>
     public sealed override int GetStringValue()
     {
-        var value = GetValue();
-        if (!CanBeRandom)
-        {
-            return value;
-        }
-        else
-        {
-            if (value == 0)
-            {
-                return TranslatorStrings.Skip(1).RandomIndex().index;
-            }
-            else
-            {
-                return value - 1;
-            }
-        }
+        return GetValue();
     }
 
     /// <summary>
@@ -210,12 +177,12 @@ public class OptionStringItem : OptionItem<int>
     /// </summary>
     /// <param name="@string">The string value to compare against.</param>
     /// <returns>True if the option value matches, false otherwise.</returns>
-    public sealed override bool Is(string @string) => TranslatorStrings[Value] == @string || ValueAsString() == @string;
+    public sealed override bool Is(string @string) => TranslatorStrings[Value].Key == @string || ValueAsString() == @string;
 
     /// <summary>
     /// Checks if the option's index value matches a specific integer.
     /// </summary>
     /// <param name="@int">The integer value to compare against.</param>
     /// <returns>True if the option value matches, false otherwise.</returns>
-    public sealed override bool Is(int @int) => !CanBeRandom ? Value == @int : Value == @int - 1;
+    public sealed override bool Is(int @int) => Value == @int;
 }

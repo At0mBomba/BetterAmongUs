@@ -1,10 +1,11 @@
 ﻿using BetterAmongUs.Data;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Generated;
 using BetterAmongUs.Modules.Support;
+using BetterAmongUs.Utilities;
+using BetterAmongUs.Utilities.Extension;
 using System.Text;
 using TMPro;
 using UnityEngine;
-using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Modules.OptionItems;
 
@@ -19,10 +20,10 @@ public abstract class OptionItem
     internal const string InfiniteIcon = "<b>∞</b>";
     internal virtual bool CanLoad => true;
     internal virtual bool IsOption => true;
-    public string Name => Translation != null ? Translator.GetString(Translation, showInvalid: false) : "None";
+    public string Name => TranslationName != null ? TranslationName.Value.LocalizedString : string.Empty;
     public int Id => _id ?? -1;
     protected int? _id { get; set; } = null;
-    protected string? Translation { get; set; } = null;
+    protected TranslationStrings.TranslationString? TranslationName { get; set; } = null;
     internal OptionTab? Tab { get; set; }
     internal OptionBehaviour? Option { get; set; }
     internal GameObject? Obj { get; set; }
@@ -32,7 +33,7 @@ public abstract class OptionItem
     internal virtual bool Show => ShowCondition.Invoke();
     internal virtual bool ShowChildren => Show;
     internal Func<bool>? ShowCondition = () => { return true; };
-    internal bool Hide => !Show || GetParents().Any(opt => !opt.ShowChildren) || BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_GameOption + Translation);
+    internal bool Hide => !Show || GetParents().Any(opt => !opt.ShowChildren) || BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_GameOption + TranslationName);
     internal static OptionItem? GetOptionById(int id) => AllOptions.FirstOrDefault(opt => opt._id == id);
     internal virtual void UpdateVisuals(bool updateTabVisuals = true) { }
     public abstract string ValueAsString();
@@ -70,7 +71,7 @@ public abstract class OptionItem
 
         string value = custom == string.Empty ? ValueAsString() : custom;
         string msg = $"<font=\"Barlow-Black SDF\" material=\"Barlow-Black Outline\">{GetParentPath()} " +
-        $"<color=#868686><size=85%>{Translator.GetString("BetterSetting.SetTo")}</size></color> {value}";
+        $"<color=#868686><size=85%>{TranslationStrings.BetterSetting_SetTo}</size></color> {value}";
         Utils.SettingsChangeNotifier(Id, msg, false);
     }
 
@@ -437,7 +438,7 @@ public abstract class OptionItem<T> : OptionItem
     protected T? DefaultValue { get; set; } = default;
     public virtual T? GetValue()
     {
-        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_GameOption + Translation))
+        if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_GameOption + TranslationName))
         {
             return DefaultValue;
         }
