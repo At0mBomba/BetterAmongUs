@@ -5,6 +5,7 @@ using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
 using BetterAmongUs.Utilities;
 using HarmonyLib;
+using Rewired;
 using TMPro;
 using UnityEngine;
 
@@ -80,6 +81,39 @@ internal static class MeetingHudPatch
     }
 
     internal static float timeOpen = 0f;
+
+    // Fix null exception
+    [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Update))]
+    [HarmonyPrefix]
+    private static bool MeetingHud_Update_Prefix(MeetingHud __instance)
+    {
+        if (__instance.playerStates == null || __instance.playerStates.Length == 0)
+            return false;
+
+        if (GameManager.Instance == null || GameManager.Instance.LogicOptions == null)
+            return false;
+
+        if (PlayerControl.LocalPlayer == null || PlayerControl.LocalPlayer.Data == null)
+            return false;
+
+        for (int i = 0; i < __instance.playerStates.Length; i++)
+        {
+            if (__instance.playerStates[i] == null)
+                return false;
+        }
+
+        try
+        {
+            if (ReInput.players == null || ReInput.players.GetPlayer(0) == null)
+                return false;
+        }
+        catch
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     // Track how long meeting has been open
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Update))]
