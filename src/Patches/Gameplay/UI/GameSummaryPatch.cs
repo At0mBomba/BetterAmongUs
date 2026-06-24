@@ -186,6 +186,9 @@ internal static class GameSummaryPatch
 
         foreach (var playerData in playersData)
         {
+            if (playerData == null)
+                continue;
+
             var playerLine = BuildPlayerLine(playerData);
             stringBuilder.AppendLine($"- {playerLine}\n");
             Logger_.Log(playerLine.Replace("\n", " "), "GameSummary");
