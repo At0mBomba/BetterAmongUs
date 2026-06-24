@@ -26,7 +26,7 @@ internal static class RPC
     /// <param name="targetClientId">The specific client ID to target, or -1 to broadcast to all clients.</param>
     internal static void SendCustomRpcPacked(CustomRPC customRPC, Action<MessageWriter> action, int targetClientId = -1)
     {
-        AmongUsClient.Instance.SendRpcImmediately(PlayerControl.LocalPlayer.NetId, CUSTOM_RPC_CALL, SendOption.Reliable, writer =>
+        AmongUsClient.Instance.SendRpcImmediately(PlayerControl.LocalPlayer.MyPhysics.NetId, CUSTOM_RPC_CALL, SendOption.Reliable, writer =>
         {
             writer.Write(ModInfo.Constants.BAU_CUSTOM_RPC_FLAG); // Flag to check if its a rpc packed into SetNamePlateStr
             writer.Write((byte)customRPC);

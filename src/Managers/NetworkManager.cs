@@ -274,11 +274,11 @@ internal static class NetworkManager
                         break;
                     }
 
-                    if (innerNetObject is PlayerControl player && player != null)
+                    if (innerNetObject is PlayerPhysics playerPhysics)
                     {
                         if (rpcCall == (byte)RPC.CUSTOM_RPC_CALL)
                         {
-                            if (RPC.HandleCustomRPCPacked(player, reader))
+                            if (RPC.HandleCustomRPCPacked(playerPhysics.myPlayer, reader))
                             {
                                 break;
                             }
@@ -291,7 +291,7 @@ internal static class NetworkManager
                     }
                     else
                     {
-                        if (innerNetObject is PlayerControl player2 && player2 != null)
+                        if (innerNetObject is PlayerControl player2)
                         {
                             RPC.HandleCustomRPCLegacy(player2, rpcCall, reader);
                         }
