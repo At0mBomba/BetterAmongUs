@@ -1,5 +1,4 @@
-﻿using BetterAmongUs.Data;
-using BetterAmongUs.Enums;
+﻿using BetterAmongUs.Enums;
 using System.Reflection;
 
 namespace BetterAmongUs;
@@ -79,7 +78,7 @@ internal static class ModInfo
     /// <summary>
     /// Indicator rather that BAU is running on Starlight.
     /// </summary>
-    internal static readonly bool Starlight = OperatingSystem.IsAndroid() && !string.IsNullOrEmpty(BetterDataManager.Folders.starLightDataFolderPath);
+    internal static readonly bool Starlight = OperatingSystem.IsAndroid();
 
     /// <summary>
     /// Retrieves metadata from the assembly attributes.
