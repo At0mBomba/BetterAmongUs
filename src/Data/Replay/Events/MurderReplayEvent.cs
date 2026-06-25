@@ -15,11 +15,11 @@ internal sealed class MurderReplayEvent : IReplayEvent<MurderReplayEvent.MurderR
 
     public void Play()
     {
-        var killer = Utils.PlayerFromPlayerId(EventData.killerId);
+        var killer = Utils.PlayerFromPlayerId(EventData.KillerId);
         if (killer == null)
             return;
 
-        var target = Utils.PlayerFromPlayerId(EventData.targetId);
+        var target = Utils.PlayerFromPlayerId(EventData.TargetId);
         if (target == null)
             return;
 
@@ -32,10 +32,10 @@ internal sealed class MurderReplayEvent : IReplayEvent<MurderReplayEvent.MurderR
 
     public void Record(MurderReplayArgs murderReplayArgs)
     {
-        EventData = new MurderReplayData(murderReplayArgs.killer.PlayerId, murderReplayArgs.target.PlayerId);
+        EventData = new MurderReplayData(murderReplayArgs.Killer.PlayerId, murderReplayArgs.Target.PlayerId);
     }
 
-    internal record MurderReplayData(int killerId, int targetId) : IReplayEvent.Data;
+    internal record MurderReplayData(int KillerId, int TargetId) : IReplayEvent.Data;
 
-    internal record MurderReplayArgs(PlayerControl killer, PlayerControl target) : IReplayEvent.Args;
+    internal record MurderReplayArgs(PlayerControl Killer, PlayerControl Target) : IReplayEvent.Args;
 }
