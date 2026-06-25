@@ -1,11 +1,11 @@
 ﻿using BetterAmongUs.Data.Config;
-using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.Mono;
+using BetterAmongUs.Utilities;
+using BetterAmongUs.Utilities.Extension;
 using HarmonyLib;
 using UnityEngine;
-using BetterAmongUs.Utilities.Extension;
 
 namespace BetterAmongUs.Patches.Gameplay.UI;
 
@@ -153,7 +153,7 @@ internal static class MiniMapBehaviourPatch
                 foreach (var taskType in console.TaskTypes)
                 {
                     // Check if this console is for critical sabotage tasks
-                    if (taskType is TaskTypes.FixLights or TaskTypes.FixComms or TaskTypes.RestoreOxy or TaskTypes.ResetReactor or TaskTypes.ResetSeismic)
+                    if (SystemAndTaskTypeUtils.IsSabotageTask(taskType))
                     {
                         var icon = CreateIcon(console.Image.sprite, "ConsoleIcon");
                         icon.color = Color.white * 0.7f;

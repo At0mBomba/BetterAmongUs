@@ -343,7 +343,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
     /// </summary>
     /// <param name="sbTag">StringBuilder for tag text.</param>
     [HideFromIl2Cpp]
-    private void SetPlayerOutline(StringBuilder sbTag)
+    private void SetPlayerOutline(StringBuilder? sbTag)
     {
         if (_player == null)
             return;
@@ -358,7 +358,10 @@ internal class PlayerInfoDisplay : MonoBehaviour
 
         if (BetterDataManager.Files.BetterDataFile.TryGetCheatInfo(_player.Data, out var info))
         {
-            sbTag.Append(info.title.ToColor(info.hexColor) + "+++");
+            if (sbTag != null)
+            {
+                sbTag.Append(info.title.ToColor(info.hexColor) + "+++");
+            }
             _player.SetOutlineByHex(true, info.hexColor);
         }
         else if (_cachedColors.Any(kvp => color == kvp.Value))
@@ -397,7 +400,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
     private void SetInGameInfo(StringBuilder sbTagTop)
     {
         if (_player.IsImpostorTeammate() || _player.IsLocalPlayer() ||
-            !PlayerControl.LocalPlayer.IsAlive() && !PlayerControl.LocalPlayer.Is(RoleTypes.GuardianAngel))
+            (!PlayerControl.LocalPlayer.IsAlive() && !PlayerControl.LocalPlayer.Is(RoleTypes.GuardianAngel)))
         {
             string roleInfo = _player.GetRoleName().ToColor(_player.Data.Role.TeamColor);
 
@@ -421,7 +424,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
     /// </summary>
     private void UpdatePlayerHighlight()
     {
-        SetPlayerOutline(new StringBuilder(32));
+        SetPlayerOutline(null);
     }
 
     /// <summary>

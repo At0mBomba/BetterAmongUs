@@ -212,11 +212,12 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
         if (!_player.IsImpostorTeam() && _player.myTasks.Count > 0)
         {
             int completedTasks = 0;
-            foreach (var task in _player.myTasks)
+            foreach (var task in _player.Data.Tasks)
             {
-                if (task.IsComplete) completedTasks++;
+                if (task.Complete)
+                    completedTasks++;
             }
-            role += $" <color=#cbcbcb>({completedTasks}/{_player.myTasks.Count})</color>";
+            role += $" <color=#cbcbcb>({completedTasks}/{_player.Data.Tasks.Count})</color>";
         }
 
         if (!_player.IsImpostorTeammate())
