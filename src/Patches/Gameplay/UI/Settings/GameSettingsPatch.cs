@@ -22,7 +22,9 @@ internal sealed class BetterGameSettings
     internal static OptionCheckboxItem? KickLevel;
     internal static OptionIntItem? KickLevelBelow;
     internal static OptionCheckboxItem? DetectCheatClients;
-    internal static OptionCheckboxItem? DetectInvalidRPCs;
+    internal static OptionCheckboxItem? DetectInvalidRpcs;
+    internal static OptionCheckboxItem? RpcRateLimiting;
+    internal static OptionIntItem? RpcRateLimit;
 
     internal static OptionStringItem? RoleRandomizer;
 
@@ -49,7 +51,7 @@ internal static class GameSettingsPatch
     // Creates all custom game settings and organizes them in tabs
     internal static void SetupSettings(bool IsPreload = false)
     {
-        // Note: Use 2000 next ID
+        // Note: Use 2200 next ID
 
         // Create main settings tab
         BetterSettingsTab = OptionTab.Create(3, TranslationStrings.BetterSetting, TranslationStrings.BetterSetting_Description, Color.green);
@@ -83,7 +85,9 @@ internal static class GameSettingsPatch
             BetterGameSettings.KickLevel = OptionCheckboxItem.Create(1900, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_KickLevel, false);
             BetterGameSettings.KickLevelBelow = OptionIntItem.Create(1700, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_KickLevelBelow, (0, 10000, 1), 0, ("Lv ", ""), BetterGameSettings.KickLevel);
             BetterGameSettings.DetectCheatClients = OptionCheckboxItem.Create(700, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectCheatClients, true);
-            BetterGameSettings.DetectInvalidRPCs = OptionCheckboxItem.Create(800, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectInvalidRPCs, true);
+            BetterGameSettings.DetectInvalidRpcs = OptionCheckboxItem.Create(800, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectInvalidRpcs, true);
+            BetterGameSettings.RpcRateLimiting = OptionCheckboxItem.Create(2000, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_RpcRateLimiting, true);
+            BetterGameSettings.RpcRateLimit = OptionIntItem.Create(2100, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_RateLimit, (25, 1000, 1), 50, ("", " PS"), BetterGameSettings.RpcRateLimiting);
         }
 
         // Role algorithm settings

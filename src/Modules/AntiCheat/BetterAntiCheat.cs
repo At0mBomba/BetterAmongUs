@@ -109,7 +109,7 @@ internal static class BetterAntiCheat
             return;
 
         if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_Anticheat) ||
-            !BetterGameSettings.DetectInvalidRPCs.GetBool())
+            !BetterGameSettings.DetectInvalidRpcs.GetBool())
             return;
 
         if (player == null)
@@ -138,7 +138,7 @@ internal static class BetterAntiCheat
         try
         {
             if (player == null || player.Data == null) return true;
-            if (!IsEnabled || !BAUConfigs.AntiCheat.Value || BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_Anticheat) || !BetterGameSettings.DetectInvalidRPCs.GetBool()) return true;
+            if (!IsEnabled || !BAUConfigs.AntiCheat.Value || BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_Anticheat) || !BetterGameSettings.DetectInvalidRpcs.GetBool()) return true;
             if (player.IsLocalPlayer() && player.IsHost()) return true;
 
             MessageReader reader = MessageReader.Get(oldReader);

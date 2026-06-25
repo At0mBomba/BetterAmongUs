@@ -5,6 +5,7 @@ using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.AntiCheat;
 using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Network;
+using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using BetterAmongUs.Structs;
 using BetterAmongUs.Utilities;
 using HarmonyLib;
@@ -454,10 +455,10 @@ internal static class NetworkManager
     /// </summary>
     private static bool PlayerRpc(PlayerControl player, byte callId, MessageReader reader)
     {
-        if (player.ExtendedData() != null)
+        if (player.ExtendedData() != null && BetterGameSettings.RpcRateLimiting.GetBool())
         {
             player.ExtendedData().AntiCheatInfo.RPCSentPS++;
-            if (player.ExtendedData().AntiCheatInfo.RPCSentPS >= ExtendedAntiCheatInfo.MAX_RPC_SENT)
+            if (player.ExtendedData().AntiCheatInfo.RPCSentPS >= BetterGameSettings.RpcRateLimit.GetInt())
             {
                 return false;
             }
@@ -496,10 +497,13 @@ internal static class NetworkManager
         [HarmonyPrefix]
         internal static bool ShipStatus_UpdateSystem_Prefix(SystemTypes systemType, PlayerControl player, MessageReader msgReader)
         {
-            player.ExtendedData().AntiCheatInfo.RPCSentPS++;
-            if (player.ExtendedData().AntiCheatInfo.RPCSentPS >= ExtendedAntiCheatInfo.MAX_RPC_SENT)
+            if (BetterGameSettings.RpcRateLimiting.GetBool())
             {
-                return false;
+                player.ExtendedData().AntiCheatInfo.RPCSentPS++;
+                if (player.ExtendedData().AntiCheatInfo.RPCSentPS >= BetterGameSettings.RpcRateLimit.GetInt())
+                {
+                    return false;
+                }
             }
 
             if (BetterAntiCheat.RpcUpdateSystemCheck(player, systemType, msgReader) != true) return false;

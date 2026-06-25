@@ -469,9 +469,19 @@ public static class TranslationStrings
     public static readonly TranslationString BetterSetting_Setting_DetectCheatClients = new("BetterSetting.Setting.DetectCheatClients");
 
     /// <summary>
-    /// Base Translation: Detect invalid RPCs
+    /// Base Translation: Detect invalid Rpcs
     /// </summary>
-    public static readonly TranslationString BetterSetting_Setting_DetectInvalidRPCs = new("BetterSetting.Setting.DetectInvalidRPCs");
+    public static readonly TranslationString BetterSetting_Setting_DetectInvalidRpcs = new("BetterSetting.Setting.DetectInvalidRpcs");
+
+    /// <summary>
+    /// Base Translation: Rpc Rate Limiting
+    /// </summary>
+    public static readonly TranslationString BetterSetting_Setting_RpcRateLimiting = new("BetterSetting.Setting.RpcRateLimiting");
+
+    /// <summary>
+    /// Base Translation: Rate Limit
+    /// </summary>
+    public static readonly TranslationString BetterSetting_Setting_RateLimit = new("BetterSetting.Setting.RateLimit");
 
     /// <summary>
     /// Base Translation: Randomizer

@@ -4,6 +4,7 @@ using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
+using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using BetterAmongUs.Utilities;
 using HarmonyLib;
 using Hazel;
@@ -79,17 +80,20 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
 
         if (AntiCheatInfo.RPCSentPS > 0)
         {
-            bool flag = BaseMono.IsCheater();
-
-            if (AntiCheatInfo.RPCSentPS >= ExtendedAntiCheatInfo.MAX_RPC_SENT && !flag)
+            if (BetterGameSettings.RpcRateLimiting.GetBool())
             {
-                BetterNotificationManager.NotifyCheat(
-                    BaseMono.Object,
-                    TranslationStrings.AntiCheat_Reason_RPCSentPS.LocalizedString,
-                    TranslationStrings.AntiCheat_UnauthorizedAction.LocalizedString
-                );
+                bool flag = BaseMono.IsCheater();
 
-                Logger_.LogCheat($"{BaseMono.Object.ExtendedData().RealName} {AntiCheatInfo.RPCSentPS} Sent.");
+                if (AntiCheatInfo.RPCSentPS >= BetterGameSettings.RpcRateLimit.GetInt() && !flag)
+                {
+                    BetterNotificationManager.NotifyCheat(
+                        BaseMono.Object,
+                        TranslationStrings.AntiCheat_Reason_RPCSentPS.LocalizedString,
+                        TranslationStrings.AntiCheat_UnauthorizedAction.LocalizedString
+                    );
+
+                    Logger_.LogCheat($"{BaseMono.Object.ExtendedData().RealName} {AntiCheatInfo.RPCSentPS} Sent.");
+                }
             }
 
             timeAccumulator += time;
@@ -184,11 +188,6 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
 /// </summary>
 internal sealed class ExtendedAntiCheatInfo
 {
-    /// <summary>
-    /// Maximum allowed RPCs per second.
-    /// </summary>
-    internal const int MAX_RPC_SENT = 50;
-
     /// <summary>
     /// Gets or sets whether the player is banned by anti-cheat.
     /// </summary>
