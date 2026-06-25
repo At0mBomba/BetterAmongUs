@@ -1,31 +1,42 @@
 ﻿using AmongUs.GameOptions;
-using BetterAmongUs.Utilities;
 using BetterAmongUs.Interfaces;
+using BetterAmongUs.Utilities;
 using System.Text.Json.Serialization;
 
 namespace BetterAmongUs.Data.Replay.Events;
 
 [Serializable]
-internal sealed class SetRoleEvent : IReplayEvent<(int playerId, int roleType)>
+internal sealed class SetRoleEvent : IReplayEvent<SetRoleEvent.SetRoleReplayData, SetRoleEvent.SetRoleReplayArgs>
 {
     [JsonPropertyName("id")]
     public string Id => "set_role";
 
     [JsonPropertyName("eventData")]
-    public (int playerId, int roleType) EventData { get; set; }
+    public SetRoleReplayData? EventData { get; set; }
 
     public void Play()
     {
-        var player = Utils.PlayerFromPlayerId(EventData.playerId);
-        if (player != null)
-        {
-            var roleType = (RoleTypes)EventData.roleType;
-            player.RpcSetRole(roleType, true);
-        }
+        if (EventData == null)
+            return;
+
+        var player = Utils.PlayerFromPlayerId(EventData.PlayerId);
+        if (player == null)
+            return;
+
+        var roleType = (RoleTypes)EventData.RoleType;
+        player.RpcSetRole(roleType, true);
     }
 
-    public void Record(PlayerControl player, RoleTypes roleType)
+    public void Undo()
     {
-        EventData = (player.Data.PlayerId, (int)roleType);
     }
+
+    public void Record(SetRoleReplayArgs args)
+    {
+        EventData = new SetRoleReplayData(args.Player.PlayerId, (int)args.RoleType);
+    }
+
+    internal record SetRoleReplayData(int PlayerId, int RoleType) : IReplayEvent.Data;
+
+    internal record SetRoleReplayArgs(PlayerControl Player, RoleTypes RoleType) : IReplayEvent.Args;
 }

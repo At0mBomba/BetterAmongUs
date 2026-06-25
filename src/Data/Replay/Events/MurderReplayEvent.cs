@@ -1,17 +1,17 @@
-﻿using BetterAmongUs.Utilities;
-using BetterAmongUs.Interfaces;
+﻿using BetterAmongUs.Interfaces;
+using BetterAmongUs.Utilities;
 using System.Text.Json.Serialization;
 
 namespace BetterAmongUs.Data.Replay.Events;
 
 [Serializable]
-internal sealed class MurderReplayEvent : IReplayEvent<(int killerId, int targetId)>
+internal sealed class MurderReplayEvent : IReplayEvent<MurderReplayEvent.MurderReplayData, MurderReplayEvent.MurderReplayArgs>
 {
     [JsonPropertyName("id")]
     public string Id => "player_murder";
 
     [JsonPropertyName("eventData")]
-    public (int killerId, int targetId) EventData { get; set; }
+    public MurderReplayData? EventData { get; set; }
 
     public void Play()
     {
@@ -26,8 +26,16 @@ internal sealed class MurderReplayEvent : IReplayEvent<(int killerId, int target
         killer.MurderPlayer(target, MurderResultFlags.Succeeded);
     }
 
-    public void Record(PlayerControl killer, PlayerControl target)
+    public void Undo()
     {
-        EventData = (killer.PlayerId, target.PlayerId);
     }
+
+    public void Record(MurderReplayArgs murderReplayArgs)
+    {
+        EventData = new MurderReplayData(murderReplayArgs.killer.PlayerId, murderReplayArgs.target.PlayerId);
+    }
+
+    internal record MurderReplayData(int killerId, int targetId) : IReplayEvent.Data;
+
+    internal record MurderReplayArgs(PlayerControl killer, PlayerControl target) : IReplayEvent.Args;
 }
