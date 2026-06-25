@@ -81,7 +81,7 @@ internal static class PlayerControlPatch
 
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.MurderPlayer))]
     [HarmonyPostfix]
-    private static void PlayerControl_MurderPlayer_Postfix(PlayerControl __instance, PlayerControl target)
+    private static void PlayerControl_MurderPlayer_Postfix(PlayerControl __instance, PlayerControl target, MurderResultFlags resultFlags)
     {
         // Check for null references
         if (__instance == null || target == null || target.Data == null || __instance.Data == null)
@@ -91,7 +91,7 @@ internal static class PlayerControlPatch
         Logger_.LogPrivate($"{__instance.Data.PlayerName} Has killed {target.Data.PlayerName} as {__instance.Data.RoleType.GetRoleName()}", "EventLog");
 
         // Track kill count in player's BetterData
-        if (!target.IsAlive())
+        if (resultFlags.HasFlag(MurderResultFlags.Succeeded) || resultFlags.HasFlag(MurderResultFlags.DecisionByHost))
         {
             __instance.ExtendedData().RoleInfo.Kills += 1;
         }
