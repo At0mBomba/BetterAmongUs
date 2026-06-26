@@ -2,6 +2,7 @@
 using BetterAmongUs.Attributes;
 using BetterAmongUs.Network.Loaders;
 using Il2CppInterop.Runtime.Attributes;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -28,6 +29,10 @@ internal sealed class GithubAPI : MonoBehaviour
     /// Gets a value indicating whether the API connection process has finished.
     /// </summary>
     internal static bool Finished { get; private set; } = false;
+
+    /// Gets a value indicating whether content is currently being downloaded.
+    /// </summary>
+    internal static bool Downloading { get; private set; }
 
     private static bool hasTryConnect = false;
 
@@ -61,15 +66,27 @@ internal sealed class GithubAPI : MonoBehaviour
     [HideFromIl2Cpp]
     private void ConnectToAPI()
     {
+        this.StartCoroutine(CoConnectToAPI());
+    }
+
+    /// <summary>
+    /// Connects to various GitHub API endpoints.
+    /// </summary>
+    private IEnumerator CoConnectToAPI()
+    {
+        Downloading = true;
+
         var newsLoader = gameObject.AddComponent<NewsLoader>();
-        this.StartCoroutine(newsLoader.CoFetchNewsData());
+        yield return newsLoader.CoFetchNewsData();
 
         // Disable auto updating on Starlight
         if (!ModInfo.Starlight)
         {
             var updateLoader = gameObject.AddComponent<BAUUpdateLoader>();
-            this.StartCoroutine(updateLoader.CoFetchUpdateData());
+            yield return updateLoader.CoFetchUpdateData();
         }
+
+        Downloading = false;
     }
 
     /// <summary>

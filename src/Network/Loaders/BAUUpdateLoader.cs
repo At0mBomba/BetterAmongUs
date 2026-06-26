@@ -1,11 +1,11 @@
 ﻿using BetterAmongUs.Attributes;
 using BetterAmongUs.Managers;
+using BetterAmongUs.Modules;
 using BetterAmongUs.Network.Configs;
 using Il2CppInterop.Runtime.Attributes;
 using System.Collections;
 using System.Text.Json;
 using UnityEngine;
-using BetterAmongUs.Modules;
 
 namespace BetterAmongUs.Network.Loaders;
 
@@ -47,12 +47,13 @@ internal sealed class BAUUpdateLoader : MonoBehaviour
         }
 
         string callBack = "";
-        yield return GitHubFile.CoDownloadManifest(GitUrlPath.RepositoryApi.Combine("update.json").ToString(), (string text) =>
+        yield return GitHubFile.CoFetchTextFile(GitUrlPath.RepositoryApi.Combine("update.json").ToString(), (string text) =>
         {
             callBack = text;
         });
 
-        if (string.IsNullOrEmpty(callBack)) yield break;
+        if (string.IsNullOrEmpty(callBack))
+            yield break;
 
         var options = new JsonSerializerOptions
         {

@@ -5,7 +5,6 @@ using Il2CppInterop.Runtime.Attributes;
 using System.Collections;
 using System.Text.Json;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace BetterAmongUs.Network.Loaders;
 
@@ -19,9 +18,6 @@ internal sealed class NewsLoader : MonoBehaviour
     /// Coroutine to fetch the news data from the remote repository.
     /// </summary>
     /// <returns>IEnumerator for coroutine execution.</returns>
-    /// <remarks>
-    /// If no internet connection is detected, it retries several times before giving up.
-    /// </remarks>
     [HideFromIl2Cpp]
     internal IEnumerator CoFetchNewsData()
     {
@@ -40,12 +36,13 @@ internal sealed class NewsLoader : MonoBehaviour
         }
 
         string callBack = "";
-        yield return GitHubFile.CoDownloadManifest(GitUrlPath.RepositoryApi.Combine("manifest.json").ToString(), (string text) =>
+        yield return GitHubFile.CoFetchTextFile(GitUrlPath.RepositoryApi.Combine("manifest.json").ToString(), text =>
         {
             callBack = text;
         });
 
-        if (string.IsNullOrEmpty(callBack)) yield break;
+        if (string.IsNullOrEmpty(callBack))
+            yield break;
 
         var options = new JsonSerializerOptions
         {
@@ -83,23 +80,18 @@ internal sealed class NewsLoader : MonoBehaviour
     [HideFromIl2Cpp]
     private IEnumerator CoDownloadNewsFile(string fileName)
     {
-        string configUrl = GitUrlPath.News.Combine(fileName);
-
-        var wwwConfig = new UnityWebRequest(configUrl, UnityWebRequest.kHttpVerbGET)
+        string callBack = "";
+        yield return GitHubFile.CoFetchTextFile(GitUrlPath.News.Combine(fileName).ToString(), text =>
         {
-            downloadHandler = new DownloadHandlerBuffer()
-        };
-        yield return wwwConfig.SendWebRequest();
+            callBack = text;
+        });
 
-        if (wwwConfig.result != UnityWebRequest.Result.Success)
-        {
-            Logger_.Error($"Error fetching config file for '{fileName}': {wwwConfig.error}");
+        if (string.IsNullOrEmpty(callBack))
             yield break;
-        }
 
         try
         {
-            var config = NewsData.Serialize(wwwConfig.downloadHandler.text);
+            var config = NewsData.Serialize(callBack);
             if (config == null || !config.Show) yield break;
             ModNews.NewsDataToProcess.Add(config);
         }
