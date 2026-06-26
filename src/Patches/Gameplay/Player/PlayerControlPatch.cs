@@ -145,10 +145,17 @@ internal static class PlayerControlPatch
     private static void PlayerControl_SetName_Postfix(PlayerControl __instance, string playerName)
     {
         // Store the last set name in player's BetterData
-        __instance.ExtendedDataWait(data =>
+        __instance.StartCoroutine(CoSetLastName(__instance, playerName));
+    }
+
+    private static IEnumerator CoSetLastName(PlayerControl player, string playerName)
+    {
+        while (player.Data == null || player.Data.ExtendedData() == null)
         {
-            data.NameSetAsLast = playerName;
-        });
+            yield return null;
+        }
+
+        player.ExtendedData().NameSetAsLast = playerName;
     }
 
     [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.BootFromVent))]

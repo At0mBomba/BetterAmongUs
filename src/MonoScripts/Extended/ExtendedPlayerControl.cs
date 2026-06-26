@@ -1,6 +1,5 @@
-﻿using BepInEx.Unity.IL2CPP.Utils;
-using BetterAmongUs.Attributes;
-using BetterAmongUs.Modules;
+﻿using BetterAmongUs.Attributes;
+using BetterAmongUs.Interfaces;
 using HarmonyLib;
 using Il2CppInterop.Runtime.Attributes;
 using System.Collections;
@@ -12,20 +11,24 @@ namespace BetterAmongUs.MonoScripts.Extended;
 /// Extends PlayerControl with additional functionality.
 /// </summary>
 [RegisterInIl2Cpp]
-internal sealed class ExtendedPlayerControl : MonoBehaviour, IMonoExtension<PlayerControl>
+internal sealed class ExtendedPlayerControl : MonoBehaviour, IAutoMonoExtension<PlayerControl>
 {
     /// <summary>
     /// Gets or sets the base PlayerControl instance.
     /// </summary>
     public PlayerControl? BaseMono { get; set; }
 
-    private void Awake()
+    public void OnExtensionAwake(PlayerControl playerControl)
     {
-        if (!this.RegisterExtension())
-            return;
+        playerControl.gameObject.AddComponent<PlayerInfoDisplay>().Init(playerControl);
+    }
 
-        this.StartCoroutine(CoAddBetterData());
-        BaseMono.gameObject.AddComponent<PlayerInfoDisplay>().Init(BaseMono);
+    public void Update()
+    {
+    }
+
+    public void OnDestroy()
+    {
     }
 
     /// <summary>
@@ -54,11 +57,6 @@ internal sealed class ExtendedPlayerControl : MonoBehaviour, IMonoExtension<Play
             ExtendedPlayerInfo newBetterData = data.gameObject.AddComponent<ExtendedPlayerInfo>();
             newBetterData.SetInfo(data);
         }
-    }
-
-    private void OnDestroy()
-    {
-        this.UnregisterExtension();
     }
 }
 
@@ -97,7 +95,7 @@ internal static class PlayerControlExtension
     /// <returns>The ExtendedPlayerControl, or null if not found.</returns>
     internal static ExtendedPlayerControl? ExtendedPlayerControl(this PlayerControl player)
     {
-        return MonoExtensionManager.Get<ExtendedPlayerControl>(player);
+        return IMonoExtension.GetExtension<ExtendedPlayerControl>(player);
     }
 
     /// <summary>
@@ -107,6 +105,6 @@ internal static class PlayerControlExtension
     /// <returns>The ExtendedPlayerControl, or null if not found.</returns>
     internal static ExtendedPlayerControl? ExtendedPlayerControl(this PlayerPhysics playerPhysics)
     {
-        return MonoExtensionManager.Get<ExtendedPlayerControl>(playerPhysics.myPlayer);
+        return IMonoExtension.GetExtension<ExtendedPlayerControl>(playerPhysics.myPlayer);
     }
 }

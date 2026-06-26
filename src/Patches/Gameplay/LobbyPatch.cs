@@ -1,11 +1,12 @@
 ﻿using BetterAmongUs.Data.Config;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Interfaces;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.OptionItems;
 using BetterAmongUs.Modules.Support;
+using BetterAmongUs.MonoScripts.Extended;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
 using UnityEngine;
-using BetterAmongUs.MonoScripts.Extended;
 
 namespace BetterAmongUs.Patches.Gameplay;
 
@@ -70,7 +71,7 @@ internal static class LobbyPatch
     {
         lobbyTimer = 600f; // Reset timer
 
-        var extendedPassiveButton = __instance.StartButton.gameObject.AddComponent<ExtendedPassiveButton>();
+        var extendedPassiveButton = IMonoExtension.AddExtension<ExtendedPassiveButton>(__instance.StartButton);
         extendedPassiveButton.OnHoldOrShiftClick += () =>
         {
             if (__instance.startState == GameStartManager.StartingStates.NotStarting)

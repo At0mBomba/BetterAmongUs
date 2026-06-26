@@ -1,5 +1,5 @@
 ﻿using BetterAmongUs.Attributes;
-using BetterAmongUs.Modules;
+using BetterAmongUs.Interfaces;
 using HarmonyLib;
 using UnityEngine;
 
@@ -40,20 +40,12 @@ internal class ExtendedPassiveButton : MonoBehaviour, IMonoExtension<PassiveButt
     private float m_holdTimer;
     private bool m_suppressClick;
 
-    private void Awake()
+    public void OnExtensionAwake(PassiveButton passiveButton)
     {
-        if (!this.RegisterExtension())
-            return;
-
-        BaseMono.OnDown = true;
+        passiveButton.OnDown = true;
     }
 
-    private void OnDestroy()
-    {
-        this.UnregisterExtension();
-    }
-
-    private void Update()
+    public void Update()
     {
         if (m_isHolding)
         {
@@ -63,6 +55,10 @@ internal class ExtendedPassiveButton : MonoBehaviour, IMonoExtension<PassiveButt
                 BaseMono.ReceiveClickUp();
             }
         }
+    }
+
+    public void OnDestroy()
+    {
     }
 
     /// <summary>
@@ -117,7 +113,7 @@ internal class ExtendedPassiveButton : MonoBehaviour, IMonoExtension<PassiveButt
         [HarmonyPrefix]
         private static bool PassiveButton_ReceiveClickDown_Prefix(PassiveButton __instance)
         {
-            var ext = MonoExtensionManager.Get<ExtendedPassiveButton>(__instance);
+            var ext = IMonoExtension.GetExtension<ExtendedPassiveButton>(__instance);
             if (ext != null)
             {
                 ext.TriggerClickDown();
@@ -131,7 +127,7 @@ internal class ExtendedPassiveButton : MonoBehaviour, IMonoExtension<PassiveButt
         [HarmonyPrefix]
         private static bool PassiveButton_ReceiveClickUp_Prefix(PassiveButton __instance)
         {
-            var ext = MonoExtensionManager.Get<ExtendedPassiveButton>(__instance);
+            var ext = IMonoExtension.GetExtension<ExtendedPassiveButton>(__instance);
             if (ext != null)
             {
                 ext.TriggerClickUp();

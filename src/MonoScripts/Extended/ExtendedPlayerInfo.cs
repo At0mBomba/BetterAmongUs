@@ -1,6 +1,7 @@
 ﻿using AmongUs.GameOptions;
 using BetterAmongUs.Attributes;
 using BetterAmongUs.Generated;
+using BetterAmongUs.Interfaces;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
@@ -18,7 +19,7 @@ namespace BetterAmongUs.MonoScripts.Extended;
 /// Extended player information with additional data and anti-cheat features.
 /// </summary>
 [RegisterInIl2Cpp]
-internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<NetworkedPlayerInfo>
+internal sealed class ExtendedPlayerInfo : MonoBehaviour, IAutoMonoExtension<NetworkedPlayerInfo>
 {
     internal ExtendedPlayerInfo()
     {
@@ -53,26 +54,15 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
 
     private float timeAccumulator = 0f;
 
-    private void Awake()
+    public void OnExtensionAwake(NetworkedPlayerInfo networkedPlayerInfo)
     {
-        if (!this.RegisterExtension())
-            return;
-
         if (HandshakeHandler != null)
         {
             HandshakeHandler.WaitSendSecretToPlayer();
         }
     }
 
-    private void OnDestroy()
-    {
-        this.UnregisterExtension();
-    }
-
-    /// <summary>
-    /// Updates anti-cheat monitoring and state tracking.
-    /// </summary>
-    internal void Update()
+    public void Update()
     {
         var time = Time.deltaTime;
 
@@ -104,6 +94,10 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
                 timeAccumulator = 0f;
             }
         }
+    }
+
+    public void OnDestroy()
+    {
     }
 
     internal void Deserialize(MessageReader reader)
@@ -289,17 +283,7 @@ internal static class PlayerControlDataExtension
     /// <returns>The ExtendedPlayerInfo, or null if not found.</returns>
     internal static ExtendedPlayerInfo? ExtendedData(this PlayerControl player)
     {
-        return MonoExtensionManager.Get<ExtendedPlayerInfo>(player.Data);
-    }
-
-    /// <summary>
-    /// Waits for extended player data to be available, then calls a callback.
-    /// </summary>
-    /// <param name="player">The PlayerControl instance.</param>
-    /// <param name="callback">The callback to execute with the extended data.</param>
-    internal static void ExtendedDataWait(this PlayerControl player, Action<ExtendedPlayerInfo> callback)
-    {
-        MonoExtensionManager.RunWhenNotNull(player, () => player?.ExtendedData(), callback);
+        return IMonoExtension.GetExtension<ExtendedPlayerInfo>(player.Data);
     }
 
     /// <summary>
@@ -309,7 +293,7 @@ internal static class PlayerControlDataExtension
     /// <returns>The ExtendedPlayerInfo, or null if not found.</returns>
     internal static ExtendedPlayerInfo? ExtendedData(this NetworkedPlayerInfo data)
     {
-        return MonoExtensionManager.Get<ExtendedPlayerInfo>(data);
+        return IMonoExtension.GetExtension<ExtendedPlayerInfo>(data);
     }
 
     /// <summary>
@@ -320,6 +304,6 @@ internal static class PlayerControlDataExtension
     internal static ExtendedPlayerInfo? ExtendedData(this ClientData data)
     {
         var player = Utils.PlayerFromClientId(data.Id);
-        return MonoExtensionManager.Get<ExtendedPlayerInfo>(player.Data);
+        return IMonoExtension.GetExtension<ExtendedPlayerInfo>(player.Data);
     }
 }

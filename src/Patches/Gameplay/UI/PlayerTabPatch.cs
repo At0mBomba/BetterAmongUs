@@ -2,13 +2,14 @@
 using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Data.Json;
-using BetterAmongUs.Utilities;
+using BetterAmongUs.Interfaces;
 using BetterAmongUs.Modules.Support;
+using BetterAmongUs.MonoScripts.Extended;
 using BetterAmongUs.Patches.Client.Managers;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
-using BetterAmongUs.MonoScripts.Extended;
 
 namespace BetterAmongUs.Patches.Gameplay.UI;
 
@@ -128,7 +129,7 @@ internal static class PlayerTabPatch
             var colorChip = playerTab.ColorChips[i];
 
             // Override click behavior
-            var extendedPassiveButton = colorChip.Button.gameObject.AddComponent<ExtendedPassiveButton>();
+            var extendedPassiveButton = IMonoExtension.AddExtension<ExtendedPassiveButton>(colorChip.Button);
             extendedPassiveButton.OnHoldOrShiftClick += () =>
             {
                 if (BAUConfigs.FavoriteColor.Value == index)
