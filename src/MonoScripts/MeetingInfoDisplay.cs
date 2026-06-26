@@ -3,14 +3,14 @@ using BetterAmongUs.Attributes;
 using BetterAmongUs.Data;
 using BetterAmongUs.Generated;
 using BetterAmongUs.Modules.Support;
-using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.MonoScripts.Extended;
 using BetterAmongUs.Utilities;
 using Il2CppInterop.Runtime.Attributes;
 using System.Text;
 using TMPro;
 using UnityEngine;
 
-namespace BetterAmongUs.Mono;
+namespace BetterAmongUs.MonoScripts;
 
 /// <summary>
 /// Displays extended player information during meetings.
@@ -183,7 +183,7 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
             return;
 
         string tagString = sbTag.ToString();
-        string[] tags = tagString.Split(["+++"], System.StringSplitOptions.RemoveEmptyEntries);
+        string[] tags = tagString.Split(["+++"], StringSplitOptions.RemoveEmptyEntries);
 
         for (int i = 0; i < tags.Length; i++)
         {

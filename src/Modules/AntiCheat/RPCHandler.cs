@@ -2,7 +2,7 @@
 using BetterAmongUs.Enums;
 using BetterAmongUs.Generated;
 using BetterAmongUs.Modules.Support;
-using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.MonoScripts.Extended;
 using Hazel;
 using InnerNet;
 using UnityEngine;

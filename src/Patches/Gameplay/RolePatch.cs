@@ -1,4 +1,4 @@
-﻿using BetterAmongUs.Mono.Extended;
+﻿using BetterAmongUs.MonoScripts.Extended;
 using HarmonyLib;
 
 namespace BetterAmongUs.Patches.Gameplay;

@@ -3,7 +3,7 @@ using BepInEx.Unity.IL2CPP.Utils;
 using BetterAmongUs.Enums;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.AntiCheat;
-using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.MonoScripts.Extended;
 using BetterAmongUs.Network;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using BetterAmongUs.Structs;

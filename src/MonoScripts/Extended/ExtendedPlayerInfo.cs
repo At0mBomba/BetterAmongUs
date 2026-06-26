@@ -12,7 +12,7 @@ using Il2CppInterop.Runtime.Attributes;
 using InnerNet;
 using UnityEngine;
 
-namespace BetterAmongUs.Mono.Extended;
+namespace BetterAmongUs.MonoScripts.Extended;
 
 /// <summary>
 /// Extended player information with additional data and anti-cheat features.

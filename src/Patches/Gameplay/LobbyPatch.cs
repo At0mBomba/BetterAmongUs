@@ -3,9 +3,9 @@ using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.OptionItems;
 using BetterAmongUs.Modules.Support;
-using BetterAmongUs.Mono.Extended;
 using HarmonyLib;
 using UnityEngine;
+using BetterAmongUs.MonoScripts.Extended;
 
 namespace BetterAmongUs.Patches.Gameplay;
 

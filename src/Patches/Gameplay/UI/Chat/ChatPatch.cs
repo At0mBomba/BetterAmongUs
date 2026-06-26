@@ -4,7 +4,7 @@ using BetterAmongUs.Data.Config;
 using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
-using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.MonoScripts.Extended;
 using BetterAmongUs.Utilities;
 using BetterAmongUs.Utilities.Extension;
 using HarmonyLib;

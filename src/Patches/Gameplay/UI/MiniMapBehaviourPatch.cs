@@ -1,7 +1,7 @@
 ﻿using BetterAmongUs.Data.Config;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
-using BetterAmongUs.Mono;
+using BetterAmongUs.MonoScripts;
 using BetterAmongUs.Utilities;
 using BetterAmongUs.Utilities.Extension;
 using HarmonyLib;

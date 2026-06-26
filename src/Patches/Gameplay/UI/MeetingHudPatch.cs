@@ -1,7 +1,7 @@
 using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
-using BetterAmongUs.Mono;
-using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.MonoScripts;
+using BetterAmongUs.MonoScripts.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
 using BetterAmongUs.Utilities;
 using HarmonyLib;

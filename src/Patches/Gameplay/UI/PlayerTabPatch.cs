@@ -4,11 +4,11 @@ using BetterAmongUs.Data.Config;
 using BetterAmongUs.Data.Json;
 using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules.Support;
-using BetterAmongUs.Mono.Extended;
 using BetterAmongUs.Patches.Client.Managers;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
+using BetterAmongUs.MonoScripts.Extended;
 
 namespace BetterAmongUs.Patches.Gameplay.UI;
 

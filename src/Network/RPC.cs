@@ -1,5 +1,5 @@
 ﻿using BetterAmongUs.Enums;
-using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.MonoScripts.Extended;
 using BetterAmongUs.Utilities;
 using Hazel;
 

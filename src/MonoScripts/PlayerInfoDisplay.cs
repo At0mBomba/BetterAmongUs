@@ -6,7 +6,7 @@ using BetterAmongUs.Data.Config;
 using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
-using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.MonoScripts.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using BetterAmongUs.Utilities;
 using HarmonyLib;
@@ -16,7 +16,7 @@ using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 
-namespace BetterAmongUs.Mono;
+namespace BetterAmongUs.MonoScripts;
 
 /// <summary>
 /// Displays extended player information during gameplay.
@@ -400,7 +400,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
     private void SetInGameInfo(StringBuilder sbTagTop)
     {
         if (_player.IsImpostorTeammate() || _player.IsLocalPlayer() ||
-            (!PlayerControl.LocalPlayer.IsAlive() && !PlayerControl.LocalPlayer.Is(RoleTypes.GuardianAngel)))
+            !PlayerControl.LocalPlayer.IsAlive() && !PlayerControl.LocalPlayer.Is(RoleTypes.GuardianAngel))
         {
             string roleInfo = _player.GetRoleName().ToColor(_player.Data.Role.TeamColor);
 

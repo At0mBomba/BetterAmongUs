@@ -8,7 +8,7 @@ using TMPro;
 using UnityEngine;
 using static BetterAmongUs.Patches.Gameplay.LobbyPatch;
 
-namespace BetterAmongUs.Mono;
+namespace BetterAmongUs.MonoScripts;
 
 /// <summary>
 /// Provides enhanced ping tracking and display functionality with additional information.

@@ -2,7 +2,7 @@
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
-using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.MonoScripts.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using BetterAmongUs.Utilities;
 using Cpp2IL.Core.Extensions;

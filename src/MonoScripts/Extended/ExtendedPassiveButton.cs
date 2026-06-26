@@ -3,7 +3,7 @@ using BetterAmongUs.Modules;
 using HarmonyLib;
 using UnityEngine;
 
-namespace BetterAmongUs.Mono.Extended;
+namespace BetterAmongUs.MonoScripts.Extended;
 
 /// <summary>
 /// Extends PassiveButton with hold and shift-click functionality.

@@ -6,7 +6,7 @@ using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules.AntiCheat.RPCHandlers.NetObjectHandlers;
 using BetterAmongUs.Modules.Support;
-using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.MonoScripts.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
 using BetterAmongUs.Utilities;
 using Hazel;

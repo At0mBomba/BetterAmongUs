@@ -6,7 +6,7 @@ using Il2CppInterop.Runtime.Attributes;
 using System.Collections;
 using UnityEngine;
 
-namespace BetterAmongUs.Mono.Extended;
+namespace BetterAmongUs.MonoScripts.Extended;
 
 /// <summary>
 /// Extends PlayerControl with additional functionality.

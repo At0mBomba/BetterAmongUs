@@ -2,7 +2,7 @@ using AmongUs.GameOptions;
 using BetterAmongUs.Attributes;
 using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
-using BetterAmongUs.Mono.Extended;
+using BetterAmongUs.MonoScripts.Extended;
 using BetterAmongUs.Utilities;
 using Hazel;
 using InnerNet;
