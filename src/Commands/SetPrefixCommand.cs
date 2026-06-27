@@ -24,7 +24,10 @@ internal sealed class SetPrefixCommand : BaseCommand
     internal override void Run()
     {
         var oldPrefix = BAUConfigs.CommandPrefix.Value;
-        var prefix = _prefixArgument.Arg.ToCharArray()?.First().ToString();
+        if (!_prefixArgument.TryParse(out var prefix))
+            return;
+
+        prefix = prefix.ToCharArray()?.First().ToString();
         if (!string.IsNullOrEmpty(prefix))
         {
             BAUConfigs.CommandPrefix.Value = prefix;

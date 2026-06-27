@@ -34,8 +34,7 @@ internal sealed class KickCommand : BaseCommand
         if (!_playerArgument.TryParse(out var player))
             return;
 
-        var isBan = _boolArgument.TryParse(out var ban);
-        if (!isBan)
+        if (!_boolArgument.TryParse(out var ban))
             return;
 
         if (!player.IsHost())

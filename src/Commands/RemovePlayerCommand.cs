@@ -26,13 +26,16 @@ internal sealed class RemovePlayerCommand : BaseCommand
 
     internal override void Run()
     {
-        if (BetterDataManager.RemovePlayer(_identifierArgument.Arg) == true)
+        if (_identifierArgument.TryParse(out var identifierArgument))
         {
-            Utils.AddChatPrivate($"{_identifierArgument.Arg} successfully removed from local <color=#4f92ff>Anti-Cheat</color> data!");
-        }
-        else
-        {
-            Utils.AddChatPrivate($"{_identifierArgument.Arg} Could not find player data from identifier");
+            if (BetterDataManager.RemovePlayer(identifierArgument) == true)
+            {
+                Utils.AddChatPrivate($"{identifierArgument} successfully removed from local <color=#4f92ff>Anti-Cheat</color> data!");
+            }
+            else
+            {
+                Utils.AddChatPrivate($"{identifierArgument} Could not find player data from identifier");
+            }
         }
     }
 }

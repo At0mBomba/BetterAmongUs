@@ -1,8 +1,8 @@
 ﻿using BetterAmongUs.Commands;
 using BetterAmongUs.Data.Config;
-using BetterAmongUs.Utilities;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
+using BetterAmongUs.Utilities;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
@@ -194,7 +194,7 @@ internal static class ChatCommandsPatch
         // Red text if command cannot be run
         if (!closestCommand.CanRunCommand(out string _))
         {
-            fullSuggestion = fullSuggestion.ToColor("#FF0300".HexToColor());
+            fullSuggestion = fullSuggestion.ToColor("#FF0300");
         }
 
         // Update UI elements
