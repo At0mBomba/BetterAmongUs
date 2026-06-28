@@ -1,5 +1,4 @@
 ﻿using AmongUs.Data;
-using AmongUs.GameOptions;
 using BetterAmongUs.Attributes;
 using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
@@ -8,10 +7,9 @@ using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.MonoScripts.Extended;
 using BetterAmongUs.Patches.Gameplay.UI.Settings;
+using BetterAmongUs.Structs;
 using BetterAmongUs.Utilities;
-using HarmonyLib;
 using Il2CppInterop.Runtime.Attributes;
-using System.Text;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -30,9 +28,9 @@ internal class PlayerInfoDisplay : MonoBehaviour
     protected TextMeshPro? _topText;
     protected TextMeshPro? _bottomText;
 
-    private readonly StringBuilder _sbTag = new(256);
-    private readonly StringBuilder _sbTagTop = new(256);
-    private readonly StringBuilder _sbTagBottom = new(256);
+    private readonly SplitStringBuilder _ssTag = new(100, '-');
+    private readonly SplitStringBuilder _ssTagTop = new(100, '-');
+    private readonly SplitStringBuilder _ssTagBottom = new(100, '-');
     private string _lastTopText = "", _lastBottomText = "", _lastInfoText = "";
     private int _lastUpdateFrame;
     private const int UPDATE_COOLDOWN = 10;
@@ -132,9 +130,9 @@ internal class PlayerInfoDisplay : MonoBehaviour
             return;
         }
 
-        _sbTag.Clear();
-        _sbTagTop.Clear();
-        _sbTagBottom.Clear();
+        _ssTag.Clear();
+        _ssTagTop.Clear();
+        _ssTagBottom.Clear();
 
         UpdatePlayerInfo();
         UpdatePlayerHighlight();
@@ -156,9 +154,6 @@ internal class PlayerInfoDisplay : MonoBehaviour
             return;
 
         if (_nameText == null)
-            return;
-
-        if (_sbTag == null || _sbTagTop == null || _sbTagBottom == null)
             return;
 
         if (_topText == null || _bottomText == null || _infoText == null)
@@ -195,20 +190,20 @@ internal class PlayerInfoDisplay : MonoBehaviour
             platform = TranslationStrings.Player_PlatformHidden.LocalizedString;
 
         if (!_player.IsInShapeshift())
-            SetPlayerOutline(_sbTag);
+            SetPlayerOutline(_ssTag);
 
         if (GameState.IsInGame && GameState.IsLobby && !GameState.IsFreePlay)
         {
-            SetLobbyInfo(ref newName, betterData, _sbTag);
+            SetLobbyInfo(ref newName, betterData, _ssTag);
 
-            _sbTagTop.Append($"<color=#9e9e9e>{platform}</color>+++")
-                    .Append($"<color=#ffd829>Lv: {_player.Data.PlayerLevel + 1}</color>+++");
+            _ssTagTop.Append($"<color=#9e9e9e>{platform}</color>")
+                .Append($"<color=#ffd829>Lv: {_player.Data.PlayerLevel + 1}</color>");
 
-            _sbTagBottom.Append($"<color={friendCodeColor}>{friendCode}</color>+++");
+            _ssTagBottom.Append($"<color={friendCodeColor}>{friendCode}</color>");
         }
         else if ((GameState.IsInGame || GameState.IsFreePlay) && !GameState.IsHideNSeek)
         {
-            SetInGameInfo(_sbTagTop);
+            SetInGameInfo(_ssTagTop);
         }
 
         if (!BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_NameOverride))
@@ -236,18 +231,18 @@ internal class PlayerInfoDisplay : MonoBehaviour
             }
         }
 
-        UpdateTextIfChanged(_topText, _sbTagTop, ref _lastTopText);
-        UpdateTextIfChanged(_bottomText, _sbTagBottom, ref _lastBottomText);
-        UpdateTextIfChanged(_infoText, _sbTag, ref _lastInfoText);
+        UpdateTextIfChanged(_topText, _ssTagTop, ref _lastTopText);
+        UpdateTextIfChanged(_bottomText, _ssTagBottom, ref _lastBottomText);
+        UpdateTextIfChanged(_infoText, _ssTag, ref _lastInfoText);
     }
 
     /// <summary>
     /// Updates text if changed, optimizing performance.
     /// </summary>
     /// <param name="textMesh">TextMeshPro component to update.</param>
-    /// <param name="sb">StringBuilder containing new text.</param>
+    /// <param name="ss">StringBuilder containing new text.</param>
     /// <param name="lastValue">Reference to last value for comparison.</param>
-    private static void UpdateTextIfChanged(TextMeshPro textMesh, StringBuilder sb, ref string lastValue)
+    private static void UpdateTextIfChanged(TextMeshPro textMesh, SplitStringBuilder ss, ref string lastValue)
     {
         if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_PlayerInfo))
         {
@@ -258,7 +253,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
         if (textMesh == null)
             return;
 
-        string newText = Utils.FormatInfo(sb);
+        string newText = ss.ToString();
         if (newText != lastValue)
         {
             textMesh.SetText(newText);
@@ -341,9 +336,9 @@ internal class PlayerInfoDisplay : MonoBehaviour
     /// <summary>
     /// Sets player outline based on data from BetterDataManager.
     /// </summary>
-    /// <param name="sbTag">StringBuilder for tag text.</param>
+    /// <param name="ssTag">StringBuilder for tag text.</param>
     [HideFromIl2Cpp]
-    private void SetPlayerOutline(StringBuilder? sbTag)
+    private void SetPlayerOutline(SplitStringBuilder? ssTag)
     {
         if (_player == null)
             return;
@@ -358,9 +353,9 @@ internal class PlayerInfoDisplay : MonoBehaviour
 
         if (BetterDataManager.Files.BetterDataFile.TryGetCheatInfo(_player.Data, out var info))
         {
-            if (sbTag != null)
+            if (ssTag.HasValue)
             {
-                sbTag.Append(info.title.ToColor(info.hexColor) + "+++");
+                ssTag.Value.Append(info.title.ToColor(info.hexColor));
             }
             _player.SetOutlineByHex(true, info.hexColor);
         }
@@ -374,7 +369,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
     /// Sets lobby specific information.
     /// </summary>
     [HideFromIl2Cpp]
-    private void SetLobbyInfo(ref string newName, ExtendedPlayerInfo betterData, StringBuilder sbTag)
+    private void SetLobbyInfo(ref string newName, ExtendedPlayerInfo betterData, SplitStringBuilder ssTag)
     {
         if (betterData == null)
             return;
@@ -386,37 +381,20 @@ internal class PlayerInfoDisplay : MonoBehaviour
         {
             string verificationSymbol = betterData.IsVerifiedBetterUser || _player.IsLocalPlayer() ? "✓ " : "";
 
-            sbTag.AppendFormat("<color=#0dff00>{1}{0}</color>+++",
+            ssTag.AppendFormat("<color=#0dff00>{1}{0}</color>",
                 TranslationStrings.Player_BetterUser.LocalizedString, verificationSymbol);
         }
-        sbTag.Append($"<color=#b554ff>ID: {_player.PlayerId}</color>+++");
+        ssTag.Append($"<color=#b554ff>ID: {_player.PlayerId}</color>");
     }
 
     /// <summary>
     /// Sets in-game specific information.
     /// </summary>
-    /// <param name="sbTagTop">StringBuilder for top tag text.</param>
+    /// <param name="ssTagTop">StringBuilder for top tag text.</param>
     [HideFromIl2Cpp]
-    private void SetInGameInfo(StringBuilder sbTagTop)
+    private void SetInGameInfo(SplitStringBuilder ssTagTop)
     {
-        if (_player.IsImpostorTeammate() || _player.IsLocalPlayer() ||
-            !PlayerControl.LocalPlayer.IsAlive() && !PlayerControl.LocalPlayer.Is(RoleTypes.GuardianAngel))
-        {
-            string roleInfo = _player.GetRoleName().ToColor(_player.Data.Role.TeamColor);
-
-            if (!_player.IsImpostorTeam() && _player.myTasks.Count > 0)
-            {
-                int completedTasks = 0;
-                foreach (var task in _player.Data.Tasks)
-                {
-                    if (task.Complete)
-                        completedTasks++;
-                }
-                roleInfo += $" <color=#cbcbcb>({completedTasks}/{_player.Data.Tasks.Count})</color>";
-            }
-
-            sbTagTop.Append(roleInfo + "+++");
-        }
+        ssTagTop.Append(_player.GetRoleInfo(true));
     }
 
     /// <summary>

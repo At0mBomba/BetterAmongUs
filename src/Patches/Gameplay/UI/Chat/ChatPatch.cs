@@ -1,14 +1,13 @@
-﻿using AmongUs.GameOptions;
-using BetterAmongUs.Data;
+﻿using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
 using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.MonoScripts.Extended;
+using BetterAmongUs.Structs;
 using BetterAmongUs.Utilities;
 using BetterAmongUs.Utilities.Extension;
 using HarmonyLib;
-using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -234,21 +233,15 @@ internal static class ChatPatch
         if (localPlayer == null)
             return;
 
-        StringBuilder sbTag = new();
-        StringBuilder sbInfo = new();
+        SplitStringBuilder ssTag = new(100, '-');
 
         string hashPuid = Utils.GetHashPuid(sourcePlayer);
         string friendCode = playerInfo.FriendCode;
         string playerName = playerInfo.ExtendedData()?.RealName ?? "???";
 
-        // Format role display with team color
-        string Role = $"<size=75%><color={sourcePlayer.GetTeamHexColor()}>{sourcePlayer.GetRoleName()}</color></size>+++";
-
         // In lobby, show player tags instead of roles
         if (GameState.IsLobby && !GameState.IsFreePlay)
         {
-            Role = "";
-
             var betterData = sourcePlayer.ExtendedData();
             if (betterData == null)
                 return;
@@ -256,50 +249,25 @@ internal static class ChatPatch
             // Show BAU user tag
             if (sourcePlayer.IsLocalPlayer() || betterData.IsBetterUser)
             {
-                sbTag.AppendFormat("<color=#0dff00>{1}{0}</color>+++", TranslationStrings.Player_BetterUser, betterData.IsVerifiedBetterUser || sourcePlayer.IsLocalPlayer() ? "✓ " : "");
+                ssTag.AppendFormat("<color=#0dff00>{1}{0}</color>", TranslationStrings.Player_BetterUser.LocalizedString, betterData.IsVerifiedBetterUser || sourcePlayer.IsLocalPlayer() ? "✓ " : "");
             }
 
             // Show mod-specific tags based on player data
             if (BetterDataManager.Files.BetterDataFile.TryGetCheatInfo(sourcePlayer.Data, out var info))
             {
-                sbTag.Append(info.title.ToColor(info.hexColor) + "+++");
+                ssTag.Append(info.title.ToColor(info.hexColor));
             }
         }
 
-        // Hide roles from alive players (unless same team)
-        if (!sourcePlayer.IsImpostorTeammate())
-        {
-            if (localPlayer.IsAlive() && !sourcePlayer.IsLocalPlayer())
-                Role = "";
-        }
+        ssTag.Append(sourcePlayer.GetRoleInfo(false).Size(75f));
 
-        // Show role for dead players or if local player is Guardian Angel
-        if ((localPlayer.Is(RoleTypes.GuardianAngel) && !sourcePlayer.IsAlive()) || !localPlayer.Is(RoleTypes.GuardianAngel))
-        {
-            sbTag.Append(Role);
-        }
-
-        // Format tags with separators
-        sbInfo.Append("<size=75%>");
-        var parts = sbTag.ToString().Split("+++");
-
-        for (int i = 0; i < parts.Length; i++)
-        {
-            if (string.IsNullOrEmpty(parts[i])) continue;
-
-            sbInfo.Append(parts[i]);
-
-            if (i != parts.Length - 2)
-                sbInfo.Append(" - ");
-        }
-
-        sbInfo.Append("</size>");
+        string infoText = ssTag.ToString().Size(75f);
 
         // Position tags before local player name, after other players' names
         if (sourcePlayer.IsLocalPlayer())
-            playerName = sbInfo + " " + playerName;
+            playerName = infoText + " " + playerName;
         else
-            playerName += " " + sbInfo;
+            playerName += " " + infoText;
 
         bubble.NameText.SetText(playerName);
     }

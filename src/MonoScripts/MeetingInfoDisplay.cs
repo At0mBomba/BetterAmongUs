@@ -1,12 +1,11 @@
-﻿using AmongUs.GameOptions;
-using BetterAmongUs.Attributes;
+﻿using BetterAmongUs.Attributes;
 using BetterAmongUs.Data;
 using BetterAmongUs.Generated;
 using BetterAmongUs.Modules.Support;
 using BetterAmongUs.MonoScripts.Extended;
+using BetterAmongUs.Structs;
 using BetterAmongUs.Utilities;
 using Il2CppInterop.Runtime.Attributes;
-using System.Text;
 using TMPro;
 using UnityEngine;
 
@@ -23,8 +22,8 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
     private Vector3 _infoPos;
     private Vector3 _TopPos;
 
-    private readonly StringBuilder _sbTag = new(256);
-    private readonly StringBuilder _sbInfo = new(256);
+    private readonly SplitStringBuilder _ssTag = new(100, '-');
+    private readonly SplitStringBuilder _ssInfo = new(100, '-');
     private string _lastInfoText = "", _lastTopText = "";
     private int _lastUpdateFrame;
     private const int UPDATE_COOLDOWN = 5;
@@ -75,8 +74,8 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
         if (_pva == null)
             return;
 
-        _sbTag.Clear();
-        _sbInfo.Clear();
+        _ssTag.Clear();
+        _ssInfo.Clear();
 
         if (_player != null)
         {
@@ -142,22 +141,21 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
         if (_player == null || _player.Data == null || _player.ExtendedData() == null)
             return;
 
-        SetPlayerTags(_sbTag);
-        FormatPlayerInfo(_sbTag, _sbInfo);
+        SetPlayerTags(_ssTag);
+        _ssInfo.Append(_player.GetRoleInfo(true));
 
-        string roleText = GetRoleText();
-        UpdateNameTextPosition(roleText, _sbInfo.ToString());
+        UpdateNameTextPosition(_ssInfo.ToString(), _ssInfo.ToString());
 
-        UpdateTextIfChanged(_infoText, _sbInfo.ToString(), ref _lastInfoText);
-        UpdateTextIfChanged(_topText, roleText, ref _lastTopText);
+        UpdateTextIfChanged(_infoText, _ssInfo.ToString(), ref _lastInfoText);
+        UpdateTextIfChanged(_topText, _ssTag.ToString(), ref _lastTopText);
     }
 
     /// <summary>
     /// Sets player tags based on data from BetterDataManager.
     /// </summary>
-    /// <param name="sbTag">StringBuilder for tag text.</param>
+    /// <param name="ssTag">StringBuilder for tag text.</param>
     [HideFromIl2Cpp]
-    private void SetPlayerTags(StringBuilder sbTag)
+    private void SetPlayerTags(SplitStringBuilder ssTag)
     {
         if (_player == null)
             return;
@@ -167,68 +165,8 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
 
         if (BetterDataManager.Files.BetterDataFile.TryGetCheatInfo(_player.Data, out var info))
         {
-            sbTag.Append(info.title.ToColor(info.hexColor) + "+++");
+            ssTag.Append(info.title.ToColor(info.hexColor));
         }
-    }
-
-    /// <summary>
-    /// Formats player information tags into a readable string.
-    /// </summary>
-    /// <param name="sbTag">StringBuilder containing tags.</param>
-    /// <param name="sbInfo">StringBuilder for formatted info.</param>
-    [HideFromIl2Cpp]
-    private static void FormatPlayerInfo(StringBuilder sbTag, StringBuilder sbInfo)
-    {
-        if (sbTag.Length == 0)
-            return;
-
-        string tagString = sbTag.ToString();
-        string[] tags = tagString.Split(["+++"], StringSplitOptions.RemoveEmptyEntries);
-
-        for (int i = 0; i < tags.Length; i++)
-        {
-            if (!string.IsNullOrEmpty(tags[i]))
-            {
-                sbInfo.Append(tags[i]);
-                if (i < tags.Length - 1)
-                {
-                    sbInfo.Append(" - ");
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Gets the role text for display.
-    /// </summary>
-    /// <returns>Formatted role text.</returns>
-    private string GetRoleText()
-    {
-        if (_player == null) return string.Empty;
-
-        string roleHexColor = _player.IsImpostorTeam() ? "#ff1919" : "#8cffff";
-        string role = $"<color={roleHexColor}>{_player.GetRoleName()}</color>";
-
-        if (!_player.IsImpostorTeam() && _player.myTasks.Count > 0)
-        {
-            int completedTasks = 0;
-            foreach (var task in _player.Data.Tasks)
-            {
-                if (task.Complete)
-                    completedTasks++;
-            }
-            role += $" <color=#cbcbcb>({completedTasks}/{_player.Data.Tasks.Count})</color>";
-        }
-
-        if (!_player.IsImpostorTeammate())
-        {
-            if ((PlayerControl.LocalPlayer.IsAlive() || PlayerControl.LocalPlayer.Is(RoleTypes.GuardianAngel)) && !_player.IsLocalPlayer())
-            {
-                return string.Empty;
-            }
-        }
-
-        return role;
     }
 
     /// <summary>

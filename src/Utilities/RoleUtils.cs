@@ -1,4 +1,5 @@
 ﻿using AmongUs.GameOptions;
+using BetterAmongUs.Modules;
 
 namespace BetterAmongUs.Utilities;
 
@@ -83,23 +84,48 @@ internal static class RoleUtils
     }
 
     /// <summary>
-    /// Determines whether a role type is cliant side and can be desynced.
+    /// Gets the role information for a specified player, optionally including task progress.
     /// </summary>
-    /// <param name="role">The role type to check.</param>
-    /// <returns>True if the role can be desynced to other clients, false otherwise.</returns>
-    internal static bool CanDesyncRole(this RoleTypes role)
+    /// <param name="player">The player to get role information for.</param>
+    /// <param name="displayTask">Whether to display the player's task completion progress.</param>
+    /// <returns>Returns role info or <see cref="string.Empty"/> if the player's role information cannot be displayed.</returns>
+    internal static string GetRoleInfo(this PlayerControl player, bool displayTask)
     {
-        if (role is RoleTypes.Phantom or RoleTypes.Viper)
+        if (!GameState.IsInGamePlay)
         {
-            return false;
+            return string.Empty;
         }
 
-        if (role is RoleTypes.Noisemaker)
+        if (!player.IsLocalPlayer() && !player.IsImpostorTeammate())
         {
-            return false;
+            if (PlayerControl.LocalPlayer.IsAlive())
+            {
+                return string.Empty;
+            }
+
+            if (PlayerControl.LocalPlayer.Is(RoleTypes.GuardianAngel))
+            {
+                return string.Empty;
+            }
         }
 
-        return true;
+        string roleInfo = player.GetRoleName().ToColor(player.Data.Role.TeamColor);
+
+        if (!player.IsImpostorTeam() && player.myTasks.Count > 0)
+        {
+            if (displayTask)
+            {
+                int completedTasks = 0;
+                foreach (var task in player.Data.Tasks)
+                {
+                    if (task.Complete)
+                        completedTasks++;
+                }
+                roleInfo += $" <color=#cbcbcb>({completedTasks}/{player.Data.Tasks.Count})</color>";
+            }
+        }
+
+        return roleInfo;
     }
 
     /// <summary>

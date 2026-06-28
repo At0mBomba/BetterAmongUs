@@ -44,26 +44,6 @@ internal static class Utils
     }
 
     /// <summary>
-    /// Formats information from a StringBuilder, cleaning HTML and formatting separators.
-    /// </summary>
-    /// <param name="source">The StringBuilder containing the text to format.</param>
-    /// <returns>The formatted string.</returns>
-    internal static string FormatInfo(StringBuilder source)
-    {
-        if (source.Length == 0) return string.Empty;
-
-        var sb = new StringBuilder();
-        foreach (var part in source.ToString().Split("+++"))
-        {
-            if (!string.IsNullOrEmpty(RemoveHtmlText(part)))
-            {
-                sb.Append(part).Append(" - ");
-            }
-        }
-        return sb.ToString().TrimEnd(" - ".ToCharArray());
-    }
-
-    /// <summary>
     /// Removes all HTML tags and formatting from a string.
     /// </summary>
     /// <param name="text">The text to clean.</param>
