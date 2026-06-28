@@ -1,5 +1,6 @@
 ﻿using BetterAmongUs.Data;
 using BetterAmongUs.Data.Config;
+using BetterAmongUs.Data.Json;
 using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
@@ -56,6 +57,7 @@ internal static class OptionsMenuBehaviourPatch
 
         ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_VentColorGroups, BAUConfigs.VentColorGroups, 2, __instance, MiniMapBehaviourPatch.ClearMapIcons);
         ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_MinimapIcons, BAUConfigs.MinimapIcons, 2, __instance, MiniMapBehaviourPatch.ClearMapIcons);
+        ClientOptionItem.CreateToggle(TranslationStrings.BetterOption_CompressSettingFiles, BAUConfigs.CompressSettingFiles, 2, __instance, ConvertAllSettingFiles);
 
         // Button options (no toggle)
         if (!ModInfo.Starlight)
@@ -124,6 +126,28 @@ internal static class OptionsMenuBehaviourPatch
             UseShellExecute = true,
             Verb = "open"
         });
+    }
+
+    private static void ConvertAllSettingFiles()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (i == BAUConfigs.SettingsPreset.Value)
+            {
+                BetterDataManager.Files.BetterGameSettingsFile.Save();
+                continue;
+            }
+
+            string path = BetterDataManager.GetSettingsFilePathFromPreset(i);
+            if (File.Exists(path))
+            {
+                var settings = new BetterGameSettingsFile
+                {
+                    OverrideFilePath = path
+                };
+                settings.Init();
+            }
+        }
     }
 
     private static TabGroup CreateTabPage(OptionsMenuBehaviour __instance, string name)

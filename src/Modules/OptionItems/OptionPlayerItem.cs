@@ -35,20 +35,19 @@ public sealed class OptionPlayerItem : OptionItem<int>
     /// </summary>
     internal override bool CanLoad => false;
 
-    private static List<OptionPlayerItem> optionPlayerItems = [];
+    private static readonly List<OptionPlayerItem> optionPlayerItems = [];
 
     /// <summary>
-    /// Creates a new player option item or returns an existing one with the same ID.
+    /// Creates a new player option item.
     /// </summary>
-    /// <param name="id">The unique identifier for this option.</param>
     /// <param name="tab">The tab this option belongs to.</param>
     /// <param name="translationString">The translation key for the option name.</param>
     /// <param name="parent">Optional parent option for hierarchical organization.</param>
     /// <param name="canBeRandom">Whether this option allows random player selection.</param>
     /// <returns>A new or existing OptionPlayerItem instance.</returns>
-    internal static OptionPlayerItem Create(int id, OptionTab tab, TranslationStrings.TranslationString translationString, OptionItem? parent = null, bool canBeRandom = true)
+    internal static OptionPlayerItem Create(OptionTab tab, TranslationStrings.TranslationString translationString, OptionItem? parent = null, bool canBeRandom = true)
     {
-        if (optionPlayerItems.FirstOrDefault(opt => opt.Id == id) is OptionPlayerItem playerItem)
+        if (optionPlayerItems.FirstOrDefault(opt => opt.TranslationName.Key == translationString.Key) is OptionPlayerItem playerItem)
         {
             playerItem.CreateBehavior();
             return playerItem;
@@ -57,7 +56,6 @@ public sealed class OptionPlayerItem : OptionItem<int>
         OptionPlayerItem Item = new();
         optionPlayerItems.Add(Item);
         Item.Value = canBeRandom ? -1 : 0; ;
-        Item._id = id;
         Item.Tab = tab;
         Item.TranslationName = translationString;
         Item.CanBeRandom = canBeRandom;

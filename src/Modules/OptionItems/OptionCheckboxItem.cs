@@ -16,17 +16,16 @@ public sealed class OptionCheckboxItem : OptionItem<bool>
     internal sealed override bool ShowChildren => base.ShowChildren && Value;
 
     /// <summary>
-    /// Creates a new checkbox option item or returns an existing one with the same ID.
+    /// Creates a new checkbox option item.
     /// </summary>
-    /// <param name="id">The unique identifier for this option.</param>
     /// <param name="tab">The tab this option belongs to.</param>
     /// <param name="translationString">The translation key for the option name.</param>
     /// <param name="defaultValue">The default value for the checkbox.</param>
     /// <param name="parent">Optional parent option for hierarchical organization.</param>
     /// <returns>A new or existing OptionCheckboxItem instance.</returns>
-    internal static OptionCheckboxItem Create(int id, OptionTab tab, TranslationStrings.TranslationString translationString, bool defaultValue, OptionItem? parent = null)
+    internal static OptionCheckboxItem Create(OptionTab tab, TranslationStrings.TranslationString translationString, bool defaultValue, OptionItem? parent = null)
     {
-        if (GetOptionById(id) is OptionCheckboxItem checkboxItem)
+        if (GetOptionByTranslationName(translationString) is OptionCheckboxItem checkboxItem)
         {
             checkboxItem.CreateBehavior();
             return checkboxItem;
@@ -34,7 +33,6 @@ public sealed class OptionCheckboxItem : OptionItem<bool>
 
         OptionCheckboxItem Item = new();
         AllOptions.Add(Item);
-        Item._id = id;
         Item.Tab = tab;
         Item.TranslationName = translationString;
         Item.DefaultValue = defaultValue;

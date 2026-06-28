@@ -69,6 +69,11 @@ internal static class BAUConfigs
     internal static BAUConfigEntry<bool> VentColorGroups { get; } = new("Better Options", "VentColorGroups", true);
 
     /// <summary>
+    /// Gets the configuration entry for compress settings file setting.
+    /// </summary>
+    internal static BAUConfigEntry<bool> CompressSettingFiles { get; } = new("Better Options", "CompressSettingFiles", false);
+
+    /// <summary>
     /// Gets the configuration entry for command prefix setting.
     /// </summary>
     internal static BAUConfigEntry<string> CommandPrefix { get; } = new("Mod", "CommandPrefix", "/");

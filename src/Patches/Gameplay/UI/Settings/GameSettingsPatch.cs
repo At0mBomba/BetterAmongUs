@@ -67,79 +67,34 @@ internal static class GameSettingsPatch
             if (IsPreload || GameState.IsHost)
             {
                 OptionTitleItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_TextHeader_HostOnly);
-                BetterGameSettings.WhenCheating = OptionStringItem.Create(100, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_WhenCheating,
+                BetterGameSettings.WhenCheating = OptionStringItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_WhenCheating,
                     [TranslationStrings.BetterSetting_Setting_WhenCheating_Notify, TranslationStrings.BetterSetting_Setting_WhenCheating_Kick, TranslationStrings.BetterSetting_Setting_WhenCheating_Ban], 2);
-                BetterGameSettings.InvalidFriendCode = OptionCheckboxItem.Create(200, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_InvalidFriendCode, true);
-                BetterGameSettings.CancelInvalidSabotage = OptionCheckboxItem.Create(900, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_CancelInvalidSabotage, true);
-                BetterGameSettings.UseBanPlayerList = OptionCheckboxItem.Create(300, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanPlayerList, true);
-                BetterGameSettings.UseBanNameList = OptionCheckboxItem.Create(400, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanNameList, true);
-                BetterGameSettings.UseBanWordList = OptionCheckboxItem.Create(500, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanWordList, true);
-                BetterGameSettings.UseBanWordListOnlyLobby = OptionCheckboxItem.Create(1400, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanWordListOnlyLobby, true, BetterGameSettings.UseBanWordList);
+                BetterGameSettings.InvalidFriendCode = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_InvalidFriendCode, true);
+                BetterGameSettings.CancelInvalidSabotage = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_CancelInvalidSabotage, true);
+                BetterGameSettings.UseBanPlayerList = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanPlayerList, true);
+                BetterGameSettings.UseBanNameList = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanNameList, true);
+                BetterGameSettings.UseBanWordList = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanWordList, true);
+                BetterGameSettings.UseBanWordListOnlyLobby = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanWordListOnlyLobby, true, BetterGameSettings.UseBanWordList);
             }
 
             // General detection settings
             OptionTitleItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_TextHeader_Detections);
-            BetterGameSettings.CensorDetectionReason = OptionCheckboxItem.Create(1300, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_CensorDetectionReason, false);
-            BetterGameSettings.DetectedLevel = OptionCheckboxItem.Create(1800, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectedLevel, false);
-            BetterGameSettings.DetectedLevelAbove = OptionIntItem.Create(600, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectedLevelAbove, (100, 10000, 5), 500, ("Lv ", ""), BetterGameSettings.DetectedLevel);
-            BetterGameSettings.KickLevel = OptionCheckboxItem.Create(1900, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_KickLevel, false);
-            BetterGameSettings.KickLevelBelow = OptionIntItem.Create(1700, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_KickLevelBelow, (0, 10000, 1), 0, ("Lv ", ""), BetterGameSettings.KickLevel);
-            BetterGameSettings.DetectCheatClients = OptionCheckboxItem.Create(700, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectCheatClients, true);
-            BetterGameSettings.DetectInvalidRpcs = OptionCheckboxItem.Create(800, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectInvalidRpcs, true);
-            BetterGameSettings.RpcRateLimiting = OptionCheckboxItem.Create(2000, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_RpcRateLimiting, true);
-            BetterGameSettings.RpcRateLimit = OptionIntItem.Create(2100, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_RateLimit, (25, 1000, 1), 50, ("", " PS"), BetterGameSettings.RpcRateLimiting);
+            BetterGameSettings.CensorDetectionReason = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_CensorDetectionReason, false);
+            BetterGameSettings.DetectedLevel = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectedLevel, false);
+            BetterGameSettings.DetectedLevelAbove = OptionIntItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectedLevelAbove, (100, 10000, 5), 500, ("Lv ", ""), BetterGameSettings.DetectedLevel);
+            BetterGameSettings.KickLevel = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_KickLevel, false);
+            BetterGameSettings.KickLevelBelow = OptionIntItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_KickLevelBelow, (0, 10000, 1), 0, ("Lv ", ""), BetterGameSettings.KickLevel);
+            BetterGameSettings.DetectCheatClients = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectCheatClients, true);
+            BetterGameSettings.DetectInvalidRpcs = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectInvalidRpcs, true);
+            BetterGameSettings.RpcRateLimiting = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_RpcRateLimiting, true);
+            BetterGameSettings.RpcRateLimit = OptionIntItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_RateLimit, (25, 1000, 1), 50, ("", " PS"), BetterGameSettings.RpcRateLimiting);
         }
 
         // Role algorithm settings
         if (IsPreload || GameState.IsHost)
         {
             OptionHeaderItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_MainHeader_RoleAlgorithm);
-            BetterGameSettings.RoleRandomizer = OptionStringItem.Create(1100, BetterSettingsTab, TranslationStrings.BetterSetting_Setting_RoleRandomizer, [new("System.Random"), new("UnityEngine.Random")], 0);
-            // BetterGameSettings.DesyncRoles = OptionCheckboxItem.Create(1200, BetterSettingsTab, "BetterSetting.Setting.DesyncRoles", true);
-        }
-
-        // Gameplay Settings section
-        {
-            // Show only for hosts
-            if (IsPreload || GameState.IsHost)
-            {
-                /*
-                // Normal game mode settings
-                if (IsPreload || !GameState.IsHideNSeek)
-                {
-                    OptionHeaderItem.Create(BetterSettingsTab, "BetterSetting.MainHeader.Gameplay");
-                    BetterGameSettings.DisableSabotages = OptionCheckboxItem.Create(1500, BetterSettingsTab, "BetterSetting.Setting.DisableSabotages", false);
-                    BetterGameSettings.DisableSabotagesForDead = OptionCheckboxItem.Create(1600, BetterSettingsTab, "BetterSetting.Setting.DisableSabotagesForDead", false);
-                }
-
-                // Hide & Seek specific settings with dynamic impostor selection
-                if (IsPreload || GameState.IsHideNSeek)
-                {
-                    OptionHeaderItem.Create(BetterSettingsTab, "BetterSetting.MainHeader.HideNSeek");
-                    OptionTitleItem.Create(BetterSettingsTab, $"<color={RoleTypes.Impostor.GetRoleHex()}>{Translator.GetString(StringNames.ImpostorsCategory)}</color>");
-                    BetterGameSettings.HideAndSeekImpNum = OptionIntItem.Create(1000, BetterSettingsTab, "BetterSetting.Setting.HideAndSeekImpNum", (1, 5, 1), 1);
-
-                    // Create player selection dropdowns that appear based on impostor count
-                    BetterGameSettingsTemp.HideAndSeekImp2 = OptionPlayerItem.Create(0, BetterSettingsTab, "BetterSetting.TempSetting.HideAndSeekImpNum", BetterGameSettings.HideAndSeekImpNum);
-                    BetterGameSettingsTemp.HideAndSeekImp2.ShowCondition = () => BetterGameSettings.HideAndSeekImpNum.GetValue() >= 2;
-
-                    BetterGameSettingsTemp.HideAndSeekImp3 = OptionPlayerItem.Create(1, BetterSettingsTab, "BetterSetting.TempSetting.HideAndSeekImpNum", BetterGameSettings.HideAndSeekImpNum);
-                    BetterGameSettingsTemp.HideAndSeekImp3.ShowCondition = () => BetterGameSettings.HideAndSeekImpNum.GetValue() >= 3 &&
-                    BetterGameSettingsTemp.HideAndSeekImp2.GetValue() != -1;
-
-                    BetterGameSettingsTemp.HideAndSeekImp4 = OptionPlayerItem.Create(2, BetterSettingsTab, "BetterSetting.TempSetting.HideAndSeekImpNum", BetterGameSettings.HideAndSeekImpNum);
-                    BetterGameSettingsTemp.HideAndSeekImp4.ShowCondition = () => BetterGameSettings.HideAndSeekImpNum.GetValue() >= 4 &&
-                    BetterGameSettingsTemp.HideAndSeekImp2.GetValue() != -1 &&
-                    BetterGameSettingsTemp.HideAndSeekImp3.GetValue() != -1;
-
-                    BetterGameSettingsTemp.HideAndSeekImp5 = OptionPlayerItem.Create(3, BetterSettingsTab, "BetterSetting.TempSetting.HideAndSeekImpNum", BetterGameSettings.HideAndSeekImpNum);
-                    BetterGameSettingsTemp.HideAndSeekImp5.ShowCondition = () => BetterGameSettings.HideAndSeekImpNum.GetValue() >= 5 &&
-                    BetterGameSettingsTemp.HideAndSeekImp2.GetValue() != -1 &&
-                    BetterGameSettingsTemp.HideAndSeekImp3.GetValue() != -1 &&
-                    BetterGameSettingsTemp.HideAndSeekImp4.GetValue() != -1;
-                }
-                */
-            }
+            BetterGameSettings.RoleRandomizer = OptionStringItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_RoleRandomizer, [new("System.Random"), new("UnityEngine.Random")], 0);
         }
 
         BetterSettingsTab.UpdateVisuals();

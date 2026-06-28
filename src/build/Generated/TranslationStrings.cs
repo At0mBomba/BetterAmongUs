@@ -324,6 +324,11 @@ public static class TranslationStrings
     public static readonly TranslationString BetterOption_MinimapIcons = new("BetterOption.MinimapIcons");
 
     /// <summary>
+    /// Base Translation: Compress Setting Files
+    /// </summary>
+    public static readonly TranslationString BetterOption_CompressSettingFiles = new("BetterOption.CompressSettingFiles");
+
+    /// <summary>
     /// Base Translation: Open Save Data
     /// </summary>
     public static readonly TranslationString BetterOption_SaveData = new("BetterOption.SaveData");

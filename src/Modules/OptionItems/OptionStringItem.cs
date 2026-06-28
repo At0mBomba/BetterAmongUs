@@ -20,9 +20,8 @@ public class OptionStringItem : OptionItem<int>
     protected TranslationStrings.TranslationString[] TranslatorStrings { get; set; } = [];
 
     /// <summary>
-    /// Creates a new string option item or returns an existing one with the same ID.
+    /// Creates a new string option item.
     /// </summary>
-    /// <param name="id">The unique identifier for this option.</param>
     /// <param name="tab">The tab this option belongs to.</param>
     /// <param name="translationStringName">The translation key for the option name.</param>
     /// <param name="translationStrings">Array of translation keys for the selectable string values.</param>
@@ -30,14 +29,14 @@ public class OptionStringItem : OptionItem<int>
     /// <param name="parent">Optional parent option for hierarchical organization.</param>
     /// <returns>A new or existing OptionStringItem instance.</returns>
     /// <exception cref="ArgumentException">Thrown when tranStrings has less than 2 elements.</exception>
-    internal static OptionStringItem Create(int id, OptionTab tab, TranslationStrings.TranslationString translationStringName, TranslationStrings.TranslationString[] translationStrings, int defaultValue, OptionItem? parent = null)
+    internal static OptionStringItem Create(OptionTab tab, TranslationStrings.TranslationString translationStringName, TranslationStrings.TranslationString[] translationStrings, int defaultValue, OptionItem? parent = null)
     {
         if (translationStrings.Length < 2)
         {
             throw new ArgumentException("tranStrings must have more then 1 string!");
         }
 
-        if (GetOptionById(id) is OptionStringItem stringItem)
+        if (GetOptionByTranslationName(translationStringName) is OptionStringItem stringItem)
         {
             stringItem.CreateBehavior();
             return stringItem;
@@ -45,7 +44,6 @@ public class OptionStringItem : OptionItem<int>
 
         OptionStringItem Item = new();
         AllOptions.Add(Item);
-        Item._id = id;
         Item.Tab = tab;
         Item.TranslationName = translationStringName;
         Item.TranslatorStrings = translationStrings;

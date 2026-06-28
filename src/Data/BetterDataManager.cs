@@ -89,7 +89,7 @@ internal static class BetterDataManager
         /// <summary>
         /// Current compressed settings file path.
         /// </summary>
-        internal static string SettingsFilePath => Path.Combine(Folders.settingsFolderPath, $"Preset-{BAUConfigs.SettingsPreset.Value}.dat");
+        internal static string SettingsFilePath => GetSettingsFilePathFromPreset(BAUConfigs.SettingsPreset.Value);
 
         /// <summary>
         /// File containing banned player identifiers.
@@ -131,6 +131,15 @@ internal static class BetterDataManager
         {
             return Folders.starLightDataFolderPath;
         }
+    }
+
+    /// <summary>
+    /// Gets the file path for the settings file associated with a specific preset number.
+    /// </summary>
+    /// <param name="preset">The preset number to get the settings file for.</param>
+    internal static string GetSettingsFilePathFromPreset(int preset)
+    {
+        return Path.Combine(Folders.settingsFolderPath, $"Preset-{preset}.json");
     }
 
     /// <summary>
@@ -239,24 +248,29 @@ internal static class BetterDataManager
     }
 
     /// <summary>
-    /// Saves a setting with the specified ID.
+    /// Saves a setting with the specified identifier to the game settings file.
     /// </summary>
-    /// <param name="id">The setting identifier.</param>
-    /// <param name="input">The setting value to save.</param>
-    internal static void SaveSetting(int id, object? input)
+    /// <param name="id">The unique identifier key for the setting.</param>
+    /// <param name="input">The value to save. Can be any object type that is JSON-serializable.</param>
+    internal static void SaveSetting(string id, object? input)
     {
+        id = id.Split(".").Last();
         Files.BetterGameSettingsFile.Settings[id] = input;
         Files.BetterGameSettingsFile.Save();
     }
 
     /// <summary>
-    /// Checks if a setting can be loaded as the specified type.
+    /// Determines whether a setting exists and can be loaded as the specified type.
     /// </summary>
-    /// <typeparam name="T">The type to check against.</typeparam>
-    /// <param name="id">The setting identifier.</param>
-    /// <returns>True if the setting exists and can be cast to type T, false otherwise.</returns>
-    internal static bool CanLoadSetting<T>(int id)
+    /// <typeparam name="T">The target type to check compatibility with.</typeparam>
+    /// <param name="id">The unique identifier key for the setting.</param>
+    /// <returns>
+    /// <see langword="true"/> if the setting exists and the value is of type <typeparamref name="T"/>; 
+    /// otherwise, <see langword="false"/>.
+    /// </returns>
+    internal static bool CanLoadSetting<T>(string id)
     {
+        id = id.Split(".").Last();
         if (Files.BetterGameSettingsFile.Settings.TryGetValue(id, out var value))
         {
             if (value is T)
@@ -269,14 +283,22 @@ internal static class BetterDataManager
     }
 
     /// <summary>
-    /// Loads a setting with the specified ID, returning a default value if not found.
+    /// Loads a setting with the specified identifier, returning a default value if the setting 
+    /// does not exist or cannot be cast to the requested type.
     /// </summary>
-    /// <typeparam name="T">The type of the setting value.</typeparam>
-    /// <param name="id">The setting identifier.</param>
-    /// <param name="Default">The default value to return and save if the setting doesn't exist.</param>
-    /// <returns>The setting value or the default value if not found.</returns>
-    internal static T? LoadSetting<T>(int id, T? Default = default)
+    /// <typeparam name="T">The expected type of the setting value.</typeparam>
+    /// <param name="id">The unique identifier key for the setting.</param>
+    /// <param name="Default">
+    /// The default value to return if the setting is not found. This value will also be 
+    /// automatically saved to the settings file.
+    /// </param>
+    /// <returns>
+    /// The stored setting value cast to type <typeparamref name="T"/>, or the specified 
+    /// <paramref name="Default"/> value if the setting doesn't exist.
+    /// </returns>
+    internal static T? LoadSetting<T>(string id, T? Default = default)
     {
+        id = id.Split(".").Last();
         if (Files.BetterGameSettingsFile.Settings.TryGetValue(id, out var value))
         {
             if (value is T castValue)

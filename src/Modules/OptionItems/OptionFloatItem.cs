@@ -36,9 +36,8 @@ public class OptionFloatItem : OptionItem<float>
     protected (string prefix, string postfix) Fixs { get; set; }
 
     /// <summary>
-    /// Creates a new float option item or returns an existing one with the same ID.
+    /// Creates a new float option item.
     /// </summary>
-    /// <param name="id">The unique identifier for this option.</param>
     /// <param name="tab">The tab this option belongs to.</param>
     /// <param name="translationString">The translation key for the option name.</param>
     /// <param name="Min_Max_Increment">Tuple containing min value, max value, and increment step.</param>
@@ -47,9 +46,9 @@ public class OptionFloatItem : OptionItem<float>
     /// <param name="parent">Optional parent option for hierarchical organization.</param>
     /// <param name="canBeInfinite">Whether this option can represent infinite values.</param>
     /// <returns>A new or existing OptionFloatItem instance.</returns>
-    internal static OptionFloatItem Create(int id, OptionTab tab, TranslationStrings.TranslationString translationString, (float minValue, float maxValue, float incrementValue) Min_Max_Increment, float defaultValue, (string prefix, string postfix) Prefix_Postfix = new(), OptionItem? parent = null, bool canBeInfinite = false)
+    internal static OptionFloatItem Create(OptionTab tab, TranslationStrings.TranslationString translationString, (float minValue, float maxValue, float incrementValue) Min_Max_Increment, float defaultValue, (string prefix, string postfix) Prefix_Postfix = new(), OptionItem? parent = null, bool canBeInfinite = false)
     {
-        if (GetOptionById(id) is OptionFloatItem floatItem)
+        if (GetOptionByTranslationName(translationString) is OptionFloatItem floatItem)
         {
             floatItem.CreateBehavior();
             return floatItem;
@@ -57,7 +56,6 @@ public class OptionFloatItem : OptionItem<float>
 
         OptionFloatItem Item = new();
         AllOptions.Add(Item);
-        Item._id = id;
         Item.Tab = tab;
         Item.TranslationName = translationString;
         Item.Increment = Min_Max_Increment.incrementValue;

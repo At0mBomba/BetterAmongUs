@@ -24,15 +24,15 @@ public abstract class OptionItem
     /// <summary>
     /// Gets the localized display name of the option.
     /// </summary>
-    public string Name => TranslationName != null ? TranslationName.Value.LocalizedString : string.Empty;
+    public string Name => TranslationName.LocalizedString;
 
+    private static int nextIdIndex;
     /// <summary>
     /// Gets the unique identifier of the option.
     /// </summary>
-    public int Id => _id ?? -1;
+    public int Id { get; } = 1000 * (++nextIdIndex);
 
-    protected int? _id { get; set; } = null;
-    protected TranslationStrings.TranslationString? TranslationName { get; set; } = null;
+    protected TranslationStrings.TranslationString TranslationName { get; set; } = default;
     internal OptionTab? Tab { get; set; }
     internal OptionBehaviour? Option { get; set; }
     internal GameObject? Obj { get; set; }
@@ -54,7 +54,7 @@ public abstract class OptionItem
     /// </summary>
     /// <param name="id">The unique identifier of the option.</param>
     /// <returns>The option with the specified ID, or null if not found.</returns>
-    internal static OptionItem? GetOptionById(int id) => AllOptions.FirstOrDefault(opt => opt._id == id);
+    internal static OptionItem? GetOptionByTranslationName(TranslationStrings.TranslationString translationString) => AllOptions.FirstOrDefault(opt => opt.TranslationName.Key == translationString.Key);
 
     /// <summary>
     /// Updates the visual appearance of the option.
@@ -105,9 +105,6 @@ public abstract class OptionItem
     /// <param name="custom">Optional custom text to display instead of the value.</param>
     internal void PopNotification(string custom = "")
     {
-        if (_id == null)
-            return;
-
         string value = custom == string.Empty ? ValueAsString() : custom;
         string msg = $"<font=\"Barlow-Black SDF\" material=\"Barlow-Black Outline\">{GetParentPath()} " +
         $"<color=#868686><size=85%>{TranslationStrings.BetterSetting_SetTo}</size></color> {value}";
@@ -557,10 +554,7 @@ public abstract class OptionItem<T> : OptionItem
         if (!CanLoad)
             return;
 
-        if (_id == null)
-            return;
-
-        Value = BetterDataManager.LoadSetting(Id, DefaultValue);
+        Value = BetterDataManager.LoadSetting(TranslationName.Key, DefaultValue);
     }
 
     /// <summary>
@@ -571,9 +565,6 @@ public abstract class OptionItem<T> : OptionItem
         if (!CanLoad)
             return;
 
-        if (_id == null)
-            return;
-
-        BetterDataManager.SaveSetting(Id, Value);
+        BetterDataManager.SaveSetting(TranslationName.Key, Value);
     }
 }
