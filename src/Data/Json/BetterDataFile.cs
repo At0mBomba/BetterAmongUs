@@ -25,7 +25,7 @@ internal sealed class BetterDataFile : AbstractJsonFile
         if (success)
         {
             SelectedOutfitPreset = Math.Clamp(SelectedOutfitPreset, 0, 5);
-            AllCheatData = [.. CheatData, .. SickoData, .. AUMData, .. KNData];
+            AllCheatData = [.. CheatData, .. SickoData, .. AUMData, .. KNData, .. MMCData];
         }
         return success;
     }
