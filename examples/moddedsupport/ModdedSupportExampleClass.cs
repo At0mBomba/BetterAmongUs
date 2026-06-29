@@ -29,7 +29,6 @@ internal class ModdedSupportExampleClass
     [Category("bau:event.bau_load")]
     public static bool OnBAULoad(BasePlugin bauPlugin)
     {
-        Logger_.Error("TEST 1");
         return true;
     }
 
@@ -44,7 +43,6 @@ internal class ModdedSupportExampleClass
     [Category("bau:event.options_load")]
     public static void OnBAUOptionsLoaded(object[] options)
     {
-        Logger_.Error("TEST 2");
     }
 
     /// <summary>
@@ -54,6 +52,5 @@ internal class ModdedSupportExampleClass
     [Category("bau:event.configs_load")]
     public static void OnBAUConfigEntriesLoaded(ConfigEntryBase[] configs)
     {
-        Logger_.Error("TEST 3");
     }
 }
