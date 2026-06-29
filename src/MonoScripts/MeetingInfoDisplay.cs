@@ -22,8 +22,8 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
     private Vector3 _infoPos;
     private Vector3 _TopPos;
 
-    private readonly SplitStringBuilder _ssTag = new(100, '-');
-    private readonly SplitStringBuilder _ssInfo = new(100, '-');
+    private readonly SplitStringBuilder _ssbTag = new(100, '-');
+    private readonly SplitStringBuilder _ssbInfo = new(100, '-');
     private string _lastInfoText = "", _lastTopText = "";
     private int _lastUpdateFrame;
     private const int UPDATE_COOLDOWN = 5;
@@ -74,8 +74,8 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
         if (_pva == null)
             return;
 
-        _ssTag.Clear();
-        _ssInfo.Clear();
+        _ssbTag.Clear();
+        _ssbInfo.Clear();
 
         if (_player != null)
         {
@@ -141,21 +141,21 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
         if (_player == null || _player.Data == null || _player.ExtendedData() == null)
             return;
 
-        SetPlayerTags(_ssTag);
-        _ssInfo.Append(_player.GetRoleInfo(true));
+        SetPlayerTags(_ssbTag);
+        _ssbInfo.Append(_player.GetRoleInfo(true));
 
-        UpdateNameTextPosition(_ssInfo.ToString(), _ssInfo.ToString());
+        UpdateNameTextPosition(_ssbInfo.ToString(), _ssbInfo.ToString());
 
-        UpdateTextIfChanged(_infoText, _ssInfo.ToString(), ref _lastInfoText);
-        UpdateTextIfChanged(_topText, _ssTag.ToString(), ref _lastTopText);
+        UpdateTextIfChanged(_infoText, _ssbInfo.ToString(), ref _lastInfoText);
+        UpdateTextIfChanged(_topText, _ssbTag.ToString(), ref _lastTopText);
     }
 
     /// <summary>
     /// Sets player tags based on data from BetterDataManager.
     /// </summary>
-    /// <param name="ssTag">StringBuilder for tag text.</param>
+    /// <param name="ssbTag">StringBuilder for tag text.</param>
     [HideFromIl2Cpp]
-    private void SetPlayerTags(SplitStringBuilder ssTag)
+    private void SetPlayerTags(SplitStringBuilder ssbTag)
     {
         if (_player == null)
             return;
@@ -165,7 +165,7 @@ internal sealed class MeetingInfoDisplay : PlayerInfoDisplay
 
         if (BetterDataManager.Files.BetterDataFile.TryGetCheatInfo(_player.Data, out var info))
         {
-            ssTag.Append(info.title.ToColor(info.hexColor));
+            ssbTag.Append(info.title.ToColor(info.hexColor));
         }
     }
 

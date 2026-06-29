@@ -233,7 +233,7 @@ internal static class ChatPatch
         if (localPlayer == null)
             return;
 
-        SplitStringBuilder ssTag = new(100, '-');
+        SplitStringBuilder ssbTag = new(100, '-');
 
         string hashPuid = Utils.GetHashPuid(sourcePlayer);
         string friendCode = playerInfo.FriendCode;
@@ -249,19 +249,19 @@ internal static class ChatPatch
             // Show BAU user tag
             if (sourcePlayer.IsLocalPlayer() || betterData.IsBetterUser)
             {
-                ssTag.AppendFormat("<color=#0dff00>{1}{0}</color>", TranslationStrings.Player_BetterUser.LocalizedString, betterData.IsVerifiedBetterUser || sourcePlayer.IsLocalPlayer() ? "✓ " : "");
+                ssbTag.AppendFormat("<color=#0dff00>{1}{0}</color>", TranslationStrings.Player_BetterUser.LocalizedString, betterData.IsVerifiedBetterUser || sourcePlayer.IsLocalPlayer() ? "✓ " : "");
             }
 
             // Show mod-specific tags based on player data
             if (BetterDataManager.Files.BetterDataFile.TryGetCheatInfo(sourcePlayer.Data, out var info))
             {
-                ssTag.Append(info.title.ToColor(info.hexColor));
+                ssbTag.Append(info.title.ToColor(info.hexColor));
             }
         }
 
-        ssTag.Append(sourcePlayer.GetRoleInfo(false).Size(75f));
+        ssbTag.Append(sourcePlayer.GetRoleInfo(false).Size(75f));
 
-        string infoText = ssTag.ToString().Size(75f);
+        string infoText = ssbTag.ToString().Size(75f);
 
         // Position tags before local player name, after other players' names
         if (sourcePlayer.IsLocalPlayer())

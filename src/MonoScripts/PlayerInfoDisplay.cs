@@ -28,9 +28,9 @@ internal class PlayerInfoDisplay : MonoBehaviour
     protected TextMeshPro? _topText;
     protected TextMeshPro? _bottomText;
 
-    private readonly SplitStringBuilder _ssTag = new(100, '-');
-    private readonly SplitStringBuilder _ssTagTop = new(100, '-');
-    private readonly SplitStringBuilder _ssTagBottom = new(100, '-');
+    private readonly SplitStringBuilder _ssbTag = new(100, '-');
+    private readonly SplitStringBuilder _ssbTagTop = new(100, '-');
+    private readonly SplitStringBuilder _ssbTagBottom = new(100, '-');
     private string _lastTopText = "", _lastBottomText = "", _lastInfoText = "";
     private int _lastUpdateFrame;
     private const int UPDATE_COOLDOWN = 10;
@@ -130,9 +130,9 @@ internal class PlayerInfoDisplay : MonoBehaviour
             return;
         }
 
-        _ssTag.Clear();
-        _ssTagTop.Clear();
-        _ssTagBottom.Clear();
+        _ssbTag.Clear();
+        _ssbTagTop.Clear();
+        _ssbTagBottom.Clear();
 
         UpdatePlayerInfo();
         UpdatePlayerHighlight();
@@ -190,20 +190,20 @@ internal class PlayerInfoDisplay : MonoBehaviour
             platform = TranslationStrings.Player_PlatformHidden.LocalizedString;
 
         if (!_player.IsInShapeshift())
-            SetPlayerOutline(_ssTag);
+            SetPlayerOutline(_ssbTag);
 
         if (GameState.IsInGame && GameState.IsLobby && !GameState.IsFreePlay)
         {
-            SetLobbyInfo(ref newName, betterData, _ssTag);
+            SetLobbyInfo(ref newName, betterData, _ssbTag);
 
-            _ssTagTop.Append($"<color=#9e9e9e>{platform}</color>")
+            _ssbTagTop.Append($"<color=#9e9e9e>{platform}</color>")
                 .Append($"<color=#ffd829>Lv: {_player.Data.PlayerLevel + 1}</color>");
 
-            _ssTagBottom.Append($"<color={friendCodeColor}>{friendCode}</color>");
+            _ssbTagBottom.Append($"<color={friendCodeColor}>{friendCode}</color>");
         }
         else if ((GameState.IsInGame || GameState.IsFreePlay) && !GameState.IsHideNSeek)
         {
-            SetInGameInfo(_ssTagTop);
+            SetInGameInfo(_ssbTagTop);
         }
 
         if (!BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_NameOverride))
@@ -231,18 +231,18 @@ internal class PlayerInfoDisplay : MonoBehaviour
             }
         }
 
-        UpdateTextIfChanged(_topText, _ssTagTop, ref _lastTopText);
-        UpdateTextIfChanged(_bottomText, _ssTagBottom, ref _lastBottomText);
-        UpdateTextIfChanged(_infoText, _ssTag, ref _lastInfoText);
+        UpdateTextIfChanged(_topText, _ssbTagTop, ref _lastTopText);
+        UpdateTextIfChanged(_bottomText, _ssbTagBottom, ref _lastBottomText);
+        UpdateTextIfChanged(_infoText, _ssbTag, ref _lastInfoText);
     }
 
     /// <summary>
     /// Updates text if changed, optimizing performance.
     /// </summary>
     /// <param name="textMesh">TextMeshPro component to update.</param>
-    /// <param name="ss">StringBuilder containing new text.</param>
+    /// <param name="ssb">StringBuilder containing new text.</param>
     /// <param name="lastValue">Reference to last value for comparison.</param>
-    private static void UpdateTextIfChanged(TextMeshPro textMesh, SplitStringBuilder ss, ref string lastValue)
+    private static void UpdateTextIfChanged(TextMeshPro textMesh, SplitStringBuilder ssb, ref string lastValue)
     {
         if (BAUModdedSupportFlags.HasFlag(BAUModdedSupportFlags.Disable_PlayerInfo))
         {
@@ -253,7 +253,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
         if (textMesh == null)
             return;
 
-        string newText = ss.ToString();
+        string newText = ssb.ToString();
         if (newText != lastValue)
         {
             textMesh.SetText(newText);
@@ -336,9 +336,9 @@ internal class PlayerInfoDisplay : MonoBehaviour
     /// <summary>
     /// Sets player outline based on data from BetterDataManager.
     /// </summary>
-    /// <param name="ssTag">StringBuilder for tag text.</param>
+    /// <param name="ssbTag">StringBuilder for tag text.</param>
     [HideFromIl2Cpp]
-    private void SetPlayerOutline(SplitStringBuilder? ssTag)
+    private void SetPlayerOutline(SplitStringBuilder? ssbTag)
     {
         if (_player == null)
             return;
@@ -353,9 +353,9 @@ internal class PlayerInfoDisplay : MonoBehaviour
 
         if (BetterDataManager.Files.BetterDataFile.TryGetCheatInfo(_player.Data, out var info))
         {
-            if (ssTag.HasValue)
+            if (ssbTag.HasValue)
             {
-                ssTag.Value.Append(info.title.ToColor(info.hexColor));
+                ssbTag.Value.Append(info.title.ToColor(info.hexColor));
             }
             _player.SetOutlineByHex(true, info.hexColor);
         }
@@ -369,7 +369,7 @@ internal class PlayerInfoDisplay : MonoBehaviour
     /// Sets lobby specific information.
     /// </summary>
     [HideFromIl2Cpp]
-    private void SetLobbyInfo(ref string newName, ExtendedPlayerInfo betterData, SplitStringBuilder ssTag)
+    private void SetLobbyInfo(ref string newName, ExtendedPlayerInfo betterData, SplitStringBuilder ssbTag)
     {
         if (betterData == null)
             return;
@@ -381,20 +381,20 @@ internal class PlayerInfoDisplay : MonoBehaviour
         {
             string verificationSymbol = betterData.IsVerifiedBetterUser || _player.IsLocalPlayer() ? "✓ " : "";
 
-            ssTag.AppendFormat("<color=#0dff00>{1}{0}</color>",
+            ssbTag.AppendFormat("<color=#0dff00>{1}{0}</color>",
                 TranslationStrings.Player_BetterUser.LocalizedString, verificationSymbol);
         }
-        ssTag.Append($"<color=#b554ff>ID: {_player.PlayerId}</color>");
+        ssbTag.Append($"<color=#b554ff>ID: {_player.PlayerId}</color>");
     }
 
     /// <summary>
     /// Sets in-game specific information.
     /// </summary>
-    /// <param name="ssTagTop">StringBuilder for top tag text.</param>
+    /// <param name="ssbTagTop">StringBuilder for top tag text.</param>
     [HideFromIl2Cpp]
-    private void SetInGameInfo(SplitStringBuilder ssTagTop)
+    private void SetInGameInfo(SplitStringBuilder ssbTagTop)
     {
-        ssTagTop.Append(_player.GetRoleInfo(true));
+        ssbTagTop.Append(_player.GetRoleInfo(true));
     }
 
     /// <summary>
