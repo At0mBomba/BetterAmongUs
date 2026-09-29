@@ -39,7 +39,7 @@ internal static class ClientPatch
     private static bool SignInStatusComponent_SetOnline_Prefix()
     {
         // Get supported Among Us versions for BAU
-        var varSupportedVersions = ModInfo.SupportedAmongUsVersions;
+        var varSupportedVersions = BAUPlugin.ModInfo.SupportedAmongUsVersions;
         Version currentVersion = new(BAUPlugin.AppVersion);
         Version firstSupportedVersion = new(varSupportedVersions.First());
         Version lastSupportedVersion = new(varSupportedVersions.Last());
@@ -56,7 +56,7 @@ internal static class ClientPatch
 
             // Show warning popup for newer Among Us version
             Utils.ShowPopUp($"<size=200%>-= <color=#ff2200><b>Warning</b></color> =-</size>\n\n" +
-                $"<size=125%><color=#0dff00>Better Among Us {BAUPlugin.GetVersionText()}</color>\nsupports <color=#4f92ff>Among Us {verText}</color>,\n" +
+                $"<size=125%><color=#0dff00>Better Among Us {BAUPlugin.ModInfo.VERSION_STRING}</color>\nsupports <color=#4f92ff>Among Us {verText}</color>,\n" +
                 $"<color=#4f92ff>Among Us <b>{BAUPlugin.AppVersion}</b></color> is above the supported versions!\n" +
                 $"<color=#ae1700>You may encounter minor to game breaking bugs.</color></size>");
         }
@@ -71,7 +71,7 @@ internal static class ClientPatch
 
             // Show warning popup for older Among Us version
             Utils.ShowPopUp($"<size=200%>-= <color=#ff2200><b>Warning</b></color> =-</size>\n\n" +
-                $"<size=125%><color=#0dff00>Better Among Us {BAUPlugin.GetVersionText()}</color>\nsupports <color=#4f92ff>Among Us {verText}</color>,\n" +
+                $"<size=125%><color=#0dff00>Better Among Us {BAUPlugin.ModInfo.VERSION_STRING}</color>\nsupports <color=#4f92ff>Among Us {verText}</color>,\n" +
                 $"<color=#4f92ff>Among Us <b>{BAUPlugin.AppVersion}</b></color> is below the supported versions!\n" +
                 $"<color=#ae1700>You may encounter minor to game breaking bugs.</color></size>");
         }
@@ -86,7 +86,7 @@ internal static class ClientPatch
         // Hide custom loading bar when exiting game
         CustomLoadingBarManager.ToggleLoadingBar(false);
 
-        Logger_.Log($"Client has left game for: {Enum.GetName(reason)}", "AmongUsClientPatch");
+        BAUPlugin.Logger.Log($"Client has left game for: {Enum.GetName(reason)}", "AmongUsClientPatch");
     }
 
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameEnd))]

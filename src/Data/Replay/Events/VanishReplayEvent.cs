@@ -38,7 +38,7 @@ internal sealed class VanishReplayEvent : IReplayEvent<VanishReplayEvent.VanishR
         EventData = new VanishReplayData(args.Player.PlayerId);
     }
 
-    internal record VanishReplayData(int PlayerId) : IReplayEvent.Data;
+    internal record VanishReplayData(byte PlayerId) : IReplayEvent.Data;
 
     internal record VanishReplayArgs(PlayerControl Player) : IReplayEvent.Args;
 }

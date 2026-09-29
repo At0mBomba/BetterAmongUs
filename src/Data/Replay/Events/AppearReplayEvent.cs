@@ -38,7 +38,7 @@ internal sealed class AppearReplayEvent : IReplayEvent<AppearReplayEvent.AppearR
         EventData = new AppearReplayData(args.Player.PlayerId, args.Animate);
     }
 
-    internal record AppearReplayData(int PlayerId, bool Animate) : IReplayEvent.Data;
+    internal record AppearReplayData(byte PlayerId, bool Animate) : IReplayEvent.Data;
 
     internal record AppearReplayArgs(PlayerControl Player, bool Animate) : IReplayEvent.Args;
 }

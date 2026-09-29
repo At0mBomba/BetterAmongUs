@@ -36,7 +36,7 @@ internal sealed class ProtectedReplayEvent : IReplayEvent<ProtectedReplayEvent.P
         EventData = new ProtectedReplayData(args.Killer.PlayerId, args.Target.PlayerId);
     }
 
-    internal record ProtectedReplayData(int KillerId, int TargetId) : IReplayEvent.Data;
+    internal record ProtectedReplayData(byte KillerId, byte TargetId) : IReplayEvent.Data;
 
     internal record ProtectedReplayArgs(PlayerControl Killer, PlayerControl Target) : IReplayEvent.Args;
 }

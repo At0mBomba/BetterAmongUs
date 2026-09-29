@@ -238,7 +238,7 @@ public sealed class OptionPlayerItem : OptionItem<int>
     {
         if (Value != -1)
         {
-            var player = Utils.PlayerFromPlayerId(Value);
+            var player = Utils.PlayerFromPlayerId((byte)Value);
             if (player != null)
                 return $"{player.GetPlayerNameAndColor()}";
             else

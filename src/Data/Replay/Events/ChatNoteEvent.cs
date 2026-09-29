@@ -37,7 +37,7 @@ internal sealed class ChatNoteEvent : IReplayEvent<ChatNoteEvent.ChatNoteReplayD
         EventData = new ChatNoteReplayData(args.Player.PlayerId, (int)args.NoteType);
     }
 
-    internal record ChatNoteReplayData(int PlayerId, int NoteType) : IReplayEvent.Data;
+    internal record ChatNoteReplayData(byte PlayerId, int NoteType) : IReplayEvent.Data;
 
     internal record ChatNoteReplayArgs(PlayerControl Player, ChatNoteTypes NoteType) : IReplayEvent.Args;
 }

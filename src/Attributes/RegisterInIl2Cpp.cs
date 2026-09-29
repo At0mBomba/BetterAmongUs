@@ -1,5 +1,4 @@
-﻿using BetterAmongUs.Modules;
-using Il2CppInterop.Runtime.Injection;
+﻿using Il2CppInterop.Runtime.Injection;
 using System.Reflection;
 
 namespace BetterAmongUs.Attributes;
@@ -21,7 +20,7 @@ internal class RegisterInIl2Cpp(params Type[] interfaces) : Attribute
     /// </summary>
     internal static void Initialize()
     {
-        var types = ModInfo.Assembly.GetTypes();
+        var types = BAUPlugin.ModInfo.Assembly.GetTypes();
         foreach (var type in types)
         {
             var attr = type.GetCustomAttribute<RegisterInIl2Cpp>();
@@ -37,7 +36,7 @@ internal class RegisterInIl2Cpp(params Type[] interfaces) : Attribute
             }
             catch (Exception ex)
             {
-                Logger_.Error($"Failed to register {type.Name}: {ex.Message}");
+                BAUPlugin.Logger.Error($"Failed to register {type.Name}: {ex.Message}");
             }
         }
     }

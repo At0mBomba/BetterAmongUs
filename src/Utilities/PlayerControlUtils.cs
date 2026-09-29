@@ -468,7 +468,7 @@ internal static class PlayerControlUtils
         if (data == null)
             return false;
 
-        return data.RoleType == RoleTypes.GuardianAngel;
+        return data.RoleType is RoleTypes.GuardianAngel or RoleTypes.SpiritGuide;
     }
 
     /// <summary>

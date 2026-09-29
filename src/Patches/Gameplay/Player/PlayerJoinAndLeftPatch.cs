@@ -30,7 +30,7 @@ internal static class PlayerJoinAndLeftPatch
             host?.SetColor(host.CurrentOutfit.ColorId);
         }
 
-        Logger_.Log($"Successfully joined {GameCode.IntToGameName(AmongUsClient.Instance.GameId)}", "OnGameJoinedPatch");
+        BAUPlugin.Logger.Log($"Successfully joined {GameCode.IntToGameName(AmongUsClient.Instance.GameId)}", "OnGameJoinedPatch");
     }
 
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnPlayerJoined))]
@@ -74,7 +74,8 @@ internal static class PlayerJoinAndLeftPatch
             {
                 if (player != null)
                 {
-                    if (TextFileHandler.CompareStringFilters(BetterDataManager.Files.banNameListFilePath, [player.Data.PlayerName]))
+                    if (TextFileHandler.CompareStringRegexMatches(BetterDataManager.Files.banNameListFilePath,
+                            player.Data.PlayerName))
                     {
                         player.Kick(true, TranslationStrings.AntiCheat_BanNameListMessage.LocalizedString, bypassDataCheck: true);
                     }
@@ -152,7 +153,7 @@ internal static class PlayerJoinAndLeftPatch
         {
             var ReasonText = $"<color=#ff0>{playerData.ExtendedData().RealName}</color> {forceReasonText}";
 
-            Logger_.Log(ReasonText);
+            BAUPlugin.Logger.Log(ReasonText);
 
             HudManager.Instance.Notifier.AddDisconnectMessage(ReasonText);
         }
@@ -189,7 +190,7 @@ internal static class PlayerJoinAndLeftPatch
                     break;
             }
 
-            Logger_.Log(ReasonText);
+            BAUPlugin.Logger.Log(ReasonText);
 
             // Add formatted disconnect message to game UI
             HudManager.Instance.Notifier.AddDisconnectMessage(ReasonText);

@@ -35,7 +35,7 @@ internal sealed class MurderReplayEvent : IReplayEvent<MurderReplayEvent.MurderR
         EventData = new MurderReplayData(murderReplayArgs.Killer.PlayerId, murderReplayArgs.Target.PlayerId);
     }
 
-    internal record MurderReplayData(int KillerId, int TargetId) : IReplayEvent.Data;
+    internal record MurderReplayData(byte KillerId, byte TargetId) : IReplayEvent.Data;
 
     internal record MurderReplayArgs(PlayerControl Killer, PlayerControl Target) : IReplayEvent.Args;
 }
