@@ -114,7 +114,7 @@ internal static class RoleUtils
                 return string.Empty;
             }
 
-            if (PlayerControl.LocalPlayer.Is(RoleTypes.GuardianAngel))
+            if (PlayerControl.LocalPlayer.IsGhostRole())
             {
                 return string.Empty;
             }
@@ -146,6 +146,7 @@ internal static class RoleUtils
     {
         { RoleTypes.CrewmateGhost, Colors.CrewmateBlue.ColorToHex() },
         { RoleTypes.GuardianAngel, "#8cffff" },
+        { RoleTypes.SpiritGuide, "#ff0066" },
         { RoleTypes.Crewmate, Colors.CrewmateBlue.ColorToHex() },
         { RoleTypes.Scientist, "#00d9d9" },
         { RoleTypes.Engineer, "#8f8f8f" },

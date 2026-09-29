@@ -64,7 +64,7 @@ internal partial class BAUPlugin
         /// </summary>
         internal static string[] SupportedAmongUsVersions =
         [
-            "2026.8.18"
+            "2026.9.29"
         ];
 
         /// <summary>
