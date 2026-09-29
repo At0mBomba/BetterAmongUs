@@ -20,8 +20,8 @@ internal sealed class UpdateSystemHandler : RPCHandler
     {
         systemHandlers = new Dictionary<uint, Func<PlayerControl?, ISystemType, MessageReader, byte, bool>>
         {
-            { (uint)SystemTypes.Sabotage, (sender, system, reader, count) => HandleSabotageSystem(sender, system.Cast<SabotageSystemType>(), reader) },
-            { (uint)SystemTypes.Ventilation, (sender, system, reader, count) => HandleVentilationSystem(sender, system.Cast<VentilationSystem>(), count) },
+            { (uint)SystemTypes.Sabotage, (sender, system, reader, count) => HandleSabotageSystem(sender, system.Cast<SabotageSystemType>()) },
+            { (uint)SystemTypes.Ventilation, (sender, system, reader, count) => HandleVentilationSystem(sender, system.Cast<VentilationSystem>(), reader) },
             { (uint)SystemTypes.Electrical, (sender, system, reader, count) => HandleSwitchSystem(sender, system.Cast<SwitchSystem>(), count) },
             { (uint)SystemTypes.Comms, (sender, system, reader, count) => HandleCommsSystem(sender, system, count) },
             { (uint)SystemTypes.MushroomMixupSabotage, (sender, system, reader, count) => HandleMushroomMixupSabotageSystem(sender, system.Cast<MushroomMixupSabotageSystem>(), count) },
@@ -68,10 +68,8 @@ internal sealed class UpdateSystemHandler : RPCHandler
         return true;
     }
 
-    private static bool HandleSabotageSystem(PlayerControl? sender, SabotageSystemType sabotageSystem, MessageReader reader)
+    private static bool HandleSabotageSystem(PlayerControl? sender, SabotageSystemType sabotageSystem)
     {
-        byte count = reader.ReadByte();
-
         if (!sender.IsImpostorTeam())
         {
             return false;
@@ -85,8 +83,14 @@ internal sealed class UpdateSystemHandler : RPCHandler
         return true;
     }
 
-    private static bool HandleVentilationSystem(PlayerControl? sender, VentilationSystem ventilationSystem, byte count)
+    private static bool HandleVentilationSystem(PlayerControl? sender, VentilationSystem ventilationSystem, MessageReader reader)
     {
+        _ = reader.ReadUInt16();
+        var operation = (VentilationSystem.Operation)reader.ReadByte();
+        if (operation == VentilationSystem.Operation.BootImpostors)
+        {
+            return false;
+        }
 
         return true;
     }

@@ -1,4 +1,5 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
+using BetterAmongUs.Enums;
 using BetterAmongUs.Generated;
 using BetterAmongUs.Modules;
 using BetterAmongUs.Patches.Gameplay.UI.Chat;
@@ -77,7 +78,7 @@ internal static class Utils
     /// </summary>
     /// <param name="clientId">The client ID to look up.</param>
     /// <returns>The ClientData if found, null otherwise.</returns>
-    internal static ClientData? ClientFromClientId(int clientId) =>
+    internal static ClientData? ClientFromClientId(ClientId clientId) =>
         AmongUsClient.Instance.allClients.FirstOrDefaultIl2Cpp(cd => cd.Id == clientId);
 
     /// <summary>
@@ -85,7 +86,7 @@ internal static class Utils
     /// </summary>
     /// <param name="playerId">The player ID to look up.</param>
     /// <returns>The NetworkedPlayerInfo if found, null otherwise.</returns>
-    internal static NetworkedPlayerInfo? PlayerDataFromPlayerId(int playerId) =>
+    internal static NetworkedPlayerInfo? PlayerDataFromPlayerId(PlayerId playerId) =>
         GameData.Instance.AllPlayers.FirstOrDefaultIl2Cpp(data => data.PlayerId == playerId);
 
     /// <summary>
@@ -93,7 +94,7 @@ internal static class Utils
     /// </summary>
     /// <param name="clientId">The client ID to look up.</param>
     /// <returns>The NetworkedPlayerInfo if found, null otherwise.</returns>
-    internal static NetworkedPlayerInfo? PlayerDataFromClientId(int clientId) =>
+    internal static NetworkedPlayerInfo? PlayerDataFromClientId(ClientId clientId) =>
         GameData.Instance.AllPlayers.FirstOrDefaultIl2Cpp(data => data.ClientId == clientId);
 
     /// <summary>
@@ -109,7 +110,7 @@ internal static class Utils
     /// </summary>
     /// <param name="playerId">The player ID to look up.</param>
     /// <returns>The PlayerControl if found, null otherwise.</returns>
-    internal static PlayerControl? PlayerFromPlayerId(int playerId) =>
+    internal static PlayerControl? PlayerFromPlayerId(PlayerId playerId) =>
         BAUPlugin.AllPlayerControls.FirstOrDefault(player => player.PlayerId == playerId);
 
     /// <summary>
@@ -117,7 +118,7 @@ internal static class Utils
     /// </summary>
     /// <param name="clientId">The client ID to look up.</param>
     /// <returns>The PlayerControl if found, null otherwise.</returns>
-    internal static PlayerControl? PlayerFromClientId(int clientId) =>
+    internal static PlayerControl? PlayerFromClientId(ClientId clientId) =>
         BAUPlugin.AllPlayerControls.FirstOrDefault(player => player.GetClientId() == clientId);
 
     /// <summary>
@@ -125,7 +126,7 @@ internal static class Utils
     /// </summary>
     /// <param name="netId">The network ID to look up.</param>
     /// <returns>The PlayerControl if found, null otherwise.</returns>
-    internal static PlayerControl? PlayerFromNetId(uint netId) =>
+    internal static PlayerControl? PlayerFromNetId(NetId netId) =>
         BAUPlugin.AllPlayerControls.FirstOrDefault(player => player.NetId == netId);
 
     // Chat functionality
@@ -430,7 +431,7 @@ internal static class Utils
         }
         catch (Exception ex)
         {
-            Logger_.Error(ex);
+            BAUPlugin.Logger.Error(ex);
             return null;
         }
     }
@@ -444,7 +445,7 @@ internal static class Utils
     {
         try
         {
-            var stream = ModInfo.Assembly.GetManifestResourceStream(path);
+            var stream = BAUPlugin.ModInfo.Assembly.GetManifestResourceStream(path);
             if (stream == null)
                 return null;
 
@@ -460,7 +461,7 @@ internal static class Utils
         }
         catch (Exception ex)
         {
-            Logger_.Error(ex);
+            BAUPlugin.Logger.Error(ex);
             return null;
         }
     }
@@ -474,13 +475,13 @@ internal static class Utils
     {
         if (!File.Exists(filePath))
         {
-            Logger_.Error($"File not found: {filePath}");
+            BAUPlugin.Logger.Error($"File not found: {filePath}");
             return null;
         }
 
         if (Path.GetExtension(filePath).ToLower() != ".wav")
         {
-            Logger_.Error("Only .wav files are supported.");
+            BAUPlugin.Logger.Error("Only .wav files are supported.");
             return null;
         }
 
@@ -496,7 +497,7 @@ internal static class Utils
         }
         catch (Exception ex)
         {
-            Logger_.Error($"Failed to load WAV: {ex}");
+            BAUPlugin.Logger.Error($"Failed to load WAV: {ex}");
             return null;
         }
     }
@@ -602,6 +603,7 @@ internal static class Utils
             Platforms.Switch => ("Switch", "Console"),
             Platforms.Android => ("Android", "Mobile"),
             Platforms.IPhone => ("IPhone", "Mobile"),
+            (Platforms)CustomPlatforms.Starlight => ("Starlight", "Mobile"),
             Platforms.Unknown => ("None", ""),
             _ => (string.Empty, string.Empty)
         };

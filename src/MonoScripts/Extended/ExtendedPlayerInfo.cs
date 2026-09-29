@@ -29,7 +29,7 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
         }
         catch (Exception ex)
         {
-            Logger_.Log("Handshake disabled: " + ex.Message);
+            BAUPlugin.Logger.Log("Handshake disabled: " + ex.Message);
             HandshakeHandler = null;
         }
     }
@@ -65,7 +65,7 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
                         TranslationStrings.AntiCheat_UnauthorizedAction.LocalizedString
                     );
 
-                    Logger_.LogCheat($"{BaseMono.Object.ExtendedData().RealName} {AntiCheatInfo.RPCSentPS} Sent.");
+                    BAUPlugin.Logger.LogCheat($"{BaseMono.Object.ExtendedData().RealName} {AntiCheatInfo.RPCSentPS} Sent.");
                 }
             }
 
@@ -93,7 +93,7 @@ internal sealed class ExtendedPlayerInfo : MonoBehaviour, IMonoExtension<Network
         {
             try
             {
-                if (reader.ReadString() == ModInfo.Constants.BAU_MODDED_PROTOCOL_FLAG)
+                if (reader.ReadString() == BAUPlugin.Constants.BAU_MODDED_PROTOCOL_FLAG)
                 {
                     int flagCount = reader.ReadPackedInt32();
                     for (int i = 0; i < flagCount; i++)

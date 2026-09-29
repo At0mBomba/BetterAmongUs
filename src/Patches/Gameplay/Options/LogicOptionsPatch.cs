@@ -1,5 +1,4 @@
-﻿using AmongUs.GameOptions;
-using BetterAmongUs.Utilities;
+﻿using BetterAmongUs.Utilities;
 using HarmonyLib;
 
 namespace BetterAmongUs.Patches.Gameplay.Options;
@@ -15,7 +14,7 @@ internal static class LogicOptionsPatch
             return;
 
         // Show anonymous votes when dead and not Guardian Angel
-        if (!PlayerControl.LocalPlayer.IsAlive() && !PlayerControl.LocalPlayer.Is(RoleTypes.GuardianAngel))
+        if (!PlayerControl.LocalPlayer.IsAlive() && !PlayerControl.LocalPlayer.IsGhostRole())
         {
             __result = false;
         }

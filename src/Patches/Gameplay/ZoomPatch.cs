@@ -1,6 +1,5 @@
-﻿using AmongUs.GameOptions;
+﻿using BetterAmongUs.Modules;
 using BetterAmongUs.Utilities;
-using BetterAmongUs.Modules;
 using HarmonyLib;
 using UnityEngine;
 
@@ -21,7 +20,7 @@ internal class ZoomPatch
         // - Not Guardian Angel AND
         // - Either not in gameplay OR player is dead
         bool canZoom = GameState.IsCanMove &&
-              !PlayerControl.LocalPlayer.Is(RoleTypes.GuardianAngel) &&
+              !PlayerControl.LocalPlayer.IsGhostRole() &&
               (!GameState.IsInGamePlay || !PlayerControl.LocalPlayer.IsAlive());
 
         // Should we reset zoom (when player was zooming but no longer can)

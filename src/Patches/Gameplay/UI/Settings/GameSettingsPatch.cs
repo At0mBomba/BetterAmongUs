@@ -16,18 +16,18 @@ internal sealed class BetterGameSettings
     internal static OptionCheckboxItem? InvalidFriendCode;
     internal static OptionCheckboxItem? UseBanPlayerList;
     internal static OptionCheckboxItem? UseBanNameList;
-    internal static OptionCheckboxItem? UseBanWordList;
-    internal static OptionCheckboxItem? UseBanWordListOnlyLobby;
+    internal static OptionCheckboxItem? UseBanChatList;
+    internal static OptionCheckboxItem? UseBanChatListOnlyLobby;
+    internal static OptionCheckboxItem? UseBanChatListBan;
     internal static OptionCheckboxItem? DetectedLevel;
     internal static OptionIntItem? DetectedLevelAbove;
     internal static OptionCheckboxItem? KickLevel;
     internal static OptionIntItem? KickLevelBelow;
+    internal static OptionIntItem? KickLevelBelowMinimumPlayers;
     internal static OptionCheckboxItem? DetectCheatClients;
     internal static OptionCheckboxItem? DetectInvalidRpcs;
     internal static OptionCheckboxItem? RpcRateLimiting;
     internal static OptionIntItem? RpcRateLimit;
-
-    internal static OptionStringItem? RoleRandomizer;
 
     internal static OptionCheckboxItem? CancelInvalidSabotage;
     internal static OptionCheckboxItem? CensorDetectionReason;
@@ -75,8 +75,9 @@ internal static class GameSettingsPatch
                 BetterGameSettings.CancelInvalidSabotage = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_CancelInvalidSabotage, true);
                 BetterGameSettings.UseBanPlayerList = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanPlayerList, true);
                 BetterGameSettings.UseBanNameList = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanNameList, true);
-                BetterGameSettings.UseBanWordList = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanWordList, true);
-                BetterGameSettings.UseBanWordListOnlyLobby = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanWordListOnlyLobby, true, BetterGameSettings.UseBanWordList);
+                BetterGameSettings.UseBanChatList = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanChatList, true);
+                BetterGameSettings.UseBanChatListOnlyLobby = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanChatListOnlyLobby, true, BetterGameSettings.UseBanChatList);
+                BetterGameSettings.UseBanChatListBan = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_UseBanChatListBan, false, BetterGameSettings.UseBanChatList);
             }
 
             // General detection settings
@@ -86,17 +87,11 @@ internal static class GameSettingsPatch
             BetterGameSettings.DetectedLevelAbove = OptionIntItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectedLevelAbove, (100, 10000, 5), 500, ("Lv ", ""), BetterGameSettings.DetectedLevel);
             BetterGameSettings.KickLevel = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_KickLevel, false);
             BetterGameSettings.KickLevelBelow = OptionIntItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_KickLevelBelow, (0, 10000, 1), 0, ("Lv ", ""), BetterGameSettings.KickLevel);
+            BetterGameSettings.KickLevelBelowMinimumPlayers = OptionIntItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_KickLevelBelowMinimumPlayers, (1, 15, 1), 9, parent: BetterGameSettings.KickLevelBelow);
             BetterGameSettings.DetectCheatClients = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectCheatClients, true);
             BetterGameSettings.DetectInvalidRpcs = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_DetectInvalidRpcs, true);
             BetterGameSettings.RpcRateLimiting = OptionCheckboxItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_RpcRateLimiting, true);
             BetterGameSettings.RpcRateLimit = OptionIntItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_RateLimit, (25, 1000, 1), 50, ("", " PS"), BetterGameSettings.RpcRateLimiting);
-        }
-
-        // Role algorithm settings
-        if (IsPreload || GameState.IsHost)
-        {
-            OptionHeaderItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_MainHeader_RoleAlgorithm);
-            BetterGameSettings.RoleRandomizer = OptionStringItem.Create(BetterSettingsTab, TranslationStrings.BetterSetting_Setting_RoleRandomizer, [new("System.Random"), new("UnityEngine.Random")], 0);
         }
 
         BetterSettingsTab.UpdateVisuals();

@@ -42,7 +42,7 @@ internal sealed class ShapeshiftReplayEvent : IReplayEvent<ShapeshiftReplayEvent
         EventData = new ShapeshiftReplayData(args.Player.PlayerId, args.Target.PlayerId, args.Animate);
     }
 
-    internal record ShapeshiftReplayData(int PlayerId, int TargetId, bool Animate) : IReplayEvent.Data;
+    internal record ShapeshiftReplayData(byte PlayerId, byte TargetId, bool Animate) : IReplayEvent.Data;
 
     internal record ShapeshiftReplayArgs(PlayerControl Player, PlayerControl Target, bool Animate) : IReplayEvent.Args;
 }

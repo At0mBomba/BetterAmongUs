@@ -1,6 +1,7 @@
 ﻿using BetterAmongUs.Data.Config;
 using BetterAmongUs.Data.Json;
 using BetterAmongUs.Utilities;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace BetterAmongUs.Data;
@@ -64,12 +65,12 @@ internal static class BetterDataManager
         /// <summary>
         /// The log file path.
         /// </summary>
-        internal static readonly string logFilePath = Path.Combine(Folders.fileFolderPath, "better-log.txt");
+        internal static readonly string logFilePath_Legacy = Path.Combine(Folders.fileFolderPath, "better-log.txt");
 
         /// <summary>
         /// The previous log file path.
         /// </summary>
-        internal static readonly string previousLogFilePath = Path.Combine(Folders.fileFolderPath, "better-previous-log.txt");
+        internal static readonly string previousLogFilePath_Legacy = Path.Combine(Folders.fileFolderPath, "better-previous-log.txt");
 
         /// <summary>
         /// Legacy data file path (BetterData.json).
@@ -102,9 +103,14 @@ internal static class BetterDataManager
         internal static readonly string banNameListFilePath = Path.Combine(Folders.saveInfoFolderPath, "BanNameList.txt");
 
         /// <summary>
-        /// File containing banned words/patterns.
+        /// Legacy file containing banned words/patterns.
         /// </summary>
-        internal static readonly string banWordListFilePath = Path.Combine(Folders.saveInfoFolderPath, "BanWordList.txt");
+        internal static readonly string banWordListFilePath_Legacy = Path.Combine(Folders.saveInfoFolderPath, "BanWordList.txt");
+
+        /// <summary>
+        /// File containing banned chat messages/patterns.
+        /// </summary>
+        internal static readonly string banChatListFilePath = Path.Combine(Folders.saveInfoFolderPath, "BanChatList.txt");
     }
 
     /// <summary>
@@ -114,7 +120,7 @@ internal static class BetterDataManager
     [
         Files.banPlayerListFilePath,
         Files.banNameListFilePath,
-        Files.banWordListFilePath
+        Files.banChatListFilePath
     ];
 
     /// <summary>
@@ -123,7 +129,7 @@ internal static class BetterDataManager
     /// <returns>The game installation path string.</returns>
     internal static string GetPathToAmongUs()
     {
-        if (!ModInfo.Starlight)
+        if (!BAUPlugin.ModInfo.Starlight)
         {
             return Path.GetDirectoryName(Application.dataPath) ?? throw new Exception("Unable to find `Application.dataPath` path!");
         }
@@ -148,7 +154,7 @@ internal static class BetterDataManager
     /// <returns>The persistent data path string.</returns>
     internal static string GetPathToAmongUsData()
     {
-        if (!ModInfo.Starlight)
+        if (!BAUPlugin.ModInfo.Starlight)
         {
             return Application.persistentDataPath;
         }
@@ -169,63 +175,26 @@ internal static class BetterDataManager
 
         foreach (var path in InitPaths)
         {
-            if (!File.Exists(path))
-            {
-                var directory = Path.GetDirectoryName(path);
-                if (!Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
+            if (File.Exists(path)) continue;
 
-                using var writer = File.CreateText(path);
-                if (path == Files.banPlayerListFilePath)
-                {
-                    writer.WriteLine("// Example ban entries (friend code and/or hashed PUID)");
-                    writer.WriteLine("// Format: [FriendCode], [HashedPUID]");
-                    writer.WriteLine("// Example with both:");
-                    writer.WriteLine("// FriendCode#0000, abc123def456789");
-                    writer.WriteLine("// Example with just friend code:");
-                    writer.WriteLine("// FriendCode#0000");
-                    writer.WriteLine("// Example with just hashed PUID:");
-                    writer.WriteLine("// , hash123xyz789");
-                }
-                else if (path == Files.banNameListFilePath)
-                {
-                    writer.WriteLine("// Example banned player names");
-                    writer.WriteLine("// Each name on a new line - supports wildcards with **");
-                    writer.WriteLine("// ** at start and end: contains anywhere");
-                    writer.WriteLine("// ** at start only: ends with");
-                    writer.WriteLine("// ** at end only: starts with");
-                    writer.WriteLine("// No **: exact match (case-insensitive)");
-                    writer.WriteLine("// ");
-                    writer.WriteLine("// HackerPlayer123");
-                    writer.WriteLine("// CheaterAccount");
-                    writer.WriteLine("// **Bot**");
-                    writer.WriteLine("// **Script");
-                    writer.WriteLine("// Exploit**");
-                    writer.WriteLine("// **Cheat**");
-                }
-                else if (path == Files.banWordListFilePath)
-                {
-                    writer.WriteLine("// Example banned words/patterns");
-                    writer.WriteLine("// Each word or pattern on a new line - supports wildcards with **");
-                    writer.WriteLine("// ** at start and end: contains anywhere");
-                    writer.WriteLine("// ** at start only: ends with");
-                    writer.WriteLine("// ** at end only: starts with");
-                    writer.WriteLine("// No **: exact match (case-insensitive)");
-                    writer.WriteLine("// ");
-                    writer.WriteLine("// hack");
-                    writer.WriteLine("// cheat");
-                    writer.WriteLine("// exploit");
-                    writer.WriteLine("// **bot**");
-                    writer.WriteLine("// **script**");
-                    writer.WriteLine("// modded");
-                    writer.WriteLine("// aimbot");
-                    writer.WriteLine("// wallhack");
-                    writer.WriteLine("// **hack**");
-                    writer.WriteLine("// **cheat**");
-                    writer.WriteLine("// speed**");
-                }
+            var directory = Path.GetDirectoryName(path);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            using var writer = File.CreateText(path);
+            if (path == Files.banPlayerListFilePath)
+            {
+                writer.WriteLine(BAUPlugin.Constants.BAN_PLAYER_LIST_CONTENT);
+            }
+            else if (path == Files.banNameListFilePath)
+            {
+                writer.WriteLine(BAUPlugin.Constants.BAN_NAME_LIST_CONTENT);
+            }
+            else if (path == Files.banChatListFilePath)
+            {
+                writer.WriteLine(BAUPlugin.Constants.BAN_CHAT_LIST_CONTENT);
             }
         }
     }
@@ -235,16 +204,143 @@ internal static class BetterDataManager
     /// </summary>
     private static void LoadLegacyData()
     {
+        if (File.Exists(Files.logFilePath_Legacy))
+        {
+            File.Delete(Files.logFilePath_Legacy);
+        }
+
+        if (File.Exists(Files.previousLogFilePath_Legacy))
+        {
+            File.Delete(Files.previousLogFilePath_Legacy);
+        }
+
         if (File.Exists(Files.settingsFilePath_Legacy))
         {
-            BAUConfigs.SettingsPreset.Value = 1;
-            File.Move(Files.settingsFilePath_Legacy, Files.SettingsFilePath);
+            if (File.Exists(Files.SettingsFilePath))
+            {
+                File.Delete(Files.settingsFilePath_Legacy);
+            }
+            else
+            {
+                File.Move(Files.settingsFilePath_Legacy, Files.SettingsFilePath);
+            }
         }
 
         if (File.Exists(Files.dataFilePath_Legacy))
         {
-            File.Move(Files.dataFilePath_Legacy, Files.dataFilePath);
+            if (File.Exists(Files.dataFilePath))
+            {
+                File.Delete(Files.dataFilePath_Legacy);
+            }
+            else
+            {
+                File.Move(Files.dataFilePath_Legacy, Files.dataFilePath);
+            }
         }
+
+        HandleMigrationFromWildcardToRegex();
+    }
+
+    /// <summary>
+    /// Performs data migration from legacy wildcard‑based ban lists to the new regex‑based format.
+    /// </summary>
+    private static void HandleMigrationFromWildcardToRegex()
+    {
+        MigrateBanWordList();
+        MigrateBanNameList();
+    }
+
+    /// <summary>
+    /// Migrates the legacy wildcard‑based BanWordList to the new regex-based BanChatList.
+    /// </summary>
+    private static void MigrateBanWordList()
+    {
+        if (!File.Exists(Files.banWordListFilePath_Legacy)) return;
+
+        var content = File.ReadLines(Files.banWordListFilePath_Legacy)
+            .Where(line =>
+                !string.IsNullOrWhiteSpace(line) &&
+                !line.StartsWith("//") &&
+                !line.StartsWith("#")
+            ).ToArray();
+
+        if (content.Any())
+        {
+            using var writer = File.CreateText(Files.banChatListFilePath);
+            writer.WriteLine(BAUPlugin.Constants.BAN_CHAT_LIST_CONTENT);
+            writer.WriteLine();
+            writer.WriteLine("// Your old wildcard based filters have been converted to regex patterns");
+            writer.WriteLine("// They will behave exactly the same as before");
+            writer.WriteLine("// You can keep using them without changing anything else");
+            writer.WriteLine();
+            foreach (var line in content)
+            {
+                writer.Write("(?i)(?: |^)");
+                if (line.StartsWith("**")) writer.Write(".*");
+                writer.Write(Regex.Escape(line.Trim('*')));
+                if (line.EndsWith("**")) writer.Write(".*");
+                writer.WriteLine("(?: |$)");
+            }
+        }
+        File.Delete(Files.banWordListFilePath_Legacy);
+    }
+
+    /// <summary>
+    /// Migrates the BanNameList from the legacy wildcard format to the current regex‑based format.
+    /// </summary>
+    private static void MigrateBanNameList()
+    {
+        if (!File.Exists(Files.banNameListFilePath)) return;
+
+        var lines = File.ReadLines(Files.banNameListFilePath)
+            .Where(line => line != "// ")
+            .ToArray();
+
+        // Return if file contains new example comment
+        if (lines.AnyLineInContentLines(BAUPlugin.Constants.BAN_NAME_LIST_CONTENT))
+            return;
+
+        var content = lines.Where(line =>
+            !string.IsNullOrWhiteSpace(line) &&
+            !line.StartsWith("//") &&
+            !line.StartsWith("#")
+        ).ToArray();
+
+        if (!content.Any())
+        {
+            File.Delete(Files.banNameListFilePath);
+            return;
+        }
+
+        if (!content.Any(s => Regex.IsMatch(s, @"\*\*")) &&
+            !lines.AnyLineInContentLines(BAUPlugin.Constants.BAN_NAME_LIST_CONTENT_LEGACY)) return;
+
+        using var writer = File.CreateText(Files.banNameListFilePath);
+        writer.WriteLine(BAUPlugin.Constants.BAN_NAME_LIST_CONTENT);
+        writer.WriteLine();
+        writer.WriteLine("// Your old wildcard based filters have been converted to regex patterns");
+        writer.WriteLine("// They will behave exactly the same as before");
+        writer.WriteLine("// You can keep using them without changing anything else");
+        writer.WriteLine();
+        foreach (var line in content)
+        {
+            writer.Write("(?i)");
+            if (!line.StartsWith("**")) writer.Write("^");
+            writer.Write(Regex.Escape(line.Trim('*')));
+            if (!line.EndsWith("**")) writer.Write("$");
+            writer.WriteLine();
+        }
+    }
+
+    /// <summary>
+    /// Determines whether any line from the supplied array matches a line in the specified content string.
+    /// </summary>
+    /// <param name="lines">An array of strings to search.</param>
+    /// <param name="content">A multi‑line string whose individual lines are compared against <paramref name="lines"/>.</param>
+    /// <returns><c>true</c> if at least one line from <paramref name="lines"/> equals any line in <paramref name="content"/>, <c>false</c> otherwise.</returns>
+    private static bool AnyLineInContentLines(this string[] lines, string content)
+    {
+        return content.Split(Environment.NewLine).Any(lines.Contains);
     }
 
     /// <summary>

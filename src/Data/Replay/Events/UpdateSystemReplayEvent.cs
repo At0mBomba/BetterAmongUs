@@ -37,7 +37,7 @@ internal sealed class UpdateSystemReplayEvent : IReplayEvent<UpdateSystemReplayE
         EventData = new UpdateSystemReplayData(checked((byte)args.System), args.Player.PlayerId, args.Amount);
     }
 
-    internal record UpdateSystemReplayData(byte SystemType, int PlayerId, byte Amount) : IReplayEvent.Data;
+    internal record UpdateSystemReplayData(byte SystemType, byte PlayerId, byte Amount) : IReplayEvent.Data;
 
     internal record UpdateSystemReplayArgs(SystemTypes System, PlayerControl Player, byte Amount) : IReplayEvent.Args;
 }

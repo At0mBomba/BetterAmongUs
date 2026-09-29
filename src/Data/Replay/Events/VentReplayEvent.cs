@@ -45,7 +45,7 @@ internal sealed class VentReplayEvent : IReplayEvent<VentReplayEvent.VentReplayD
         EventData = new VentReplayData(args.Player.PlayerId, args.Exit, args.VentId);
     }
 
-    internal record VentReplayData(int PlayerId, bool Exit, int VentId) : IReplayEvent.Data;
+    internal record VentReplayData(byte PlayerId, bool Exit, int VentId) : IReplayEvent.Data;
 
     internal record VentReplayArgs(PlayerControl Player, bool Exit, int VentId) : IReplayEvent.Args;
 }

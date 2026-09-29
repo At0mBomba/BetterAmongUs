@@ -324,6 +324,16 @@ public static class TranslationStrings
     public static readonly TranslationString BetterOption_MinimapIcons = new("BetterOption.MinimapIcons");
 
     /// <summary>
+    /// Base Translation: Better Minimap Colors
+    /// </summary>
+    public static readonly TranslationString BetterOption_BetterMinimapColors = new("BetterOption.BetterMinimapColors");
+
+    /// <summary>
+    /// Base Translation: Better Colorblind Text
+    /// </summary>
+    public static readonly TranslationString BetterOption_BetterColorblindText = new("BetterOption.BetterColorblindText");
+
+    /// <summary>
     /// Base Translation: Compress Setting Files
     /// </summary>
     public static readonly TranslationString BetterOption_CompressSettingFiles = new("BetterOption.CompressSettingFiles");
@@ -364,19 +374,9 @@ public static class TranslationStrings
     public static readonly TranslationString BetterSetting_MainHeader_AntiCheat = new("BetterSetting.MainHeader.AntiCheat");
 
     /// <summary>
-    /// Base Translation: &lt;color=#4f92ff&gt;Role Algorithm Settings&lt;/color&gt;
-    /// </summary>
-    public static readonly TranslationString BetterSetting_MainHeader_RoleAlgorithm = new("BetterSetting.MainHeader.RoleAlgorithm");
-
-    /// <summary>
     /// Base Translation: &lt;color=#d7d700&gt;Gameplay Settings&lt;/color&gt;
     /// </summary>
     public static readonly TranslationString BetterSetting_MainHeader_Gameplay = new("BetterSetting.MainHeader.Gameplay");
-
-    /// <summary>
-    /// Base Translation: &lt;color=#d7d700&gt;Hide &amp; Seek Settings&lt;/color&gt;
-    /// </summary>
-    public static readonly TranslationString BetterSetting_MainHeader_HideNSeek = new("BetterSetting.MainHeader.HideNSeek");
 
     /// <summary>
     /// Base Translation: &lt;color=#4f92ff&gt;Host Only&lt;/color&gt;
@@ -434,19 +434,19 @@ public static class TranslationStrings
     public static readonly TranslationString BetterSetting_Setting_UseBanNameList = new("BetterSetting.Setting.UseBanNameList");
 
     /// <summary>
-    /// Base Translation: Use ban word list
+    /// Base Translation: Use ban chat list
     /// </summary>
-    public static readonly TranslationString BetterSetting_Setting_UseBanWordList = new("BetterSetting.Setting.UseBanWordList");
+    public static readonly TranslationString BetterSetting_Setting_UseBanChatList = new("BetterSetting.Setting.UseBanChatList");
 
     /// <summary>
     /// Base Translation: Only in lobby
     /// </summary>
-    public static readonly TranslationString BetterSetting_Setting_UseBanWordListOnlyLobby = new("BetterSetting.Setting.UseBanWordListOnlyLobby");
+    public static readonly TranslationString BetterSetting_Setting_UseBanChatListOnlyLobby = new("BetterSetting.Setting.UseBanChatListOnlyLobby");
 
     /// <summary>
-    /// Base Translation: Show role in name for clients
+    /// Base Translation: Ban
     /// </summary>
-    public static readonly TranslationString BetterSetting_Setting_ShowRoleForClients = new("BetterSetting.Setting.ShowRoleForClients");
+    public static readonly TranslationString BetterSetting_Setting_UseBanChatListBan = new("BetterSetting.Setting.UseBanChatListBan");
 
     /// <summary>
     /// Base Translation: Censor detection reason
@@ -474,6 +474,11 @@ public static class TranslationStrings
     public static readonly TranslationString BetterSetting_Setting_KickLevelBelow = new("BetterSetting.Setting.KickLevelBelow");
 
     /// <summary>
+    /// Base Translation: Only when player count at least
+    /// </summary>
+    public static readonly TranslationString BetterSetting_Setting_KickLevelBelowMinimumPlayers = new("BetterSetting.Setting.KickLevelBelowMinimumPlayers");
+
+    /// <summary>
     /// Base Translation: Detect cheat clients
     /// </summary>
     public static readonly TranslationString BetterSetting_Setting_DetectCheatClients = new("BetterSetting.Setting.DetectCheatClients");
@@ -492,16 +497,6 @@ public static class TranslationStrings
     /// Base Translation: Rate Limit
     /// </summary>
     public static readonly TranslationString BetterSetting_Setting_RateLimit = new("BetterSetting.Setting.RateLimit");
-
-    /// <summary>
-    /// Base Translation: Randomizer
-    /// </summary>
-    public static readonly TranslationString BetterSetting_Setting_RoleRandomizer = new("BetterSetting.Setting.RoleRandomizer");
-
-    /// <summary>
-    /// Base Translation: Desync roles to other clients
-    /// </summary>
-    public static readonly TranslationString BetterSetting_Setting_DesyncRoles = new("BetterSetting.Setting.DesyncRoles");
 
     /// <summary>
     /// Base Translation: Disable sabotages for dead

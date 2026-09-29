@@ -10,21 +10,32 @@ namespace BetterAmongUs.Patches.Unity;
 [HarmonyPatch]
 internal static class UnityWebRequestPatch
 {
-    // Build mod version header string
+    /// <summary>
+    /// Builds a mod version header string for network transmission.
+    /// Format: "major;minor;patch;metadata1/metadata2/metadata3"
+    /// </summary>
     public static string GetHeader()
     {
         var stringBuilder = new StringBuilder();
+        var version = BAUPlugin.ModInfo.SemVersion;
 
-        // Format: "Version;BuildType;IsHotfix/HotfixNum/BetaNum"
-        stringBuilder.Append(ModInfo.PLUGIN_VERSION);
+        stringBuilder.Append(version.Major);
         stringBuilder.Append(';');
-        stringBuilder.Append(Enum.GetName(ModInfo.ReleaseBuildType));
+        stringBuilder.Append(version.Minor);
         stringBuilder.Append(';');
-        stringBuilder.Append(ModInfo.IS_HOTFIX);
-        stringBuilder.Append('/');
-        stringBuilder.Append(ModInfo.HOTFIX_NUM);
-        stringBuilder.Append('/');
-        stringBuilder.Append(ModInfo.BETA_NUM);
+        stringBuilder.Append(version.Patch);
+        stringBuilder.Append(';');
+
+        var buildMetadata = version.Metadata;
+        if (buildMetadata.Length > 0)
+        {
+            for (int i = 0; i < buildMetadata.Length; i++)
+            {
+                stringBuilder.Append(buildMetadata[i]);
+                if (i < buildMetadata.Length - 1)
+                    stringBuilder.Append('/');
+            }
+        }
 
         return stringBuilder.ToString();
     }
@@ -68,7 +79,7 @@ internal static class UnityWebRequestPatch
 
                 if (responseHeader != null)
                 {
-                    Logger_.Log("Connected to a supported Better Among Us matchmaking server");
+                    BAUPlugin.Logger.Log("Connected to a supported Better Among Us matchmaking server");
                 }
             }));
         }

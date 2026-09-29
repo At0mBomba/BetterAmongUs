@@ -1,5 +1,6 @@
 ﻿using BepInEx.Unity.IL2CPP.Utils;
 using BetterAmongUs.Data.Config;
+using BetterAmongUs.Enums;
 using BetterAmongUs.Generated;
 using BetterAmongUs.Managers;
 using BetterAmongUs.Modules;
@@ -40,6 +41,11 @@ internal static class PlatformSpoofPatch
 
         if (player != null && __instance != null)
         {
+            if (__instance.Platform == (Platforms)CustomPlatforms.Starlight)
+            {
+                yield break;
+            }
+
             // Check Xbox/Windows store players for invalid platform ID length
             if (__instance.Platform is Platforms.StandaloneWin10 or Platforms.Xbox)
             {
@@ -51,7 +57,7 @@ internal static class PlatformSpoofPatch
                         TranslationStrings.AntiCheat_Reason_PlatformSpoofer.LocalizedString,
                         TranslationStrings.AntiCheat_HasBeenDetectedWithCheat.LocalizedString
                     );
-                    Logger_.LogCheat($"{player.ExtendedData().RealName} {TranslationStrings.AntiCheat_Reason_PlatformSpoofer}: {__instance.XboxPlatformId}");
+                    BAUPlugin.Logger.LogCheat($"{player.ExtendedData().RealName} {TranslationStrings.AntiCheat_Reason_PlatformSpoofer}: {__instance.XboxPlatformId}");
                 }
             }
 
@@ -66,7 +72,7 @@ internal static class PlatformSpoofPatch
                         TranslationStrings.AntiCheat_Reason_PlatformSpoofer.LocalizedString,
                         TranslationStrings.AntiCheat_HasBeenDetectedWithCheat.LocalizedString
                     );
-                    Logger_.LogCheat($"{player.ExtendedData().RealName} {TranslationStrings.AntiCheat_Reason_PlatformSpoofer}: {__instance.PsnPlatformId}");
+                    BAUPlugin.Logger.LogCheat($"{player.ExtendedData().RealName} {TranslationStrings.AntiCheat_Reason_PlatformSpoofer}: {__instance.PsnPlatformId}");
                 }
             }
 
