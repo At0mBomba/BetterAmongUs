@@ -73,8 +73,6 @@ WINEDLLOVERRIDES="winhttp=n,b" PROTON_NO_ESYNC=1 %command%
 - ❌ Xbox/Playstation/Switch
 
 ## Supported Game Versions
-- ✅ AU **v19.0.0** / **v2026.9.29**: (BAU v1.3.4) >
-- ✅ AU **v18.0.0** / **v2026.8.18**: (BAU v1.3.3 Hotfix 1) >
 - ✅ AU **v17.2.0** / **v2026.3.17**: (BAU v1.3.3) >
 - ✅ AU **v17.1.0** / **v2025.11.18**: (BAU v1.3.1) >
 - ✅ AU **v17.0.1** / **v2025.10.14**: (BAU v1.3.0) >
@@ -132,8 +130,7 @@ BetterAmongUs offers a variety of commands to enhance your control over the game
 A huge thank you to everyone who contributed to making BetterAmongUs a reality!
 
 - **Head Developer**: [D1GQ](https://github.com/D1GQ)
-- **Contributor**: [Nyx](https://github.com/DeveloperNyx)
-- **Contributor**: [At0mBomba](https://github.com/At0mBomba)
+- **Linux Support**: [Nyx](https://github.com/DeveloperNyx)
 
 ## Contacts
 betterauofficial@gmail.com
